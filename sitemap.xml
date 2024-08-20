@@ -1,0 +1,23 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jmestret.github.io/GeoThinneR/404.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/LICENSE-text.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/LICENSE.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/articles/GeoThinneR.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/articles/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/authors.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/news/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/assign_coords_to_grid.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/brute_force_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/caretta.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/grid_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/kd_tree_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/long_lat_to_cartesian.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/max_thinning_algorithm.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/precision_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/r_tree_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/rounding_hashing_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/thin_points.html</loc></url>
+</urlset>
+
