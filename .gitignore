@@ -1,0 +1,10 @@
+.Rhistory
+.Rproj.user/
+CRAN-SUBMISSION
+inst/doc
+docs
+.Ruserdata
+*-Ex.R
+/*.Rcheck/
+vignettes/*.html
+vignettes/*.pdf

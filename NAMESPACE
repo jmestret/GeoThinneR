@@ -1,0 +1,3 @@
+useDynLib(GeoThinneR, .registration = TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, sourceCpp)

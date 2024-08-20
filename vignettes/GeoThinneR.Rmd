@@ -1,0 +1,430 @@
+---
+title: "A collection of simple methods for spatial thinning of species occurrences and point data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A collection of simple methods for spatial thinning of species occurrences and point data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+run_code <- requireNamespace("sf", quietly = TRUE) &
+  requireNamespace("terra", quietly = TRUE) &
+  requireNamespace("ggplot2", quietly = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = run_code
+)
+```
+
+# Overview
+
+Loading occurrence data in R for species distribution modeling or other types of point data analysis is  an easy task that can become tedious when dealing with uncertain records or sampling bias. Spatial thinning methods can be helpful in some situations for reducing sampling bias while retaining a significant number of points or a specific desired count.
+
+The **GeoThinneR** package offers a collection of straightforward and effective methods for spatial thinning of species occurrences and other point data, allowing researchers to improve the quality of their datasets.
+
+This package includes a main function (`thin_points`) that wraps various methods (specified by the `method` parameter) for spatial thinning, including:
+
+- Distance-based methods:
+  - Brute force distance thinning (`"brute_force"`)
+  - K-D trees thinning (`"kd_tree"`)
+  - R-trees thinning (`"r_tree"`)
+  - Rounding and hashing (`"round_hash"`)
+- Regular grid-based methods:
+  - Grid sampling (`"grid"`)
+- Coordinate precision-based methods:
+  - Precision thinning (`"precision"`)
+  
+This variety allows users to select the most suitable approach based on their specific datasets and research objectives.
+  
+In this vignette, we provide an overview of the key functionalities of the package and demonstrate how to use the various thinning methods along with advanced options.
+
+# Setup and load datasets
+
+To get started with **GeoThinneR**, we will also load the following packages:
+
+- **terra**: for working with raster and spatial data.
+- **sf**: for handling spatial polygons.
+- **ggplot2**: for visualizing the thinning process.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(GeoThinneR)
+library(terra)
+library(sf)
+library(ggplot2)
+```
+
+We will simulate a dataset with `n = 2000` random points for two species and load a subset of real data from the Logerhead sea turtle (*Caretta caretta*) occurrences in the Mediterranean Sea.
+
+```{r load data, message=FALSE, results='hide'}
+# Set seed for reproducibility
+set.seed(123)
+
+# Simulate the dataset
+n <- 2000  # Number of points
+sim_data <- data.frame(
+  long = runif(n, min = -20, max = 20),
+  lat = runif(n, min = -10, max = 10),
+  sp = sample(c("sp1", "sp2"), n, replace = TRUE)
+)
+
+# Load the Caretta caretta occurrences
+data("caretta")
+
+# Load mediterranean sea polygon
+medit <- system.file("extdata", "mediterranean_sea.gpkg", package = "GeoThinneR")
+medit <- sf::st_read(medit)
+```
+```{r plot loaded data, , fig.show="hold",  out.width="50%"}
+ggplot() +
+  geom_point(data = sim_data, aes(x = long, y = lat, color = sp)) +
+  scale_color_manual(values = c(sp1 = "#5183B3", sp2 = "#EB714B")) +
+  xlab("Longitude") + ylab("Latitude") +
+  ggtitle("Simulated Species Occurrences") +
+  theme_minimal()
+
+ggplot() +
+  geom_sf(data = medit, color = "#353839", fill = "antiquewhite", alpha = 0.7)  +
+  geom_point(data = caretta, aes(x = decimalLongitude, y = decimalLatitude),color = "#EB714B", alpha = 1) +
+  xlab("Longitude") + ylab("Latitude") +
+  ggtitle("C. caretta Mediterranean Sea Occurrences") +
+  theme(
+      panel.grid.major = element_line(color = gray(.5),linetype = "dashed",linewidth = 0.5),
+      panel.background = element_rect(fill = "white"),
+      axis.title = element_blank(),
+      legend.position = "bottom"
+    )
+```
+
+# Quick start guide
+
+Now that we have loaded our data, let's quickly explore how to use the `thin_points()` function to perform spatial thinning on our datasets.
+
+Let's start by applying spatial thinning to our simulated dataset using the brute force distance thinning method. We pass our dataframe/tibble/matrix through the `data` argument, and with `lon_col` and `lat_col`, we can define the names of the columns containing longitude and latitude (or x, y) coordinates. If you don't specify any columns, it will take the first two columns by default. We will use the brute force algorithm (`brute_force`) specified in the `method` parameter and set a thinning distance (`thin_dist`) of 20 km. Since this is not a deterministic approach, we will run 5 iterations (`trials`) and return all the iterations (`all_trials`).
+
+```{r}
+# Apply spatial thinning to the simulated data
+thin_sim_data <- thin_points(
+  data = sim_data, # Dataframe with coordinates
+  long_col = "long", # Longitude column name
+  lat_col = "lat", # Latitude column name
+  method = "brute_force",  # Method for thinning
+  thin_dist = 20,  # Thinning distance in km,
+  trials = 5, # Number of reps
+  all_trials = TRUE, # Return all trials
+  seed = 123 # Seed for reproducibility
+)
+```
+
+We can see that out of every 5 trials, there is one that returns one point less. This is due to the randomness of the algorithm.
+
+```{r}
+# Number of keeped points in each trial
+sapply(thin_sim_data, nrow)
+```
+
+Next, we will thin the *Caretta caretta* occurrences using the K-D trees method. We'll use a thinning distance of 30 km and return only the trial with the most points kept (`all_trials` set to `FALSE`).
+
+```{r}
+# Apply spatial thinning to the real data
+thin_real_data <- thin_points(
+  data = caretta, # We will not specify long_col, lat_col as they are in position 1 and 2
+  method = "kd_tree",
+  thin_dist = 30,  # Thinning distance in km,
+  trials = 5,
+  all_trials = FALSE,
+  seed = 123
+)
+
+# Thinned dataframe stored in the first element of the output list
+dim(thin_real_data[[1]])
+```
+```{r, echo = FALSE}
+ggplot() +
+  geom_sf(data = medit, color = "#353839", fill = "antiquewhite", alpha = 0.7)  +
+  geom_point(data = caretta, aes(x = decimalLongitude, y = decimalLatitude),color = "#EB714B", alpha = 0.5) +
+  geom_point(data = thin_real_data[[1]], aes(x = long, y = lat),color = "#5183B3", alpha = 1) +
+  xlab("Longitude") + ylab("Latitude") +
+  ggtitle("C. caretta Mediterranean Sea Occurrences") +
+  theme(
+      panel.grid.major = element_line(color = gray(.5),linetype = "dashed",linewidth = 0.5),
+      panel.background = element_rect(fill = "white"),
+      axis.title = element_blank(),
+      legend.position = "bottom"
+    )
+```
+
+As you can see, with **GeoThinneR**, it's very easy to apply spatial thinning to your dataset. As you will see in the next sections, there are a variety of options and methods that best suit different situations. You will learn how to use each specific method with its own options, how to thin groups separately, how to request a specific number of points, how to select less uncertain points, and how to work with points that do not represent longitude and latitude coordinates.
+
+# Thinning methods
+
+In this section, we will show how to use each thinning method, highlighting its unique parameters and features.
+
+## Distance-based methods
+
+All distance-based methods apply spatial thinning based on an exact distance defined by the `thin_dist` parameter. When using longitude and latitude data, the function computes the Haversine distance. You can also pass a custom Earth radius using the `R` parameter (by default, it uses 6371 km).
+
+### Brute force distance thinning
+
+This is the most common method for calculating the distance between points, as it directly computes all pairwise distances and retains points that are far enough apart based on the thinning distance. By default, it computes the Haversine distance using the `RdistEarth` function from the **fields** package. If `euclidean` is set to `TRUE`, it will compute the Euclidean distance instead. The main advantage of this method is that it computes the full picture of your points, making it easier to retain the maximum number of points. However, the primary drawback is that it is very time and memory consuming, as it requires computing all pairwise comparisons.
+
+```{r}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "brute_force", 
+  thin_dist = 20,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+nrow(thin_sim_data[[1]])
+```
+
+### K-D trees
+
+K-D trees are a well-known data structure for partitioning space during nearest neighbor searches, making them an efficient option for distance-based thinning. A K-D tree is a binary treeof *k* dimensions that partitions the space to discard data points that are further away. This method uses the **nabor** R package to implement K-D trees via the **libnabo** library. Since K-D trees are based on Euclidean distance, if `euclidean` is set to `FALSE` to work with longitude and latitude data, **GeoThinneR** will transform the coordinates into XYZ Cartesian coordinates. Additionally, by setting `space_partitioning` to `TRUE`, the space will be divided into grids before computing the K-D tree, which can be more memory-efficient for large datasets.
+
+```{r}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "kd_tree", 
+  thin_dist = 20,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+nrow(thin_sim_data[[1]])
+```
+
+### R-trees
+
+R-trees are widely used for spatial searching, especially with geographic coordinates. While R-trees have a slightly higher construction cost compared to other methods, they speed up searches. This method uses the same parameters as the K-D tree method. In **GeoThinneR**, R-trees are implemented as a slightly modified version of the **rtree** R package, which is based on the **Boost** geometry library. In order to use R-tree you need to install the modified package from GitHub using `remotes::install_github("jmestret/rtree")`. This modification allows for computing both Euclidean distance (`euclidean = TRUE`) and Haversine distance (`euclidean = FALSE`) for geographic coordinates.
+
+```{r, eval = FALSE}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "r_tree", 
+  thin_dist = 20,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+nrow(thin_sim_data[[1]])
+```
+
+### Rounding and hashing
+
+This method reduces data complexity and is particularly useful in specific scenarios. First, the coordinates of the data points are rounded to a specified precision based on the thinning distance. The rounded coordinates are then hashed into a grid where each cell is identified by a unique combination of longitude and latitude values. The algorithm iterates through the grid cells, checking the distance between points within the same cell and neighboring cells, and removes points that fall within the thinning distance. This method can also be seen as a form of precision-based thinning.
+
+The distance between points can be calculated using either the Haversine or Euclidean formula. This method is very memory-efficient and fast, especially with large datasets and large thinning distances. However, the main drawback is that it usually does not find the optimal maximum number of points to retain, as it removes them without computing all distances.
+
+```{r}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "round_hash", 
+  thin_dist = 20,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+nrow(thin_sim_data[[1]])
+```
+
+## Grid-based methods
+
+### Grid sampling
+
+Grid sampling is a standard method where the area is divided into a grid, and points are sampled from each grid cell. This method is very fast and memory-efficient. There are two main ways to apply grid sampling: (i) Define the characteristics of the grid, and (ii) pass your own grid as a raster (`SpatRaster`).
+
+For the first method, you can use the `thin_dist` parameter to define the grid cell size (the distance in km will be approximated to degrees to define the grid cell size), or you can pass the resolution of the grid (e.g., `resolution = 0.25` for 0.25x0.25-degree cells). If you want to align the grid with external data or covariate layers, you can pass the `origin` argument as a tuple of two values (e.g., `c(0, 0)`). Similarly, you can specify the coordinate reference system (CRS) of your grid (`crs`).
+
+```{r}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "grid", 
+  resolution = 1,
+  origin = c(0, 0),
+  crs = "epsg:4326",
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+```
+
+Alternatively, you can pass a `SpatRaster` object, and that grid will be used for the thinning process.
+
+```{r, message=FALSE, warning=FALSE}
+rast_obj <- terra::rast(xmin = -20, xmax = 20, ymin = -10, ymax = 10, res = 1)
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "grid", 
+  raster_obj = rast_obj,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+```
+```{r, echo = FALSE}
+rast_obj <- terra::as.polygons(rast_obj)
+rast_obj <- sf::st_as_sf(rast_obj)
+ggplot() +
+  geom_sf(data = rast_obj, color = "#353839") +
+  geom_point(data = sim_data, aes(x = long, y = lat),color = "#EB714B", alpha = 0.5) +
+  geom_point(data = thin_sim_data[[1]], aes(x = long, y = lat),color = "#5183B3", alpha = 1) +
+  theme_minimal()
+```
+
+## Coordinate Precision-Based Methods
+
+### Precision Thinning
+
+In this approach, coordinates are rounded to a certain precision to remove points that fall too close together. After removing points based on coordinate precision, the coordinate values are restored to their original locations. This is the simplest method and is very useful when working with data from different sources with varying coordinate precisions. To use it, you need to define the `precision` parameter, indicating the number of decimals to which the coordinates should be rounded.
+
+```{r}
+system.time(
+thin_sim_data <- thin_points(
+  data = sim_data,
+  method = "precision", 
+  precision = 0,
+  trials = 50,
+  all_trials = FALSE,
+  seed = 123
+))
+nrow(thin_sim_data[[1]])
+```
+
+These are the methods implemented in **GeoThinneR**. Depending on your specific dataset and research needs, one method may be more suitable than others.
+
+# Additional features
+
+## Spatial thinning by group
+
+In some cases, your dataset may include different groups, such as species, time periods, areas, or conditions, that you want to thin independently. The `group_col` parameter allows you to specify the column containing the grouping factor, and the thinning will be performed separately for each group. For example, in the simulated data where we have two species, we can use this parameter to thin each species independently:
+
+```{r}
+thin_sim_data <- thin_points(
+  data = sim_data,
+  thin_dist = 20,
+  seed = 123
+)
+thin_sim_data_group <- thin_points(
+  data = sim_data,
+  group_col = "sp",
+  thin_dist = 20,
+  seed = 123
+)
+
+nrow(thin_sim_data[[1]])
+nrow(thin_sim_data_group[[1]])
+```
+```{r, echo =FALSE, fig.show="hold",  out.width="50%"}
+removed <- sim_data[-as.numeric(rownames(thin_sim_data[[1]])), ]
+removed_group <- sim_data[-as.numeric(rownames(thin_sim_data_group[[1]])), ]
+
+ggplot() +
+  geom_point(data = sim_data, aes(x = long, y = lat, color = sp), alpha = 0.2) +
+  geom_point(data = removed, aes(x = long, y = lat, color = sp), alpha = 1) +
+  scale_color_manual(values = c(sp1 = "#5183B3", sp2 = "#EB714B")) +
+  ggtitle("Removed points without grouping") +
+  theme_minimal()
+
+ggplot() +
+  geom_point(data = sim_data, aes(x = long, y = lat, color = sp), alpha = 0.2) +
+  geom_point(data = removed_group, aes(x = long, y = lat, color = sp), alpha = 1) +
+  scale_color_manual(values = c(sp1 = "#5183B3", sp2 = "#EB714B")) +
+  ggtitle("Removed points for each independent species") +
+  theme_minimal()
+```
+
+
+
+## Fixed number of points
+
+What if you need to retain a fixed number of points that best covers the area where your data points are located? The `target_points` parameter allows you to specify the number of points to keep, and the function will return that number of points spaced as separated as possible. Additionally, you can also set a `thin_dist` parameter so that no points closer than this distance will be retained. Currently, this approach is only implemented using the brute force method, so be cautious when applying it to very large datasets.
+
+```{r}
+thin_real_data <- thin_points(
+  data = caretta, 
+  target_points = 150,
+  thin_dist = 30,
+  all_trials = FALSE,
+  seed = 123,
+  verbose = TRUE
+)
+nrow(thin_real_data[[1]])
+```
+```{r}
+ggplot() +
+  geom_sf(data = medit, color = "#353839", fill = "antiquewhite", alpha = 0.7)  +
+  geom_point(data = thin_real_data[[1]], aes(x = long, y = lat),color = "#5183B3", alpha = 1) +
+  xlab("Longitude") + ylab("Latitude") +
+  ggtitle("C. caretta Mediterranean Sea Occurrences") +
+  theme(
+      panel.grid.major = element_line(color = gray(.5),linetype = "dashed",linewidth = 0.5),
+      panel.background = element_rect(fill = "white"),
+      axis.title = element_blank(),
+      legend.position = "bottom"
+    )
+```
+
+## Select points by priority
+
+In some scenarios, you may want to prioritize certain points based on a specific criterion, such as uncertainty, data quality, or recency. The `priority` parameter allows you to pass a vector representing the priority of each point. Currently, this feature can be used with the `grid` and `precision` methods. You can use this argument to prioritize points based on any criteria, such as uncertainty, year of observation, or data quality.
+
+For example, in the sea turtle data downloaded from GBIF, there is a column named `coordinateUncertaintyInMeters`. We can use this to prioritize points with lower uncertainty within each grid cell (in the `grid` method) or when rounding coordinates (in the `precision` method). Keep in mind that bigger uncertainty values represent less priority so we have to reverse this values.
+
+
+```{r}
+thin_real_data <- thin_points(
+  data = caretta,
+  method = "precision",
+  precision = 0,
+  seed = 123
+)
+
+# Substracting the maximum - the highest uncertainty becomes the lowest priority and vice versa.
+priority <- max(caretta$coordinateUncertaintyInMeters) - caretta$coordinateUncertaintyInMeters
+thin_real_data_uncert <- thin_points(
+  data = caretta,
+  method = "precision",
+  precision = 0,
+  priority = priority,
+  seed = 123
+)
+
+mean(thin_real_data[[1]]$coordinateUncertaintyInMeters)
+mean(thin_real_data_uncert[[1]]$coordinateUncertaintyInMeters)
+```
+
+# Other Packages
+
+The **GeoThinneR** package was inspired by the work of many others who have developed methods and packages for working with spatial data and thinning techniques. Our goal with **GeoThinneR** is to offer additional flexibility in method selection and to address specific needs we encountered while using other packages. We would like to acknowledge and mention other tools that may be suitable for your work:
+
+- **spThin**: The `thin` function provides a brute-force spatial thinning of data, maximizing the number of retained points through random iterative repetitions, using the Haversine distance.
+- **enmSdmX**: Includes the `geoThin` function, which calculates all pairwise distances between points for thinning purposes.
+- **dismo**: The `gridSample` function samples points using a grid as stratification, providing an efficient method for spatial thinning.
+
+# References
+
+- Aiello‐Lammens, M. E., Boria, R. A., Radosavljevic, A., Vilela, B., and Anderson, R. P. (2015). *spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models*. Ecography, 38(5), 541-545.
+
+- Elseberg, J., Magnenat, S., Siegwart, R., & Nüchter, A. (2012). *Comparison of nearest-neighbor-search strategies and implementations for efficient shape registration*. Journal of Software Engineering for Robotics, 3(1), 2-12.
+
+- Hijmans, R.J., Phillips, S., Leathwick, J., & Elith, J. (2023). *dismo: Species Distribution Modeling*. R Package Version 1.3-14. https://cran.r-project.org/package=dismo
+
+- Johnson, K., & Hunziker, P. (2021). *rtree: R-Trees for point data in R*. R Package Version 0.2.0. https://github.com/akoyabio/rtree
+
+- Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023). *Including imprecisely georeferenced specimens improves accuracy of species distribution models and estimates of niche breadth*. Global Ecology and Biogeography, 32(3), 342-355.
+
+# Session Info
+
+```{r}
+sessionInfo()
+```

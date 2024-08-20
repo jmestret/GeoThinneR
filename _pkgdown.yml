@@ -1,0 +1,38 @@
+title: GeoThinneR
+url: https://jmestret.github.io/GeoThinneR/
+template:
+  bootstrap: 5
+  params:
+    bootswatch: sandstone
+  includes:
+    in_header: |
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-N3F029FJEK"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-N3F029FJEK');
+      </script>
+reference:
+- title: Wrapper function
+  contents: '`thin_points`'
+- title: Methods functions
+  contents:
+  - '`brute_force_thinning`'
+  - '`kd_tree_thinning`'
+  - '`r_tree_thinning`'
+  - '`rounding_hashing_thinning`'
+  - '`grid_thinning`'
+  - '`precision_thinning`'
+- title: Helper functions
+  contents:
+  - '`max_thinning_algorithm`'
+  - '`long_lat_to_cartesian`'
+  - '`assign_coords_to_grid`'
+- title: Datasets
+  contents: '`caretta`'
+navbar:
+  type: inverse
+

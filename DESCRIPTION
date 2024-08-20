@@ -1,0 +1,48 @@
+Type: Package
+Package: GeoThinneR
+Title: An R Package for Simple Spatial Thinning Methods in Ecological and Spatial Analysis
+    Spatial Analysis
+Version: 1.0.0
+Authors@R: 
+    person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8983-3417"))
+Description: Provides efficient geospatial thinning algorithms to reduce
+    the density of coordinate data while maintaining spatial
+    relationships. Implements K-D Tree Approximate Nearest Neighbors
+    (ANN), R-Tree, and brute force thinning methods.
+License: MIT + file LICENSE
+URL: https://github.com/jmestret/GeoThinneR,
+    https://jmestret.github.io/GeoThinneR/
+BugReports: https://github.com/jmestret/GeoThinneR/issues
+Depends:
+    R (>= 4.0.0)
+Imports:
+    data.table,
+    fields,
+    matrixStats,
+    nabor,
+    Rcpp,
+    stats,
+    terra
+Suggests:
+    ggplot2,
+    knitr,
+    rmarkdown,
+    rtree,
+    sf,
+    testthat (>= 3.0.0),
+    tibble
+LinkingTo: 
+    Rcpp
+Remotes:
+    jmestret/rtree
+VignetteBuilder: 
+    knitr
+BuildVignettes: true
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Note: This package implements an R-tree structure from the rtree package
+    (github.com/hunzikp/rtree).
+RoxygenNote: 7.3.1
