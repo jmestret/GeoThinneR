@@ -9,7 +9,10 @@ Authors@R:
 Description: Provides efficient geospatial thinning algorithms to reduce
     the density of coordinate data while maintaining spatial
     relationships. Implements K-D Tree Approximate Nearest Neighbors
-    (ANN), R-Tree, and brute force thinning methods.
+    (ANN), R-Tree, and brute force thinning methods. It uses a modified version 
+    of the R-tree structure from the 'rtree' package 
+    <https://github.com/akoyabio/rtree>. The modified version can be downloaded 
+    from <https://github.com/jmestret/rtree>.
 License: MIT + file LICENSE
 URL: https://github.com/jmestret/GeoThinneR,
     https://jmestret.github.io/GeoThinneR/
@@ -41,6 +44,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-Note: This package implements an R-tree structure from the rtree package
-    (github.com/hunzikp/rtree).
 RoxygenNote: 7.3.1
