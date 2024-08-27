@@ -39,22 +39,22 @@ Applies the R-tree thinning algorithm on a set of coordinates.
 If you want to use R-trees you need to install the `rtree` package from `remotes::install_github("jmestret/rtree")`. It is a modified version from \url{https://github.com/akoyabio/rtree}.
 }
 \examples{
-\dontrun{
-# Generate random coordinates
-set.seed(123)
-coordinates <- matrix(runif(20, min = -180, max = 180), ncol = 2) # 10 random points
+if (requireNamespace("rtree", quietly = TRUE)) {
+  # Generate random coordinates
+  set.seed(123)
+  coordinates <- matrix(runif(20, min = -180, max = 180), ncol = 2) # 10 random points
 
-# Perform thinning without space partitioning
-result <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5)
-print(result)
+  # Perform thinning without space partitioning
+  result <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5)
+  print(result)
 
-# Perform thinning with space partitioning
-result_space_part <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5,
-                                     space_partitioning = TRUE)
-print(result_space_part)
+  # Perform thinning with space partitioning
+  result_space_part <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5,
+                                       space_partitioning = TRUE)
+  print(result_space_part)
 
-# Perform thinning with euclidean distance
-result_euclidean <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5, euclidean = TRUE)
-print(result_euclidean)
+  # Perform thinning with euclidean distance
+  result_euclidean <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5, euclidean = TRUE)
+  print(result_euclidean)
 }
 }

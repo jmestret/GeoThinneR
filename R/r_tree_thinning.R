@@ -13,23 +13,23 @@
 #' @param R Radius of the Earth in kilometers (default: 6371 km).
 #' @return A logical vector indicating which points are kept in the best trial if all_trials is FALSE; otherwise, a list of logical vectors for each trial.
 #' @examples
-#' \dontrun{
-#' # Generate random coordinates
-#' set.seed(123)
-#' coordinates <- matrix(runif(20, min = -180, max = 180), ncol = 2) # 10 random points
+#' if (requireNamespace("rtree", quietly = TRUE)) {
+#'   # Generate random coordinates
+#'   set.seed(123)
+#'   coordinates <- matrix(runif(20, min = -180, max = 180), ncol = 2) # 10 random points
 #'
-#' # Perform thinning without space partitioning
-#' result <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5)
-#' print(result)
+#'   # Perform thinning without space partitioning
+#'   result <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5)
+#'   print(result)
 #'
-#' # Perform thinning with space partitioning
-#' result_space_part <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5,
-#'                                      space_partitioning = TRUE)
-#' print(result_space_part)
+#'   # Perform thinning with space partitioning
+#'   result_space_part <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5,
+#'                                        space_partitioning = TRUE)
+#'   print(result_space_part)
 #'
-#' # Perform thinning with euclidean distance
-#' result_euclidean <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5, euclidean = TRUE)
-#' print(result_euclidean)
+#'   # Perform thinning with euclidean distance
+#'   result_euclidean <- r_tree_thinning(coordinates, thin_dist = 10, trials = 5, euclidean = TRUE)
+#'   print(result_euclidean)
 #' }
 #' @export
 r_tree_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_trials = FALSE, space_partitioning = FALSE, euclidean = FALSE, R = 6371) {

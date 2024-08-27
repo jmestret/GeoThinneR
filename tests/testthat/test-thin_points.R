@@ -27,6 +27,7 @@ test_that("thin_points works with valid input", {
 })
 
 test_that("Thinning works with tibble input", {
+  skip_if_not_installed("tibble")
   sample_tibble <- tibble::as_tibble(sample_data)
 
   thinned_data_tibble <- thin_points(sample_tibble,
