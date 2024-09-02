@@ -38,6 +38,8 @@ Suggests:
     tibble
 LinkingTo: 
     Rcpp
+Remotes:
+    jmestret/rtree
 VignetteBuilder: 
     knitr
 BuildVignettes: true
