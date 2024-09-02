@@ -278,7 +278,7 @@ computing all pairwise comparisons.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.300   0.016   0.316</span></span>
+<span><span class="co">#&gt;   0.312   0.008   0.320</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
 </div>
@@ -309,7 +309,7 @@ memory-efficient for large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.187   0.004   0.191</span></span>
+<span><span class="co">#&gt;   0.188   0.000   0.188</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
 </div>
@@ -369,7 +369,7 @@ all distances.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.079   0.000   0.079</span></span>
+<span><span class="co">#&gt;   0.078   0.000   0.078</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1790</span></span></code></pre></div>
 </div>
@@ -407,7 +407,7 @@ can specify the coordinate reference system (CRS) of your grid
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.057   0.000   0.057</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.050   0.000   0.049</span></span></code></pre></div>
 <p>Alternatively, you can pass a <code>SpatRaster</code> object, and
 that grid will be used for the thinning process.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -451,7 +451,7 @@ should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.003   0.000   0.004</span></span>
+<span><span class="co">#&gt;   0.003   0.000   0.003</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 775</span></span></code></pre></div>
 <p>These are the methods implemented in <strong>GeoThinneR</strong>.
@@ -513,9 +513,9 @@ large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2024-08-20 10:25:08</span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2024-09-02 20:20:14</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
-<span><span class="co">#&gt; Total execution time: 2.61 seconds</span></span>
+<span><span class="co">#&gt; Total execution time: 2.56 seconds</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -651,7 +651,7 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355.</p></li>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] sass_0.4.9         utf8_1.2.4         class_7.3-22       KernSmooth_2.23-24</span></span>
-<span><span class="co">#&gt;  [5] digest_0.6.36      magrittr_2.0.3     evaluate_0.24.0    grid_4.4.1        </span></span>
+<span><span class="co">#&gt;  [5] digest_0.6.37      magrittr_2.0.3     evaluate_0.24.0    grid_4.4.1        </span></span>
 <span><span class="co">#&gt;  [9] fastmap_1.2.0      maps_3.4.2         jsonlite_1.8.8     e1071_1.7-14      </span></span>
 <span><span class="co">#&gt; [13] DBI_1.2.3          spam_2.10-0        fansi_1.0.6        viridisLite_0.4.2 </span></span>
 <span><span class="co">#&gt; [17] scales_1.3.0       codetools_0.2-20   textshaping_0.4.0  jquerylib_0.1.4   </span></span>
@@ -661,7 +661,7 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355.</p></li>
 <span><span class="co">#&gt; [33] nabor_0.5.0        proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-10   </span></span>
 <span><span class="co">#&gt; [37] fs_1.6.4           ragg_1.3.2         pkgconfig_2.0.3    desc_1.4.3        </span></span>
 <span><span class="co">#&gt; [41] pkgdown_2.1.0      pillar_1.9.0       bslib_0.8.0        gtable_0.3.5      </span></span>
-<span><span class="co">#&gt; [45] data.table_1.15.4  glue_1.7.0         Rcpp_1.0.13        fields_16.2       </span></span>
+<span><span class="co">#&gt; [45] data.table_1.16.0  glue_1.7.0         Rcpp_1.0.13        fields_16.2       </span></span>
 <span><span class="co">#&gt; [49] systemfonts_1.1.0  xfun_0.47          tibble_3.2.1       highr_0.11        </span></span>
 <span><span class="co">#&gt; [53] knitr_1.48         farver_2.1.2       htmltools_0.5.8.1  rmarkdown_2.28    </span></span>
 <span><span class="co">#&gt; [57] labeling_0.4.3     dotCall64_1.1-1    compiler_4.4.1</span></span></code></pre></div>
