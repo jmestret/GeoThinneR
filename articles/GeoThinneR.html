@@ -278,7 +278,7 @@ computing all pairwise comparisons.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.313   0.004   0.317</span></span>
+<span><span class="co">#&gt;   0.312   0.008   0.320</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
 </div>
@@ -309,7 +309,7 @@ memory-efficient for large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.189   0.000   0.190</span></span>
+<span><span class="co">#&gt;   0.190   0.008   0.198</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
 </div>
@@ -369,7 +369,7 @@ all distances.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.078   0.000   0.078</span></span>
+<span><span class="co">#&gt;   0.078   0.000   0.079</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1790</span></span></code></pre></div>
 </div>
@@ -407,7 +407,7 @@ can specify the coordinate reference system (CRS) of your grid
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.046   0.004   0.050</span></span></code></pre></div>
+<span><span class="co">#&gt;   0.045   0.004   0.050</span></span></code></pre></div>
 <p>Alternatively, you can pass a <code>SpatRaster</code> object, and
 that grid will be used for the thinning process.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -451,7 +451,7 @@ should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.003   0.000   0.003</span></span>
+<span><span class="co">#&gt;   0.004   0.000   0.004</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 775</span></span></code></pre></div>
 <p>These are the methods implemented in <strong>GeoThinneR</strong>.
@@ -513,9 +513,9 @@ large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2024-09-02 20:35:55</span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2024-09-02 20:38:08</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
-<span><span class="co">#&gt; Total execution time: 2.57 seconds</span></span>
+<span><span class="co">#&gt; Total execution time: 2.58 seconds</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
