@@ -40,12 +40,6 @@ To install the development version of GeoThinneR from GitHub, use:
 devtools::install_github("jmestret/GeoThinneR")
 ```
 
-Optionally, to use R-trees you need to install:
-
-``` r
-devtools::install_github("jmestret/rtree")
-```
-
 ## How to Use GeoThinneR
 
 The documentation can be found at
@@ -167,4 +161,4 @@ reference the GitHub repository as follows:
 
 Mestre-Tomás, J. (2024). GeoThinneR: An R package for simple spatial
 thinning methods in ecological and spatial analysis. R package version
-1.0.0, <https://github.com/jmestret/GeoThinneR>
+1.1.0, <https://github.com/jmestret/GeoThinneR>

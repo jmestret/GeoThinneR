@@ -9,7 +9,7 @@ thin_points(
   long_col = NULL,
   lat_col = NULL,
   group_col = NULL,
-  method = c("brute_force", "kd_tree", "r_tree", "round_hash", "grid", "precision"),
+  method = c("brute_force", "kd_tree", "round_hash", "grid", "precision"),
   trials = 10,
   all_trials = FALSE,
   target_points = NULL,
@@ -27,7 +27,7 @@ thin_points(
 
 \item{group_col}{Name of the column for grouping points (e.g., species name, year). If NULL, no grouping is applied.}
 
-\item{method}{Thinning method to use `c("brute_force", "kd_tree", "r_tree", "round_hash", "grid", "precision")`.}
+\item{method}{Thinning method to use `c("brute_force", "kd_tree", "round_hash", "grid", "precision")`.}
 
 \item{trials}{Number of thinning iterations to perform (default: 10).}
 
@@ -54,7 +54,6 @@ performed to identify the best thinned dataset.
 The thinning methods available are:
 - `brute_force`: Uses a brute force approach to thin points.
 - `kd_tree`: Uses K-D trees for thinning.
-- `r_tree`: Uses R-trees for thinning.
 - `round_hash`: Uses rounding and hashing for efficient thinning.
 - `grid`: Applies a grid-based thinning method.
 - `precision`: Utilizes precision-based thinning.
@@ -63,7 +62,6 @@ For more information on specific thinning methods and inputs, refer to their res
 - `brute_force_thinning()`
 - `grid_thinning()`
 - `kd_tree_thinning()`
-- `r_tree_thinning()`
 - `rounding_hashing_thinning()`
 - `precision_thinning()`
 }

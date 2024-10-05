@@ -9,7 +9,7 @@
 #' @param long_col Name of the column with longitude coordinates (default: "decimalLongitude").
 #' @param lat_col Name of the column with latitude coordinates (default: "decimalLatitude").
 #' @param group_col Name of the column for grouping points (e.g., species name, year). If NULL, no grouping is applied.
-#' @param method Thinning method to use `c("brute_force", "kd_tree", "r_tree", "round_hash", "grid", "precision")`.
+#' @param method Thinning method to use `c("brute_force", "kd_tree", "round_hash", "grid", "precision")`.
 #' @param trials Number of thinning iterations to perform (default: 10).
 #' @param all_trials If TRUE, returns results of all attempts; if FALSE, returns the best attempt with the most points retained (default: FALSE).
 #' @param target_points Optional; a numeric value specifying the exact number of points to keep. If NULL (default), maximizes the number of kept points.
@@ -23,7 +23,6 @@
 #' The thinning methods available are:
 #' - `brute_force`: Uses a brute force approach to thin points.
 #' - `kd_tree`: Uses K-D trees for thinning.
-#' - `r_tree`: Uses R-trees for thinning.
 #' - `round_hash`: Uses rounding and hashing for efficient thinning.
 #' - `grid`: Applies a grid-based thinning method.
 #' - `precision`: Utilizes precision-based thinning.
@@ -32,7 +31,6 @@
 #' - `brute_force_thinning()`
 #' - `grid_thinning()`
 #' - `kd_tree_thinning()`
-#' - `r_tree_thinning()`
 #' - `rounding_hashing_thinning()`
 #' - `precision_thinning()`
 #'
@@ -63,7 +61,7 @@
 #'
 #' @export
 thin_points <- function(data, long_col = NULL, lat_col = NULL, group_col = NULL,
-                        method = c("brute_force", "kd_tree", "r_tree", "round_hash", "grid", "precision"),
+                        method = c("brute_force", "kd_tree", "round_hash", "grid", "precision"),
                         trials = 10, all_trials = FALSE,
                         target_points = NULL, seed = NULL, verbose = FALSE, ...) {
 
@@ -126,7 +124,6 @@ thin_points <- function(data, long_col = NULL, lat_col = NULL, group_col = NULL,
       method,
       "brute_force"    = brute_force_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
       "kd_tree"        = kd_tree_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
-      "r_tree"         = r_tree_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
       "round_hash"     = rounding_hashing_thinning(coordinates,  trials = trials, all_trials = all_trials, seed = seed, ...),
       "grid"      = grid_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
       "precision" = precision_thinning(coordinates, trials = trials, all_trials = all_trials, ...),

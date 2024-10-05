@@ -22,7 +22,6 @@ reference:
   contents:
   - '`brute_force_thinning`'
   - '`kd_tree_thinning`'
-  - '`r_tree_thinning`'
   - '`rounding_hashing_thinning`'
   - '`grid_thinning`'
   - '`precision_thinning`'

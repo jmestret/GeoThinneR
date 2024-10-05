@@ -29,7 +29,6 @@ This package includes a main function (`thin_points`) that wraps various methods
 - Distance-based methods:
   - Brute force distance thinning (`"brute_force"`)
   - K-D trees thinning (`"kd_tree"`)
-  - R-trees thinning (`"r_tree"`)
   - Rounding and hashing (`"round_hash"`)
 - Regular grid-based methods:
   - Grid sampling (`"grid"`)
@@ -184,30 +183,13 @@ nrow(thin_sim_data[[1]])
 
 ### K-D trees
 
-K-D trees are a well-known data structure for partitioning space during nearest neighbor searches, making them an efficient option for distance-based thinning. A K-D tree is a binary treeof *k* dimensions that partitions the space to discard data points that are further away. This method uses the **nabor** R package to implement K-D trees via the **libnabo** library. Since K-D trees are based on Euclidean distance, if `euclidean` is set to `FALSE` to work with longitude and latitude data, **GeoThinneR** will transform the coordinates into XYZ Cartesian coordinates. Additionally, by setting `space_partitioning` to `TRUE`, the space will be divided into grids before computing the K-D tree, which can be more memory-efficient for large datasets.
+K-D trees are a well-known data structure for partitioning space during nearest neighbor searches, making them an efficient option for distance-based thinning. A K-D tree is a binary tree of *k* dimensions that partitions the space to discard data points that are further away. This method uses the **nabor** R package to implement K-D trees via the **libnabo** library. Since K-D trees are based on Euclidean distance, if `euclidean` is set to `FALSE` to work with longitude and latitude data, **GeoThinneR** will transform the coordinates into XYZ Cartesian coordinates. Additionally, by setting `space_partitioning` to `TRUE`, the space will be divided into grids before computing the K-D tree, which can be more memory-efficient for large datasets.
 
 ```{r}
 system.time(
 thin_sim_data <- thin_points(
   data = sim_data,
   method = "kd_tree", 
-  thin_dist = 20,
-  trials = 50,
-  all_trials = FALSE,
-  seed = 123
-))
-nrow(thin_sim_data[[1]])
-```
-
-### R-trees
-
-R-trees are widely used for spatial searching, especially with geographic coordinates. While R-trees have a slightly higher construction cost compared to other methods, they speed up searches. This method uses the same parameters as the K-D tree method. In **GeoThinneR**, R-trees are implemented as a slightly modified version of the **rtree** R package, which is based on the **Boost** geometry library. In order to use R-tree you need to install the modified package from GitHub using `remotes::install_github("jmestret/rtree")`. This modification allows for computing both Euclidean distance (`euclidean = TRUE`) and Haversine distance (`euclidean = FALSE`) for geographic coordinates.
-
-```{r, eval = FALSE}
-system.time(
-thin_sim_data <- thin_points(
-  data = sim_data,
-  method = "r_tree", 
   thin_dist = 20,
   trials = 50,
   all_trials = FALSE,
@@ -418,8 +400,6 @@ The **GeoThinneR** package was inspired by the work of many others who have deve
 - Elseberg, J., Magnenat, S., Siegwart, R., & Nüchter, A. (2012). *Comparison of nearest-neighbor-search strategies and implementations for efficient shape registration*. Journal of Software Engineering for Robotics, 3(1), 2-12.
 
 - Hijmans, R.J., Phillips, S., Leathwick, J., & Elith, J. (2023). *dismo: Species Distribution Modeling*. R Package Version 1.3-14. https://cran.r-project.org/package=dismo
-
-- Johnson, K., & Hunziker, P. (2021). *rtree: R-Trees for point data in R*. R Package Version 0.2.0. https://github.com/akoyabio/rtree
 
 - Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023). *Including imprecisely georeferenced specimens improves accuracy of species distribution models and estimates of niche breadth*. Global Ecology and Biogeography, 32(3), 342-355.
 

@@ -3,7 +3,7 @@
 #include <R_ext/Rdynload.h>
 
 // Declare the C++ function
-extern SEXP rounding_hashing_thinning(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP rounding_hashing_thinning(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 // Register the routines
 static const R_CallMethodDef CallEntries[] = {
