@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Simple Spatial Thinning for Ecological and Spatial Analysis">
-<meta name="description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree Approximate Nearest Neighbors (ANN), R-Tree, and brute force thinning methods. It uses a modified version of the R-tree structure from the rtree package &lt;https://github.com/akoyabio/rtree&gt;. The modified version can be downloaded from &lt;https://github.com/jmestret/rtree&gt;. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
-<meta property="og:description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree Approximate Nearest Neighbors (ANN), R-Tree, and brute force thinning methods. It uses a modified version of the R-tree structure from the rtree package &lt;https://github.com/akoyabio/rtree&gt;. The modified version can be downloaded from &lt;https://github.com/jmestret/rtree&gt;. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
+<meta name="description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
+<meta property="og:description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
 <meta property="og:image" content="https://jmestret.github.io/GeoThinneR/logo.png">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-N3F029FJEK"></script><script>
   window.dataLayer = window.dataLayer || [];
@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">GeoThinneR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,9 +84,6 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmestret/GeoThinneR"</span><span class="op">)</span></span></code></pre></div>
-<p>Optionally, to use R-trees you need to install:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmestret/rtree"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="how-to-use-geothinner">How to Use GeoThinneR<a class="anchor" aria-label="anchor" href="#how-to-use-geothinner"></a>
@@ -96,7 +93,7 @@
 <h3 id="example-1-distance-based-thinning">Example 1: Distance-based thinning<a class="anchor" aria-label="anchor" href="#example-1-distance-based-thinning"></a>
 </h3>
 <p>In this example, we will use the brute force method to thin points based on a specified distance:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jmestret/GeoThinneR" class="external-link">GeoThinneR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulated data (longitude, latitude)</span></span>
@@ -122,7 +119,7 @@
 <h3 id="example-2-grid-based-thinning-with-a-raster-file">Example 2: Grid-based thinning with a raster file<a class="anchor" aria-label="anchor" href="#example-2-grid-based-thinning-with-a-raster-file"></a>
 </h3>
 <p>In this example, we will use a grid sampling method with a raster file to thin the data:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jmestret/GeoThinneR" class="external-link">GeoThinneR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
 <span></span>
@@ -145,14 +142,14 @@
 <span><span class="co"># View the number of kept points</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_grid</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 149</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.11.2, GDAL 3.8.2, PROJ 9.3.1; sf_use_s2() is TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.11.2, GDAL 3.8.2, PROJ 9.3.1; sf_use_s2() is TRUE</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="75%"></p>
 </div>
 <div class="section level3">
 <h3 id="example-3-precision-based-thinning-with-grouping-variable">Example 3: Precision-based thinning with grouping variable<a class="anchor" aria-label="anchor" href="#example-3-precision-based-thinning-with-grouping-variable"></a>
 </h3>
 <p>In this example, we will perform precision-based thinning while considering a grouping variable:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jmestret/GeoThinneR" class="external-link">GeoThinneR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Simulated data with a grouping variable</span></span>
@@ -189,7 +186,7 @@
 <h2 id="how-to-cite-geothinner">How to cite GeoThinneR<a class="anchor" aria-label="anchor" href="#how-to-cite-geothinner"></a>
 </h2>
 <p>The GeoThinneR paper is currently in progress. Meanwhile, you can reference the GitHub repository as follows:</p>
-<p>Mestre-Tomás, J. (2024). GeoThinneR: An R package for simple spatial thinning methods in ecological and spatial analysis. R package version 1.0.0, <a href="https://github.com/jmestret/GeoThinneR" class="external-link uri">https://github.com/jmestret/GeoThinneR</a></p>
+<p>Mestre-Tomás, J. (2024). GeoThinneR: An R package for simple spatial thinning methods in ecological and spatial analysis. R package version 1.1.0, <a href="https://github.com/jmestret/GeoThinneR" class="external-link uri">https://github.com/jmestret/GeoThinneR</a></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -242,7 +239,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
