@@ -20,18 +20,28 @@ reference:
   contents: '`thin_points`'
 - title: Methods functions
   contents:
-  - '`brute_force_thinning`'
-  - '`kd_tree_thinning`'
-  - '`rounding_hashing_thinning`'
+  - '`distance_thinning`'
   - '`grid_thinning`'
   - '`precision_thinning`'
+- title: Distance-based methods
+  contents:
+  - '`compute_neighbors_brute`'
+  - '`compute_neighbors_kdtree`'
+  - '`compute_neighbors_local_kdtree`'
+  - '`estimate_k_max`'
+  - '`select_target_points`'
 - title: Helper functions
   contents:
   - '`max_thinning_algorithm`'
-  - '`long_lat_to_cartesian`'
-  - '`assign_coords_to_grid`'
+  - '`lon_lat_to_cartesian`'
+  - '`calculate_spatial_coverage`'
+  - '`compute_nearest_neighbor_distances`'
+- title: Class
+  contents: '`as_GeoThinned`'
 - title: Datasets
-  contents: '`caretta`'
+  contents:
+  - '`caretta`'
+  - '`thunnus`'
 navbar:
   type: inverse
 

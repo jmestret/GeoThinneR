@@ -32,10 +32,6 @@ test_that("precision_thinning handles identical coordinates", {
   expect_equal(sum(result[[1]]), 1)
 })
 
-test_that("precision_thinning validates input parameters", {
-  expect_error(precision_thinning(coordinates, precision = -1), "`precision` must be a non-negative integer.")
-})
-
 test_that("precision_thinning provides consistent results with fixed seed", {
   set.seed(42)
   result1 <- precision_thinning(coordinates, trials = 1, all_trials = FALSE)
@@ -54,7 +50,7 @@ test_that("precision_thinning handles a single coordinate", {
   expect_true(result[[1]])
 })
 
-test_that("precision_thinning with wrongly formated priority", {
+test_that("precision_thinning validates input parameters", {
+  expect_error(precision_thinning(coordinates, precision = -1), "`precision` must be a non-negative integer.")
   expect_error(precision_thinning(coordinates, precision = 2, priority = 1), "'priority' must be a numeric vector with same length as number of points.")
 })
-

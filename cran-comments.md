@@ -1,9 +1,15 @@
-## Resubmission
+## Release summary
 
-This is a resubmission to address the feedback from the previous CRAN submission.
+This is the CRAN submission of GeoThinneR v2.0.0.
 
-* The non-CRAN package `rtree` has been removed from `Suggests`.
-* Associated functionalities depending on `rtree` have been removed or adjusted accordingly.
+This release is backward-incompatible with earlier versions of GeoThinneR.
+
+Key changes:
+- Introduction of the new `GeoThinned` S3 class for storing and managing thinning results.
+- Revised `thin_points()`, with new argument structure and multiple thinning methods.
+- Support for advanced neighbor search strategies (e.g., local kd-tree, k-max estimation).
+- Improved performance and parallel processing options.
+- Additional functionality and helper tools for post-analysis.
 
 ## Test environments
 
@@ -14,28 +20,6 @@ The package was tested on the following environments:
 
 ## R CMD check results
 
-The package passed `R CMD check` on all tested platforms with the following results.
-There was one NOTE:
+The package passed `R CMD check` on all tested platforms.
 
-```
-New submission
-
-Package was archived on CRAN
-
-Possibly misspelled words in DESCRIPTION:
-  Elseberg (12:46)
-  al (12:58)
-  et (12:55)
-  geospatial (8:33)
-```
-
-* This is a new submission after the package was archived.
-* The flagged words in the DESCRIPTION are proper nouns or standard terminology.
-
-```
-CRAN repository db overrides:
-  X-CRAN-Comment: Archived on 2024-09-18 as issues were not corrected
-    in time.
-```
-
-* All previously noted issues have now been corrected, and the package is ready for resubmission.
+0 errors | 0 warnings | 0 notes

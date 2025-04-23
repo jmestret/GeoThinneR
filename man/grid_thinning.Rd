@@ -10,6 +10,7 @@ grid_thinning(
   resolution = NULL,
   origin = NULL,
   raster_obj = NULL,
+  n = 1,
   trials = 10,
   all_trials = FALSE,
   crs = "epsg:4326",
@@ -23,41 +24,43 @@ grid_thinning(
 
 \item{resolution}{A numeric value representing the resolution (in degrees) of the raster grid. If provided, this takes priority over `thin_dist`.}
 
-\item{origin}{A numeric vector of length 2 (for example, `c(0, 0)`), specifying the origin of the raster grid (optional).}
+\item{origin}{A numeric vector of length 2 (e.g., `c(0, 0)`), specifying the origin of the raster grid (optional).}
 
-\item{raster_obj}{An optional `terra` SpatRaster object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.}
+\item{raster_obj}{An optional `terra::SpatRaster` object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.}
+
+\item{n}{A positive integer specifying the maximum number of points to retain per grid cell (default: 1).}
 
 \item{trials}{An integer specifying the number of trials to perform for thinning (default: 10).}
 
 \item{all_trials}{A logical value indicating whether to return results for all trials (`TRUE`) or just the first trial (`FALSE`, default).}
 
-\item{crs}{An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.}
+\item{crs}{An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, `epsg:4326`). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.}
 
-\item{priority}{A of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, the points are preferred according to these values.}
+\item{priority}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
 }
 \value{
 A list of logical vectors indicating which points to keep for each trial.
 }
 \description{
-This function performs thinning of spatial points by assigning them to grid cells based on a specified resolution or thinning distance. It can either create a new raster grid or use an existing raster object.
+This function performs thinning of spatial points by assigning them to grid cells based on a specified resolution or thinning distance. It can either create a new raster grid or use an existing `terra::SpatRaster` object.
 }
 \examples{
 # Example: Grid thinning using thin_dist
-coordinates <- matrix(c(-122.4194, 37.7749,
+coords <- matrix(c(-122.4194, 37.7749,
                         -122.4195, 37.7740,
                         -122.4196, 37.7741), ncol = 2, byrow = TRUE)
 
-result <- grid_thinning(coordinates, thin_dist = 10, trials = 5, all_trials = TRUE)
+result <- grid_thinning(coords, thin_dist = 10, trials = 5, all_trials = TRUE)
 print(result)
 
 # Example: Grid thinning using a custom resolution
-result_res <- grid_thinning(coordinates, resolution = 0.01, trials = 5)
+result_res <- grid_thinning(coords, resolution = 0.01, n = 2, trials = 5)
 print(result_res)
 
 # Example: Using a custom raster object
 library(terra)
 rast_obj <- terra::rast(nrows = 100, ncols = 100, xmin = -123, xmax = -121, ymin = 36, ymax = 38)
-result_raster <- grid_thinning(coordinates, raster_obj = rast_obj, trials = 5)
+result_raster <- grid_thinning(coords, raster_obj = rast_obj, trials = 5)
 print(result_raster)
 
 }

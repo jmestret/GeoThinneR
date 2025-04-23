@@ -1,6 +1,6 @@
 Type: Package
 Package: GeoThinneR
-Title: Simple Spatial Thinning for Ecological and Spatial Analysis
+Title: Efficient Spatial Thinning of Species Occurrences
 Version: 1.1.0
 Authors@R: 
     person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
@@ -19,21 +19,22 @@ Depends:
     R (>= 4.0.0)
 Imports:
     data.table,
+    doParallel,
     fields,
+    foreach,
+    graphics,
+    grDevices,
     matrixStats,
     nabor,
-    Rcpp,
+    sf,
     stats,
     terra
 Suggests:
     ggplot2,
     knitr,
     rmarkdown,
-    sf,
     testthat (>= 3.0.0),
     tibble
-LinkingTo: 
-    Rcpp
 VignetteBuilder: 
     knitr
 BuildVignettes: true

@@ -1,38 +1,41 @@
 #' Perform Grid-Based Thinning of Spatial Points
 #'
-#' This function performs thinning of spatial points by assigning them to grid cells based on a specified resolution or thinning distance. It can either create a new raster grid or use an existing raster object.
+#' This function performs thinning of spatial points by assigning them to grid cells based on a specified resolution or thinning distance. It can either create a new raster grid or use an existing `terra::SpatRaster` object.
 #'
 #' @param coordinates A numeric matrix or data frame with two columns representing the x (longitude) and y (latitude) coordinates of the points.
 #' @param thin_dist A numeric value representing the thinning distance in kilometers. It will be converted to degrees if `resolution` is not provided.
 #' @param resolution A numeric value representing the resolution (in degrees) of the raster grid. If provided, this takes priority over `thin_dist`.
-#' @param origin A numeric vector of length 2 (for example, `c(0, 0)`), specifying the origin of the raster grid (optional).
-#' @param raster_obj An optional `terra` SpatRaster object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.
+#' @param origin A numeric vector of length 2 (e.g., `c(0, 0)`), specifying the origin of the raster grid (optional).
+#' @param raster_obj An optional `terra::SpatRaster` object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.
+#' @param n A positive integer specifying the maximum number of points to retain per grid cell (default: 1).
 #' @param trials An integer specifying the number of trials to perform for thinning (default: 10).
 #' @param all_trials A logical value indicating whether to return results for all trials (`TRUE`) or just the first trial (`FALSE`, default).
-#' @param crs An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.
-#' @param priority A of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, the points are preferred according to these values.
+#' @param crs An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, `epsg:4326`). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.
+#' @param priority A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.
 #' @return A list of logical vectors indicating which points to keep for each trial.
 #' @examples
 #' # Example: Grid thinning using thin_dist
-#' coordinates <- matrix(c(-122.4194, 37.7749,
+#' coords <- matrix(c(-122.4194, 37.7749,
 #'                         -122.4195, 37.7740,
 #'                         -122.4196, 37.7741), ncol = 2, byrow = TRUE)
 #'
-#' result <- grid_thinning(coordinates, thin_dist = 10, trials = 5, all_trials = TRUE)
+#' result <- grid_thinning(coords, thin_dist = 10, trials = 5, all_trials = TRUE)
 #' print(result)
 #'
 #' # Example: Grid thinning using a custom resolution
-#' result_res <- grid_thinning(coordinates, resolution = 0.01, trials = 5)
+#' result_res <- grid_thinning(coords, resolution = 0.01, n = 2, trials = 5)
 #' print(result_res)
 #'
 #' # Example: Using a custom raster object
 #' library(terra)
 #' rast_obj <- terra::rast(nrows = 100, ncols = 100, xmin = -123, xmax = -121, ymin = 36, ymax = 38)
-#' result_raster <- grid_thinning(coordinates, raster_obj = rast_obj, trials = 5)
+#' result_raster <- grid_thinning(coords, raster_obj = rast_obj, trials = 5)
 #' print(result_raster)
 #'
+#' @importFrom data.table := .N
+#'
 #' @export
-grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, origin = NULL, raster_obj = NULL, trials = 10, all_trials = FALSE, crs = "epsg:4326", priority = NULL) {
+grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, origin = NULL, raster_obj = NULL, n = 1,  trials = 10, all_trials = FALSE, crs = "epsg:4326", priority = NULL) {
 
   # Validate input
   if (is.null(thin_dist) && is.null(resolution) && is.null(raster_obj)) {
@@ -40,9 +43,13 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
   }
 
   if (!is.null(priority)){
-    if (!is.numeric(priority) | length(priority) != nrow(coordinates)){
+    if (!is.numeric(priority) || length(priority) != nrow(coordinates)){
       stop("'priority' must be a numeric vector with same length as number of points.")
     }
+  }
+
+  if (!is.numeric(n) || length(n) != 1 || n <= 0) {
+    stop("`n` must be a positive integer specifying the maximum number of points per grid cell.")
   }
 
   # Calculate resolution if thin_dist is provided and resolution is NULL
@@ -69,13 +76,13 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
 
   # Assign points to raster cells
   grid_cell <- terra::cellFromXY(r_grid, coordinates)
-  unique_grid_cell <- unique(stats::na.omit(grid_cell))
+  #unique_grid_cell <- unique(stats::na.omit(grid_cell))
 
   # Initialize results list for trials
   keep_points <- vector("list", ifelse(all_trials, trials, 1))
 
   # Main thinning loop for the specified number of trials
-  for (i in seq_len(length(keep_points))) {
+  for (i in seq_along(keep_points)) {
     if (is.null(priority)){
       sort_order <- stats::runif(nrow(coordinates))
     } else {
@@ -86,9 +93,12 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
       rand_order = sort_order,
       grid_cell = grid_cell
     )
-
     keep_points_trial <- keep_points_trial[order(keep_points_trial[["rand_order"]], decreasing = TRUE), ]
-    keep_points_trial[, "keep"] <- !duplicated(keep_points_trial[["grid_cell"]])
+
+    # Rank points within each grid cell and retain up to n points
+    keep_points_trial[, "rank_within_cell" := seq_len(.N), by = "grid_cell"]
+    keep_points_trial[, "keep"] <- keep_points_trial[, "rank_within_cell"] <= n
+    #keep_points_trial[, "keep"] <- !duplicated(keep_points_trial[["grid_cell"]])
 
     # If not saving all trials, keep only the first trial result
     keep_points[[i]] <- keep_points_trial[order(keep_points_trial[["id"]]),][["keep"]]

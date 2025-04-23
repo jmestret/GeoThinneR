@@ -2,82 +2,136 @@
 #'
 #' This function performs spatial thinning of geographic points to reduce
 #' point density while maintaining spatial representation. Points are thinned
-#' based on a specified distance, grid, or precision, and multiple trials can be
-#' performed to identify the best thinned dataset.
+#' based on a specified distance, grid, or decimal precision, with support for
+#' multiple trials and optional grouping.
 #'
-#' @param data A data frame or tibble containing the points to thin. Must contain longitude and latitude columns.
-#' @param long_col Name of the column with longitude coordinates (default: "decimalLongitude").
-#' @param lat_col Name of the column with latitude coordinates (default: "decimalLatitude").
-#' @param group_col Name of the column for grouping points (e.g., species name, year). If NULL, no grouping is applied.
-#' @param method Thinning method to use `c("brute_force", "kd_tree", "round_hash", "grid", "precision")`.
-#' @param trials Number of thinning iterations to perform (default: 10).
-#' @param all_trials If TRUE, returns results of all attempts; if FALSE, returns the best attempt with the most points retained (default: FALSE).
-#' @param target_points Optional; a numeric value specifying the exact number of points to keep. If NULL (default), maximizes the number of kept points.
+#' @param data A data frame or tibble containing the input points to thin. Must contain longitude and latitude columns.
+#' @param lon_col Character name of the column with longitude coordinates (default: `"lon"`).
+#' @param lat_col Character name of the column with latitude coordinates (default: `"lat"`).
+#' @param group_col Character name of the column for grouping points (e.g., species name, year). If `NULL`, no grouping is applied.
+#' @param method Thinning method to use. One of `"distance", "grid", "precision"`.
+#' @param trials Number of thinning iterations to perform (default: `10`). Must be a positive integer.
+#' @param all_trials If `TRUE`, returns results of all attempts; if `FALSE`, returns the best attempt with the most points retained (default: `FALSE`).
 #' @param seed Optional; an integer seed for reproducibility of results.
-#' @param verbose If TRUE, prints progress messages (default: FALSE).
-#' @param ... Additional parameters passed to specific thinning methods (e.g., thin_dist, precision, resolution, origin, R).
+#' @param verbose If `TRUE`, prints progress messages (default: `FALSE`).
+#' @param ... Additional arguments passed to specific thinning methods. See Details.
 #'
-#' @return A tibble of thinned points, or a combined result of all attempts if `all_trials` is TRUE.
+#' @return A `GeoThinned` object (S3 class), which contains:
+#' \itemize{
+#'   \item `retained`: A list of logical vectors (one per trial) indicating retained points.
+#'   \item `original_data`: The original input dataset.
+#'   \item `method`: The thinning method used.
+#'   \item `params`: A list of the thinning parameters used.
+#' }
 #'
 #' @details
-#' The thinning methods available are:
-#' - `brute_force`: Uses a brute force approach to thin points.
-#' - `kd_tree`: Uses K-D trees for thinning.
-#' - `round_hash`: Uses rounding and hashing for efficient thinning.
-#' - `grid`: Applies a grid-based thinning method.
-#' - `precision`: Utilizes precision-based thinning.
+#' The following thinning methods are available:
+#'
+#' \describe{
+#'  \item{`"distance"`}{Forces a specific minimum distance between points.}
+#'  \item{`"grid"`}{Applies a grid-based thinning method.}
+#'  \item{`"precision"`}{Utilizes precision-based thinning.}
+#' }
+#'
+#' \strong{Distance-based thinning}
+#'
+#' The specific parameters for distance-based thinning are:
+#'
+#' \describe{
+#'  \item{`thin_dist`}{A positive numeric value representing the thinning distance in kilometers.}
+#'  \item{`search_type`}{A character string indicating the neighbor search method 'c("local_kd_tree", "k_estimation", "kd_tree", "brute")'. The defult value is 'local_kd_tree'.}
+#'  \item{`distance`}{Distance metric to use 'c("haversine", "euclidean")'. Default is Haversine for geographic coordinates.}
+#'  \item{`R`}{The radius of the Earth in kilometers. Default is 6371 km.}
+#'  \item{`target_points`}{Optional integer specifying the number of points to retain. If 'NULL' (default), the function tries to maximize the number of points retained.}
+#'  \item{`n_cores`}{Number of cores for parallel processing (only for '"local_kd_tree"'). Default is 1.}
+#' }
+#'
+#' \strong{Grid-based thinning}
+#'
+#' The specific parameters for grid-based thinning are:
+#'
+#' \describe{
+#'  \item{`thin_dist`}{A positive numeric value representing the thinning distance in kilometers.}
+#'  \item{`resolution`}{A numeric value representing the resolution (in degrees) of the raster grid. If provided, this takes priority over 'thin_dist'.}
+#'  \item{`origin`}{A numeric vector of length 2 (e.g., 'c(0, 0)'), specifying the origin of the raster grid (optional).}
+#'  \item{`raster_obj`}{An optional 'terra::SpatRaster' object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.}
+#'  \item{`n`}{A positive integer specifying the maximum number of points to retain per grid cell (default: 1).}
+#'  \item{`crs`}{An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, 'epsg:4326'). This can be an EPSG code, a PROJ.4 string, or a 'terra::crs' object.}
+#'  \item{`priority`}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+#' }
+#'
+#' \strong{Precision-based thinning}
+#'
+#' The specific parameters for precision-based thinning are:
+#'
+#' \describe{
+#'  \item{`precision`}{A positive integer specifying the number of decimal places to which coordinates should be rounded. Default is 4.}
+#'  \item{`priority`}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+#' }
 #'
 #' For more information on specific thinning methods and inputs, refer to their respective documentation:
-#' - `brute_force_thinning()`
-#' - `grid_thinning()`
-#' - `kd_tree_thinning()`
-#' - `rounding_hashing_thinning()`
-#' - `precision_thinning()`
+#'
+#' \itemize{
+#'  \item `distance_thinning()`
+#'  \item `grid_thinning()`
+#'  \item `precision_thinning()`
+#' }
 #'
 #' @examples
-#' # Generate sample data
+#' # Basic usage
 #' set.seed(123)
 #' sample_data <- data.frame(
-#'   decimalLongitude = runif(100, -180, 180),
-#'   decimalLatitude = runif(100, -90, 90)
+#'   lon = runif(100, -10, 10),
+#'   lat = runif(100, -5, 5)
 #' )
 #'
-#' # Perform thinning using K-D tree method
-#' thinned_data <- thin_points(sample_data,
-#'                              long_col = "decimalLongitude",
-#'                              lat_col = "decimalLatitude",
-#'                              method = "kd_tree",
-#'                              trials = 5,
-#'                              verbose = TRUE)
+#' result <- thin_points(sample_data, method = "distance", thin_dist = 100)
 #'
-#' # Perform thinning with grouping
-#' sample_data$species <- sample(c("species_A", "species_B"), 100, replace = TRUE)
-#' thinned_grouped_data <- thin_points(sample_data,
-#'                                      long_col = "decimalLongitude",
-#'                                      lat_col = "decimalLatitude",
-#'                                      group_col = "species",
-#'                                      method = "kd_tree",
-#'                                      trials = 10)
+#' # Grouped thinning
+#' sample_data$species <- sample(c("A", "B"), 100, replace = TRUE)
+#' grouped_result <- thin_points(sample_data, group_col = "species",
+#'                               method = "distance", thin_dist = 100)
 #'
 #' @export
-thin_points <- function(data, long_col = NULL, lat_col = NULL, group_col = NULL,
-                        method = c("brute_force", "kd_tree", "round_hash", "grid", "precision"),
+thin_points <- function(data, lon_col = "lon", lat_col = "lat", group_col = NULL,
+                        method = c("distance", "grid", "precision"),
                         trials = 10, all_trials = FALSE,
-                        target_points = NULL, seed = NULL, verbose = FALSE, ...) {
+                        seed = NULL, verbose = FALSE, ...) {
 
   # Match the method argument
   method <- match.arg(method)
 
+  # Validate inputs
   if (!is.numeric(trials) || length(trials) != 1 || trials <= 0) {
     stop("`trials` must be a positive integer.")
   }
-
   if (!is.logical(all_trials) || length(all_trials) != 1) {
     stop("`all_trials` must be a logical value.")
   }
 
   # Set seed for reproducibility
-  set.seed(seed)
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+
+  # Check input data and columns
+  # Identify longitude and latitude columns
+  if (is.null(lon_col) || is.null(lat_col)) {
+    # Check if columns 1 and 2 are numeric
+    if (!is.numeric(data[, 1]) || !is.numeric(data[, 2])) {
+      stop("Error: The first two columns must be numeric. Please specify lon_col and lat_col arguments.")
+    }
+    # Rename the columns
+    lon_col <- "lon"
+    lat_col <- "lat"
+    colnames(data)[1:2] <- c(lon_col, lat_col)
+  }
+  if (!lon_col %in% colnames(data) || !lat_col %in% colnames(data)) {
+    stop("Specified longitude or latitude columns do not exist in the data.")
+  }
+  if (!is.null(group_col) && !(group_col %in% colnames(data))) {
+    stop("Specified grouping column does not exist in the data.")
+  }
 
   # Start time tracking
   start_time <- Sys.time()
@@ -90,92 +144,71 @@ thin_points <- function(data, long_col = NULL, lat_col = NULL, group_col = NULL,
     data <- as.data.frame(data)
   }
 
-  # Identify longitude and latitude columns
-  if (is.null(long_col) || is.null(lat_col)) {
-    # Check if columns 1 and 2 are numeric
-    if (!is.numeric(data[, 1]) || !is.numeric(data[, 2])) {
-      stop("Error: The first two columns must be numeric. Please specify long_col and lat_col arguments.")
-    }
-    # Rename the columns
-    long_col <- "long"
-    lat_col <- "lat"
-    colnames(data)[1:2] <- c(long_col, lat_col)
-  }
-
-  # Validate column names
-  if (!long_col %in% names(data) || !lat_col %in% names(data)) {
-    stop("Specified longitude or latitude columns do not exist in the data.")
-  }
-  if (!is.null(group_col) && !(group_col %in% names(data))) {
-    stop("Specified grouping column does not exist in the data.")
-  }
-
-  # Prepare output trials based on all_trials
+  # Initialize results container
   exported_trials <- ifelse(all_trials, trials, 1)
-  thinned_data <- vector("list", exported_trials)
 
   # Function to perform thinning
   perform_thinning <- function(data_subset) {
-    coordinates <- as.matrix(data_subset[, c(long_col, lat_col), drop = FALSE])
-    if (verbose) cat("Starting thinning process using method:", method, "\n")
+    coordinates <- as.matrix(data_subset[, c(lon_col, lat_col), drop = FALSE])
+    if (verbose) cat("Thinning using method:", method, "\n")
 
-    # Thinning based on the selected method
-    keeped_points <- switch(
+    # Call the appropriate thinning method
+    kept_points <- switch(
       method,
-      "brute_force"    = brute_force_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
-      "kd_tree"        = kd_tree_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
-      "round_hash"     = rounding_hashing_thinning(coordinates,  trials = trials, all_trials = all_trials, seed = seed, ...),
+      "distance"  = distance_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
       "grid"      = grid_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
       "precision" = precision_thinning(coordinates, trials = trials, all_trials = all_trials, ...),
-      stop("Invalid method specified. Please choose a valid thinning method.")
+      stop("Invalid thinning method specified.")
     )
 
     if (verbose) cat("Thinning process completed.\n")
-    return(keeped_points)
+    return(kept_points)
   }
 
   # Thinning process
   # If group_col is provided, split the data by group
   if (!is.null(group_col)) {
     unique_groups <- unique(data[[group_col]])
+
+    # Preallocate a list of logical vectors for each trial
+    kept_points <- vector("list", exported_trials)
+    for (i in seq_len(exported_trials)) {
+      kept_points[[i]] <- rep(FALSE, nrow(data))
+    }
+
     for (group in unique_groups) {
       if (verbose) cat("Processing group:", group, "\n")
-      group_data <- data[data[[group_col]] == group, ]
+      group_indices <- which(data[[group_col]] == group)
+      group_data <- data[group_indices, , drop = FALSE]
 
-      # Thinning based on target_points or not
-      keeped_points <- if (is.null(target_points)) {
-        perform_thinning(group_data)
-      } else {
-        message("For specific target points, brute force method is used.")
-        brute_force_thinning(as.matrix(group_data[, c(long_col, lat_col), drop = FALSE]), trials = trials, all_trials = all_trials, target_points = target_points, ...)
-      }
+      group_kept <- perform_thinning(group_data)
 
       for (i in seq_len(exported_trials)) {
-        thinned_data[[i]] <- rbind(thinned_data[[i]], group_data[keeped_points[[i]], , drop = FALSE])
+        kept_points[[i]][group_indices] <- group_kept[[i]]
       }
     }
   } else {
-    keeped_points <- if (is.null(target_points)) {
-      perform_thinning(data)
-    } else {
-      message("For specific target points, brute force method is used.")
-      brute_force_thinning(as.matrix(data[, c(long_col, lat_col), drop = FALSE]), trials = trials, all_trials = all_trials, target_points = target_points, ...)
-    }
-    for (i in seq_len(exported_trials)) {
-      thinned_data[[i]] <- data[keeped_points[[i]], , drop = FALSE]
-    }
+    kept_points <- perform_thinning(data)
   }
 
   # End time tracking and calculate duration
   execution_time <- Sys.time() - start_time
   if (verbose) cat("Total execution time:", round(execution_time, 2), "seconds\n")
 
-  # Convert thinned data back to tibble if the original data was a tibble
-  if (is_tbl) {
-    thinned_data <- lapply(thinned_data, tibble::as_tibble)
-  } else if (is_mat){
-    thinned_data <- lapply(thinned_data, as.matrix)
-  }
+  all_params <- list(...)
+  all_params$lon_col <- lon_col
+  all_params$lat_col <- lat_col
+  all_params$group_col <- group_col
+  all_params$trials <- trials
+  all_params$all_trials <- all_trials
+  all_params$seed <- seed
 
-  return(thinned_data)
+  result <- as_GeoThinned(
+    retained = kept_points[seq_len(exported_trials)],
+    method = method,
+    params = all_params,
+    original_data = data
+  )
+
+  return(result)
 }

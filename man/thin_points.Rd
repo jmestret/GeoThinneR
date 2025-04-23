@@ -6,88 +6,119 @@
 \usage{
 thin_points(
   data,
-  long_col = NULL,
-  lat_col = NULL,
+  lon_col = "lon",
+  lat_col = "lat",
   group_col = NULL,
-  method = c("brute_force", "kd_tree", "round_hash", "grid", "precision"),
+  method = c("distance", "grid", "precision"),
   trials = 10,
   all_trials = FALSE,
-  target_points = NULL,
   seed = NULL,
   verbose = FALSE,
   ...
 )
 }
 \arguments{
-\item{data}{A data frame or tibble containing the points to thin. Must contain longitude and latitude columns.}
+\item{data}{A data frame or tibble containing the input points to thin. Must contain longitude and latitude columns.}
 
-\item{long_col}{Name of the column with longitude coordinates (default: "decimalLongitude").}
+\item{lon_col}{Character name of the column with longitude coordinates (default: `"lon"`).}
 
-\item{lat_col}{Name of the column with latitude coordinates (default: "decimalLatitude").}
+\item{lat_col}{Character name of the column with latitude coordinates (default: `"lat"`).}
 
-\item{group_col}{Name of the column for grouping points (e.g., species name, year). If NULL, no grouping is applied.}
+\item{group_col}{Character name of the column for grouping points (e.g., species name, year). If `NULL`, no grouping is applied.}
 
-\item{method}{Thinning method to use `c("brute_force", "kd_tree", "round_hash", "grid", "precision")`.}
+\item{method}{Thinning method to use. One of `"distance", "grid", "precision"`.}
 
-\item{trials}{Number of thinning iterations to perform (default: 10).}
+\item{trials}{Number of thinning iterations to perform (default: `10`). Must be a positive integer.}
 
-\item{all_trials}{If TRUE, returns results of all attempts; if FALSE, returns the best attempt with the most points retained (default: FALSE).}
-
-\item{target_points}{Optional; a numeric value specifying the exact number of points to keep. If NULL (default), maximizes the number of kept points.}
+\item{all_trials}{If `TRUE`, returns results of all attempts; if `FALSE`, returns the best attempt with the most points retained (default: `FALSE`).}
 
 \item{seed}{Optional; an integer seed for reproducibility of results.}
 
-\item{verbose}{If TRUE, prints progress messages (default: FALSE).}
+\item{verbose}{If `TRUE`, prints progress messages (default: `FALSE`).}
 
-\item{...}{Additional parameters passed to specific thinning methods (e.g., thin_dist, precision, resolution, origin, R).}
+\item{...}{Additional arguments passed to specific thinning methods. See Details.}
 }
 \value{
-A tibble of thinned points, or a combined result of all attempts if `all_trials` is TRUE.
+A `GeoThinned` object (S3 class), which contains:
+\itemize{
+  \item `retained`: A list of logical vectors (one per trial) indicating retained points.
+  \item `original_data`: The original input dataset.
+  \item `method`: The thinning method used.
+  \item `params`: A list of the thinning parameters used.
+}
 }
 \description{
 This function performs spatial thinning of geographic points to reduce
 point density while maintaining spatial representation. Points are thinned
-based on a specified distance, grid, or precision, and multiple trials can be
-performed to identify the best thinned dataset.
+based on a specified distance, grid, or decimal precision, with support for
+multiple trials and optional grouping.
 }
 \details{
-The thinning methods available are:
-- `brute_force`: Uses a brute force approach to thin points.
-- `kd_tree`: Uses K-D trees for thinning.
-- `round_hash`: Uses rounding and hashing for efficient thinning.
-- `grid`: Applies a grid-based thinning method.
-- `precision`: Utilizes precision-based thinning.
+The following thinning methods are available:
+
+\describe{
+ \item{`"distance"`}{Forces a specific minimum distance between points.}
+ \item{`"grid"`}{Applies a grid-based thinning method.}
+ \item{`"precision"`}{Utilizes precision-based thinning.}
+}
+
+\strong{Distance-based thinning}
+
+The specific parameters for distance-based thinning are:
+
+\describe{
+ \item{`thin_dist`}{A positive numeric value representing the thinning distance in kilometers.}
+ \item{`search_type`}{A character string indicating the neighbor search method 'c("local_kd_tree", "k_estimation", "kd_tree", "brute")'. The defult value is 'local_kd_tree'.}
+ \item{`distance`}{Distance metric to use 'c("haversine", "euclidean")'. Default is Haversine for geographic coordinates.}
+ \item{`R`}{The radius of the Earth in kilometers. Default is 6371 km.}
+ \item{`target_points`}{Optional integer specifying the number of points to retain. If 'NULL' (default), the function tries to maximize the number of points retained.}
+ \item{`n_cores`}{Number of cores for parallel processing (only for '"local_kd_tree"'). Default is 1.}
+}
+
+\strong{Grid-based thinning}
+
+The specific parameters for grid-based thinning are:
+
+\describe{
+ \item{`thin_dist`}{A positive numeric value representing the thinning distance in kilometers.}
+ \item{`resolution`}{A numeric value representing the resolution (in degrees) of the raster grid. If provided, this takes priority over 'thin_dist'.}
+ \item{`origin`}{A numeric vector of length 2 (e.g., 'c(0, 0)'), specifying the origin of the raster grid (optional).}
+ \item{`raster_obj`}{An optional 'terra::SpatRaster' object to use for grid thinning. If provided, the raster object will be used instead of creating a new one.}
+ \item{`n`}{A positive integer specifying the maximum number of points to retain per grid cell (default: 1).}
+ \item{`crs`}{An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, 'epsg:4326'). This can be an EPSG code, a PROJ.4 string, or a 'terra::crs' object.}
+ \item{`priority`}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+}
+
+\strong{Precision-based thinning}
+
+The specific parameters for precision-based thinning are:
+
+\describe{
+ \item{`precision`}{A positive integer specifying the number of decimal places to which coordinates should be rounded. Default is 4.}
+ \item{`priority`}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+}
 
 For more information on specific thinning methods and inputs, refer to their respective documentation:
-- `brute_force_thinning()`
-- `grid_thinning()`
-- `kd_tree_thinning()`
-- `rounding_hashing_thinning()`
-- `precision_thinning()`
+
+\itemize{
+ \item `distance_thinning()`
+ \item `grid_thinning()`
+ \item `precision_thinning()`
+}
 }
 \examples{
-# Generate sample data
+# Basic usage
 set.seed(123)
 sample_data <- data.frame(
-  decimalLongitude = runif(100, -180, 180),
-  decimalLatitude = runif(100, -90, 90)
+  lon = runif(100, -10, 10),
+  lat = runif(100, -5, 5)
 )
 
-# Perform thinning using K-D tree method
-thinned_data <- thin_points(sample_data,
-                             long_col = "decimalLongitude",
-                             lat_col = "decimalLatitude",
-                             method = "kd_tree",
-                             trials = 5,
-                             verbose = TRUE)
+result <- thin_points(sample_data, method = "distance", thin_dist = 100)
 
-# Perform thinning with grouping
-sample_data$species <- sample(c("species_A", "species_B"), 100, replace = TRUE)
-thinned_grouped_data <- thin_points(sample_data,
-                                     long_col = "decimalLongitude",
-                                     lat_col = "decimalLatitude",
-                                     group_col = "species",
-                                     method = "kd_tree",
-                                     trials = 10)
+# Grouped thinning
+sample_data$species <- sample(c("A", "B"), 100, replace = TRUE)
+grouped_result <- thin_points(sample_data, group_col = "species",
+                              method = "distance", thin_dist = 100)
 
 }

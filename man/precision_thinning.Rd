@@ -15,13 +15,13 @@ precision_thinning(
 \arguments{
 \item{coordinates}{A numeric matrix or data frame with two columns representing the longitude and latitude of points.}
 
-\item{precision}{An integer specifying the number of decimal places to which coordinates should be rounded. Default is 4.}
+\item{precision}{A positive integer specifying the number of decimal places to which coordinates should be rounded. Default is 4.}
 
-\item{trials}{An integer specifying the number of thinning trials to perform. Default is 10.}
+\item{trials}{A positive integer specifying the number of thinning trials to perform. Default is 10.}
 
 \item{all_trials}{A logical value indicating whether to return results for all trials (`TRUE`) or just the first/best trial (`FALSE`). Default is `FALSE`.}
 
-\item{priority}{A of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, the points are preferred accoridng to these values.}
+\item{priority}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
 }
 \value{
 If `all_trials` is `FALSE`, returns a logical vector indicating which points were kept in the first trial.
@@ -37,12 +37,12 @@ but setting `all_trials = TRUE` will return the results of all trials.
 }
 \examples{
 # Example usage
-coordinates <- matrix(c(-123.3656, 48.4284, -123.3657, 48.4285, -123.3658, 48.4286), ncol = 2)
-result <- precision_thinning(coordinates, precision = 3, trials = 5, all_trials = TRUE)
+coords <- matrix(c(-123.3656, 48.4284, -123.3657, 48.4285, -123.3658, 48.4286), ncol = 2)
+result <- precision_thinning(coords, precision = 3, trials = 5, all_trials = TRUE)
 print(result)
 
 # Example with a single trial and lower precision
-result_single <- precision_thinning(coordinates, precision = 2, trials = 1, all_trials = FALSE)
+result_single <- precision_thinning(coords, precision = 2, trials = 1, all_trials = FALSE)
 print(result_single)
 
 }

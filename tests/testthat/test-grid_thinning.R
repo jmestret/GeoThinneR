@@ -35,11 +35,21 @@ test_that("grid_thinning returns multiple trials when all_trials = TRUE", {
   expect_true(all(sapply(result, length) == nrow(coordinates)))
 })
 
-test_that("grid_thinning without raster information", {
+test_that("grid_thinning works with priority", {
+  result_priority <- grid_thinning(coordinates, thin_dist = 10, trials = 3, priority = priority)
+
+  expect_length(result_priority[[1]], nrow(coordinates))
+  expect_true(sum(result_priority[[1]]) < nrow(coordinates)) # Should thin some points
+})
+
+test_that("grid_thinning invalid input", {
+  # grid_thinning without raster information
   expect_error(grid_thinning(coordinates), "Either thin_dist, resolution, or raster_obj must be provided.")
-})
 
-test_that("grid_thinning with wrongly formated priority", {
+  # grid_thinning with wrongly formated priority
   expect_error(grid_thinning(coordinates, resolution = 2, priority = 1), "'priority' must be a numeric vector with same length as number of points.")
-})
 
+  # grid_thinning with wrongly formated n
+  expect_error(grid_thinning(coordinates, resolution = 2, n = -1), "`n` must be a positive integer specifying the maximum number of points per grid cell.")
+
+})

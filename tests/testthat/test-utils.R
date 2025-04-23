@@ -1,22 +1,16 @@
-test_that("long_lat_to_cartesian converts coordinates correctly", {
-  long <- c(0, 90, -90)
-  lat <- c(0, 0, 0)
-  result <- long_lat_to_cartesian(long, lat)
+coords <- data.frame(
+  lon = c(-122.4194, -122.4195, -122.4196, -122.4197),
+  lat = c(37.7749, 37.7740, 37.7741, 37.7750)
+)
+coords <- as.matrix(coords)
 
-  expected <- cbind(
-    x = c(6371, 0, 0),
-    y = c(0, 6371, -6371),
-    z = c(0, 0, 0)
-  )
-
-  expect_equal(result, expected, tolerance = 1e-5)
+test_that("thin_points handles invalid input", {
+  expect_error(estimate_k_max (NULL, 3), "`coordinates` must be a matrix")
+  expect_error(estimate_k_max(coords, thin_dist = -2), "`thin_dist` must be a positive number.")
 })
 
-test_that("assign_coords_to_grid assigns coordinates to correct grid cells", {
-  coords <- data.frame(long = c(0.5, 1.5, 2.5), lat = c(0.5, 1.5, 2.5))
-  result <- assign_coords_to_grid(coords, 1)
-
-  expected <- c("0_0", "1_1", "2_2")
-
-  expect_equal(result, expected)
+test_that("calculate_spatial_coverage with Euclidean distance", {
+  coords_proj <- matrix(runif(20), ncol = 2) * 100
+  area_euclidean <- calculate_spatial_coverage(coords_proj, distance = "euclidean")
+  expect_true(area_euclidean > 0)
 })
