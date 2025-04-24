@@ -1,4 +1,4 @@
-# GeoThinneR (development version)
+# GeoThinneR 2.0.0
 
 **Breaking changes**. This version is backward-incompatible with earlier versions of GeoThinneR.
 
