@@ -5,7 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>A collection of simple methods for spatial thinning of species occurrences and point data • GeoThinneR</title>
+<meta name="description" content="GeoThinneR">
+<title>Getting started with GeoThinneR • GeoThinneR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -14,10 +15,15 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A collection of simple methods for spatial thinning of species occurrences and point data">
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-N3F029FJEK"></script><script>
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with GeoThinneR">
+<meta property="og:description" content="GeoThinneR">
+<meta property="og:image" content="https://jmestret.github.io/GeoThinneR/logo.png">
+<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]--><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-N3F029FJEK"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -27,34 +33,46 @@
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="inverse" aria-label="Site navigation"><div class="container">
-
+    <nav class="navbar fixed-top navbar-inverse navbar-expand-lg bg-primary" data-bs-theme="inverse"><div class="container">
+    
     <a class="navbar-brand me-2" href="../index.html">GeoThinneR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
-
+    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item"><a class="nav-link" href="../articles/GeoThinneR.html">Get started</a></li>
-<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/GeoThinneR.html">Get started</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
-<ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
-</form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/jmestret/GeoThinneR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/jmestret/GeoThinneR/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 
-
+    
   </div>
 </nav><div class="container template-article">
 
@@ -63,10 +81,10 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>A collection of simple methods for spatial thinning of species occurrences and point data</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Getting started with GeoThinneR</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/Latest/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/HEAD/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
       <div class="d-none name"><code>GeoThinneR.Rmd</code></div>
     </div>
 
@@ -75,374 +93,470 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>Loading occurrence data in R for species distribution modeling or
-other types of point data analysis is an easy task that can become
-tedious when dealing with uncertain records or sampling bias. Spatial
-thinning methods can be helpful in some situations for reducing sampling
-bias while retaining a significant number of points or a specific
-desired count.</p>
-<p>The <strong>GeoThinneR</strong> package offers a collection of
-straightforward and effective methods for spatial thinning of species
-occurrences and other point data, allowing researchers to improve the
-quality of their datasets.</p>
-<p>This package includes a main function (<code>thin_points</code>) that
-wraps various methods (specified by the <code>method</code> parameter)
-for spatial thinning, including:</p>
-<ul>
-<li>Distance-based methods:
-<ul>
-<li>Brute force distance thinning (<code>"brute_force"</code>)</li>
-<li>K-D trees thinning (<code>"kd_tree"</code>)</li>
-<li>R-trees thinning (<code>"r_tree"</code>)</li>
-<li>Rounding and hashing (<code>"round_hash"</code>)</li>
-</ul>
-</li>
-<li>Regular grid-based methods:
-<ul>
-<li>Grid sampling (<code>"grid"</code>)</li>
-</ul>
-</li>
-<li>Coordinate precision-based methods:
-<ul>
-<li>Precision thinning (<code>"precision"</code>)</li>
-</ul>
-</li>
-</ul>
-<p>This variety allows users to select the most suitable approach based
-on their specific datasets and research objectives.</p>
-<p>In this vignette, we provide an overview of the key functionalities
-of the package and demonstrate how to use the various thinning methods
-along with advanced options.</p>
+<p><strong>GeoThinneR</strong> is an R package designed for efficient
+spatial thinning of point data, particularly useful for species
+occurrence data and other spatial analyses. It implements optimized
+neighbor search algorithms based on <em>kd</em>-trees, providing an
+<strong>efficient, scalable, and user-friendly</strong> approach. When
+working with large-scale datasets containing hundreds of thousands of
+points, applying thinning manually is not possible, and existing tools
+in R providing thinning methods for species distribution modeling often
+lack scalability and computational efficiency.</p>
+<p>Spatial thinning is widely used across many disciplines to
+<strong>reduce the density of spatial point data</strong> by selectively
+removing points based on specified criteria, such as threshold spacing
+or grid cells. This technique is applied in fields like remote sensing,
+where it improves data visualization and processing, as well as in
+geostatistics, and spatial ecological modeling. Among these, species
+distribution modeling is a key area where thinning plays a crucial role
+in mitigating the effects of spatial sampling bias.</p>
+<p>This vignette provides a step-by-step guide to thinning with
+<strong>GeoThinneR</strong> using both simulated and real-world
+datasets.</p>
 </div>
 <div class="section level2">
-<h2 id="setup-and-load-datasets">Setup and load datasets<a class="anchor" aria-label="anchor" href="#setup-and-load-datasets"></a>
+<h2 id="setup-and-loading-data">Setup and loading data<a class="anchor" aria-label="anchor" href="#setup-and-loading-data"></a>
 </h2>
-<p>To get started with <strong>GeoThinneR</strong>, we will also load
-the following packages:</p>
-<ul>
-<li>
-<strong>terra</strong>: for working with raster and spatial
-data.</li>
-<li>
-<strong>sf</strong>: for handling spatial polygons.</li>
-<li>
-<strong>ggplot2</strong>: for visualizing the thinning process.</li>
-</ul>
+<p>To get started with <strong>GeoThinneR</strong>, we begin by loading
+the packages used in this vignette:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jmestret/GeoThinneR" class="external-link">GeoThinneR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<p>We will simulate a dataset with <code>n = 2000</code> random points
-for two species and load a subset of real data from the Logerhead sea
-turtle (<em>Caretta caretta</em>) occurrences in the Mediterranean
-Sea.</p>
+<p>We’ll use two dataset to demonstrate the use of
+<strong>GeoThinneR</strong>: 1. A <strong>simulated a dataset</strong>
+with <code>n = 2000</code> random occurrences randomly distributed
+within a 40 x 20 degree area for two artificial species. 2. A
+<strong>real-world dataset</strong> containing loggerhead sea turtle
+(<em>Caretta caretta</em>) occurrences in the Mediterranean Sea
+downloaded from GBIF () and included with the package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set seed for reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Simulate the dataset</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">2000</span>  <span class="co"># Number of points</span></span>
+<span><span class="co"># Simulated dataset</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">2000</span></span>
 <span><span class="va">sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  long <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">20</span>, max <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
-<span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>  sp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sp1"</span>, <span class="st">"sp2"</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Load the Caretta caretta occurrences</span></span>
+<span><span class="co"># Load real-world occurrence dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"caretta"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Load mediterranean sea polygon</span></span>
+<span><span class="co"># Load Mediterranean Sea polygon</span></span>
 <span><span class="va">medit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mediterranean_sea.gpkg"</span>, package <span class="op">=</span> <span class="st">"GeoThinneR"</span><span class="op">)</span></span>
 <span><span class="va">medit</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">medit</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sim_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, color <span class="op">=</span> <span class="va">sp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sp1 <span class="op">=</span> <span class="st">"#5183B3"</span>, sp2 <span class="op">=</span> <span class="st">"#EB714B"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Simulated Species Occurrences"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">medit</span>, color <span class="op">=</span> <span class="st">"#353839"</span>, fill <span class="op">=</span> <span class="st">"antiquewhite"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>  <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">caretta</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">decimalLongitude</span>, y <span class="op">=</span> <span class="va">decimalLatitude</span><span class="op">)</span>,color <span class="op">=</span> <span class="st">"#EB714B"</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"C. caretta Mediterranean Sea Occurrences"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>      panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">gray</a></span><span class="op">(</span><span class="fl">.5</span><span class="op">)</span>,linetype <span class="op">=</span> <span class="st">"dashed"</span>,linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>      panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
-<span>      axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>      legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
-<p><img src="GeoThinneR_files/figure-html/plot%20loaded%20data,%20-1.png" width="50%"><img src="GeoThinneR_files/figure-html/plot%20loaded%20data,%20-2.png" width="50%"></p>
+<p>Let’s visualize the datasets before thinning:</p>
+<p><img src="GeoThinneR_files/figure-html/plot%20loaded%20data-1.png" width="50%"><img src="GeoThinneR_files/figure-html/plot%20loaded%20data-2.png" width="50%"></p>
 </div>
 <div class="section level2">
 <h2 id="quick-start-guide">Quick start guide<a class="anchor" aria-label="anchor" href="#quick-start-guide"></a>
 </h2>
-<p>Now that we have loaded our data, let’s quickly explore how to use
-the <code><a href="../reference/thin_points.html">thin_points()</a></code> function to perform spatial thinning on
-our datasets.</p>
-<p>Let’s start by applying spatial thinning to our simulated dataset
-using the brute force distance thinning method. We pass our
-dataframe/tibble/matrix through the <code>data</code> argument, and with
-<code>lon_col</code> and <code>lat_col</code>, we can define the names
-of the columns containing longitude and latitude (or x, y) coordinates.
-If you don’t specify any columns, it will take the first two columns by
-default. We will use the brute force algorithm
-(<code>brute_force</code>) specified in the <code>method</code>
-parameter and set a thinning distance (<code>thin_dist</code>) of 20 km.
-Since this is not a deterministic approach, we will run 5 iterations
-(<code>trials</code>) and return all the iterations
-(<code>all_trials</code>).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>Now that our data is ready, let’s use <strong>GeoThinneR</strong> for
+spatial thinning. All methods are accessed through the
+<code><a href="../reference/thin_points.html">thin_points()</a></code> function, which requires, at a minimum, a
+dataset containing georeferenced points (WGS84 CRS - EPSG:4326) in
+<code>matrix</code>, <code>data.frame</code>, or <code>tibble</code>
+format. The query dataset is provided through the <code>data</code>
+argument, and with <code>lon_col</code> and <code>lat_col</code>
+parameters, we can define the column names containing longitude and
+latitude (or x, y) coordinates. Default values are “lon” and “lat”, and
+if not present, it will take the first two columns by default.</p>
+<p>The <strong>thinning method</strong> is defined using the
+<code>method</code> parameter, with the following options:</p>
+<ul>
+<li>
+<code>"distance"</code>: Distance-based thinning<br>
+</li>
+<li>
+<code>"grid"</code>: Grid-based thinning<br>
+</li>
+<li>
+<code>"precision"</code>: Precision-based thinning</li>
+</ul>
+<p>The <strong>thinning constraint</strong> (distance, grid resolution
+or decimal precision) depends on the method chosen (these will be
+detailed in the next section). Regardless of the method, the algorithm
+selects which points to retain and remove. Since this selection is
+non-deterministic, you can run <strong>multiple randomized thinning
+trials</strong> to maximize the number of retained points.</p>
+<p>Let’s quickly thin the simulated dataset using a simple
+distance-based method:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Apply spatial thinning to the simulated data</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">sim_data</span>, <span class="co"># Dataframe with coordinates</span></span>
-<span>  long_col <span class="op">=</span> <span class="st">"long"</span>, <span class="co"># Longitude column name</span></span>
-<span>  lat_col <span class="op">=</span> <span class="st">"lat"</span>, <span class="co"># Latitude column name</span></span>
-<span>  method <span class="op">=</span> <span class="st">"brute_force"</span>,  <span class="co"># Method for thinning</span></span>
-<span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,  <span class="co"># Thinning distance in km,</span></span>
-<span>  trials <span class="op">=</span> <span class="fl">5</span>, <span class="co"># Number of reps</span></span>
-<span>  all_trials <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># Return all trials</span></span>
-<span>  seed <span class="op">=</span> <span class="fl">123</span> <span class="co"># Seed for reproducibility</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>We can see that out of every 5 trials, there is one that returns one
-point less. This is due to the randomness of the algorithm.</p>
+<span><span class="va">quick_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sim_data</span>,     <span class="co"># Dataframe with coordinates</span></span>
+<span>  lon_col <span class="op">=</span> <span class="st">"lon"</span>,     <span class="co"># Longitude column name</span></span>
+<span>  lat_col <span class="op">=</span> <span class="st">"lat"</span>,     <span class="co"># Latitude column name</span></span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>, <span class="co"># Method for thinning</span></span>
+<span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,      <span class="co"># Thinning distance in km,</span></span>
+<span>  trials <span class="op">=</span> <span class="fl">5</span>,          <span class="co"># Number of trials</span></span>
+<span>  all_trials <span class="op">=</span> <span class="cn">TRUE</span>,   <span class="co"># Return all trials</span></span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span>           <span class="co"># Seed for reproducibility</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">quick_thin</span></span>
+<span><span class="co">#&gt; GeoThinned object</span></span>
+<span><span class="co">#&gt; Method used: distance </span></span>
+<span><span class="co">#&gt; Number of trials: 5 </span></span>
+<span><span class="co">#&gt; Points retained in largest trial: 1391</span></span></code></pre></div>
+<p>This command applies spatial thinning ensuring no two retained points
+are closer than 20 km (<code>thin_dist</code>). The algorithm runs 5
+random trials (<code>trials</code>) and return the results of all trials
+(<code>all_trials = TRUE</code>).</p>
+<div class="section level4">
+<h4 id="exploring-the-geothinned-object">Exploring the GeoThinned object<a class="anchor" aria-label="anchor" href="#exploring-the-geothinned-object"></a>
+</h4>
+<p>The output of <code><a href="../reference/thin_points.html">thin_points()</a></code> is a <code>GeoThinned</code>
+object, which contains: - <code>x$retained</code>: a list of logical
+vectors indicating which points were retained in each trial -
+<code>x$method</code>: the method used for thinning -
+<code>x$params</code>: the parameters used for thinning -
+<code>x$original_data</code>: the original dataset</p>
+<p>You can apply basic methods for inspecting the object such as
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary()</a></code>, and <code><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot()</a></code>.
+The <code><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary()</a></code> function provides detailed information about
+the thinning process, including the number of points retained in each
+trial, the nearest neighbor distance (NND), and the coverage of the
+retained points.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Summary of GeoThinneR Results</span></span>
+<span><span class="co">#&gt; -----------------------------</span></span>
+<span><span class="co">#&gt; Method used       : distance </span></span>
+<span><span class="co">#&gt; Distance metric   : haversine </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of points:</span></span>
+<span><span class="co">#&gt;   Original              2000</span></span>
+<span><span class="co">#&gt;   Thinned               1391</span></span>
+<span><span class="co">#&gt;   Retention ratio      0.696</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Nearest Neighbor Distances [km]</span></span>
+<span><span class="co">#&gt;             Min 1st Qu. Median   Mean 3rd Qu.   Max</span></span>
+<span><span class="co">#&gt; Original  0.650  11.011 17.159 18.216  24.265 61.83</span></span>
+<span><span class="co">#&gt; Thinned  20.015  23.050 26.545 28.026  31.380 61.83</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Spatial Coverage (Convex Hull Area) [km2]</span></span>
+<span><span class="co">#&gt;   Original        2458025.112</span></span>
+<span><span class="co">#&gt;   Thinned         2457093.024</span></span></code></pre></div>
+<p>We see that from 2000, we retained the 69.6% of points (1391), and
+the minimum distance between points has increased without reducing too
+much the spatial coverage or extent of the points compared to the
+original dataset.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Number of keeped points in each trial</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">thin_sim_data</span>, <span class="va">nrow</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1795 1794 1795 1795 1795</span></span></code></pre></div>
-<p>Next, we will thin the <em>Caretta caretta</em> occurrences using the
-K-D trees method. We’ll use a thinning distance of 30 km and return only
-the trial with the most points kept (<code>all_trials</code> set to
-<code>FALSE</code>).</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">)</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>If we check the number of points retained in each trial, we can see
+that the 5 trials return different numbers of points retained. This is
+due to the randomness of the algorithm when selecting which points to
+retain. You can use <code>seed</code> for reproducibility. By setting,
+<code>all_trials = FALSE</code> it will just return the trial that kept
+the most points.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Number of kept points in each trial</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">$</span><span class="va">retained</span>, <span class="va">sum</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1387 1385 1388 1391 1387</span></span></code></pre></div>
+<p>You can access the thinned dataset that retained the maximum number
+of points using the <code><a href="../reference/GeoThinned.html">largest()</a></code> function.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          lon        lat  sp</span></span>
+<span><span class="co">#&gt; 1 -4.2484496 -3.4032602 sp2</span></span>
+<span><span class="co">#&gt; 2  5.7661027 -3.5548415 sp2</span></span>
+<span><span class="co">#&gt; 3 -1.8204616 -3.5081961 sp2</span></span>
+<span><span class="co">#&gt; 6 -9.0888700  1.1634277 sp1</span></span>
+<span><span class="co">#&gt; 7  0.5621098 -0.5257711 sp1</span></span>
+<span><span class="co">#&gt; 8  7.8483809 -4.4432328 sp1</span></span></code></pre></div>
+<p>If you want to access points from a specific trial, you can use the
+<code><a href="../reference/GeoThinned.html">get_trial()</a></code> function, which returns the thinned dataset for
+that trial.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">get_trial</a></span><span class="op">(</span><span class="va">quick_thin</span>, trial <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="co">#&gt;          lon        lat  sp</span></span>
+<span><span class="co">#&gt; 1 -4.2484496 -3.4032602 sp2</span></span>
+<span><span class="co">#&gt; 2  5.7661027 -3.5548415 sp2</span></span>
+<span><span class="co">#&gt; 3 -1.8204616 -3.5081961 sp2</span></span>
+<span><span class="co">#&gt; 6 -9.0888700  1.1634277 sp1</span></span>
+<span><span class="co">#&gt; 7  0.5621098 -0.5257711 sp1</span></span>
+<span><span class="co">#&gt; 8  7.8483809 -4.4432328 sp1</span></span></code></pre></div>
+<p>Just in case you want to get the points that were removed from the
+original dataset, you can use the <code>retained</code> list to index
+the original data. The <code>retained</code> list contains logical
+vectors indicating which points were retained in each trial. You can use
+this to filter the original data and get the removed points.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">trial</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">$</span><span class="va">original_data</span><span class="op">[</span><span class="op">!</span><span class="va">quick_thin</span><span class="op">$</span><span class="va">retained</span><span class="op">[[</span><span class="va">trial</span><span class="op">]</span><span class="op">]</span>, <span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         lon         lat  sp</span></span>
+<span><span class="co">#&gt; 4  7.660348  0.14434260 sp1</span></span>
+<span><span class="co">#&gt; 5  8.809346 -0.07172694 sp1</span></span>
+<span><span class="co">#&gt; 11 9.136667  3.50963224 sp2</span></span>
+<span><span class="co">#&gt; 20 9.090073 -4.96464505 sp2</span></span>
+<span><span class="co">#&gt; 21 7.790786  4.97424144 sp1</span></span>
+<span><span class="co">#&gt; 32 8.045981  0.77635149 sp1</span></span></code></pre></div>
+<p>Also, you can use <code><a href="../reference/GeoThinned.html">as_sf()</a></code> to convert the thinned dataset
+to a <code>sf</code> object, which is useful for plotting and spatial
+analysis.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sf_thinned</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GeoThinned.html">as_sf</a></span><span class="op">(</span><span class="va">quick_thin</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">sf_thinned</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sf"         "data.frame"</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="real-world-example">Real-world example<a class="anchor" aria-label="anchor" href="#real-world-example"></a>
+</h4>
+<p>GeoThinneR includes a dataset of loggerhead sea turtle (<em>Caretta
+caretta</em>) occurrence records in the Mediterranean Sea, sourced from
+GBIF and filtered. We now apply a 30 km thinning distance, returning
+only the largest trial (the one with the maximum number of points
+retained, <code>all_trials</code> set to <code>FALSE</code>).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Apply spatial thinning to the real data</span></span>
-<span><span class="va">thin_real_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">caretta</span>, <span class="co"># We will not specify long_col, lat_col as they are in position 1 and 2</span></span>
-<span>  method <span class="op">=</span> <span class="st">"kd_tree"</span>,</span>
-<span>  thin_dist <span class="op">=</span> <span class="fl">30</span>,  <span class="co"># Thinning distance in km,</span></span>
+<span><span class="va">caretta_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">caretta</span>, <span class="co"># We will not specify lon_col, lat_col as they are in position 1 and 2</span></span>
+<span>  lat_col <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
+<span>  lon_col <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>,</span>
+<span>  thin_dist <span class="op">=</span> <span class="fl">30</span>, <span class="co"># Thinning distance in km,</span></span>
 <span>  trials <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Thinned dataframe stored in the first element of the output list</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 520   5</span></span></code></pre></div>
-<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span><span class="co"># Thinned dataframe stored in the first element of the retained list</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">caretta_thin</span><span class="op">)</span>, <span class="fu"><a href="../reference/GeoThinned.html">get_trial</a></span><span class="op">(</span><span class="va">caretta_thin</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>As you can see, with <strong>GeoThinneR</strong>, it’s very easy to
-apply spatial thinning to your dataset. As you will see in the next
-sections, there are a variety of options and methods that best suit
-different situations. You will learn how to use each specific method
-with its own options, how to thin groups separately, how to request a
-specific number of points, how to select less uncertain points, and how
-to work with points that do not represent longitude and latitude
-coordinates.</p>
+apply spatial thinning to your dataset. In the next section we explain
+the different thinning methods and how to use them, and also the
+implemented optimizations for large-scale datasets.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="thinning-methods">Thinning methods<a class="anchor" aria-label="anchor" href="#thinning-methods"></a>
 </h2>
-<p>In this section, we will show how to use each thinning method,
+<p><strong>GeoThinneR</strong> offers different algorithms for spatial
+thinning. In this section, we will show how to use each thinning method,
 highlighting its unique parameters and features.</p>
 <div class="section level3">
-<h3 id="distance-based-methods">Distance-based methods<a class="anchor" aria-label="anchor" href="#distance-based-methods"></a>
+<h3 id="distance-based-thinning">Distance-based thinning<a class="anchor" aria-label="anchor" href="#distance-based-thinning"></a>
 </h3>
-<p>All distance-based methods apply spatial thinning based on an exact
-distance defined by the <code>thin_dist</code> parameter. When using
-longitude and latitude data, the function computes the Haversine
-distance. You can also pass a custom Earth radius using the
-<code>R</code> parameter (by default, it uses 6371 km).</p>
+<p>Distance-based thinning (<code>method="distance"</code>) ensures that
+all retained points are separated by at least a user-defined minimum
+distance <code>thin_dist</code> (in km). For geographic coordinates,
+using <code>distance = "haversine"</code> (default) computes
+great-circle distances, or alternatively, the Euclidean distance between
+3D Cartesian coordinates (depending on the method) to identify
+neighboring points within the distance threshold. The algorithm iterates
+through the dataset and removes points that are too close to each
+other.</p>
+<p>In general, the choice of search method depends on the size of the
+dataset and the desired thinning distance:</p>
+<ul>
+<li>
+<code>search_type="brute"</code>: Useful for small datasets, low
+scalability.</li>
+<li>
+<code>search_type="kd_tree"</code>: More memory-efficient, better
+scalability for medium-sized datasets.</li>
+<li>
+<code>search_type="local_kd_tree"</code> (default): Faster than
+<code>"kd_tree"</code> and reduces memory usage. Can be parallelized to
+improve speed.</li>
+<li>
+<code>search_type="k_estimation"</code>: Very fast when the number
+of points to remove is low or not very clustered, if not similar or
+worse than <code>"local_kd_tree"</code>.</li>
+</ul>
+<p>You can find the benchmarking results for each method in the package
+manuscript (see references).</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dist_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span><span class="va">sim_data</span>, method <span class="op">=</span> <span class="st">"distance"</span>, thin_dist <span class="op">=</span> <span class="fl">25</span>, trials <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dist_thin</span><span class="op">)</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <div class="section level4">
-<h4 id="brute-force-distance-thinning">Brute force distance thinning<a class="anchor" aria-label="anchor" href="#brute-force-distance-thinning"></a>
+<h4 id="brute-force">Brute force<a class="anchor" aria-label="anchor" href="#brute-force"></a>
 </h4>
-<p>This is the most common method for calculating the distance between
-points, as it directly computes all pairwise distances and retains
-points that are far enough apart based on the thinning distance. By
-default, it computes the Haversine distance using the
-<code>RdistEarth</code> function from the <strong>fields</strong>
-package. If <code>euclidean</code> is set to <code>TRUE</code>, it will
-compute the Euclidean distance instead. The main advantage of this
-method is that it computes the full picture of your points, making it
-easier to retain the maximum number of points. However, the primary
-drawback is that it is very time and memory consuming, as it requires
-computing all pairwise comparisons.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<p>This is the most common greedy method for calculating the distance
+between points (<code>search_type="brute"</code>), as it directly
+computes all pairwise distances and retains points that are far enough
+apart based on the thinning distance. By default, it computes the
+Haversine distance using the <code>rdist.earth()</code> function from
+the <strong>fields</strong> package. If
+<code>distance = "euclidean"</code>, it computes the Euclidean distance
+instead. The main advantage of this method is that it computes the full
+distance matrix between your points. However, the main disadvantage is
+that it is very time and memory consuming, as it requires computing all
+pairwise comparisons.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">brute_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"brute_force"</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>,</span>
+<span>  search_type <span class="op">=</span> <span class="st">"brute"</span>,</span>
 <span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.308   0.007   0.316</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">brute_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1391</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="k-d-trees">K-D trees<a class="anchor" aria-label="anchor" href="#k-d-trees"></a>
+<h4 id="traditional-kd-tree">Traditional <em>kd</em>-tree<a class="anchor" aria-label="anchor" href="#traditional-kd-tree"></a>
 </h4>
-<p>K-D trees are a well-known data structure for partitioning space
-during nearest neighbor searches, making them an efficient option for
-distance-based thinning. A K-D tree is a binary treeof <em>k</em>
-dimensions that partitions the space to discard data points that are
-further away. This method uses the <strong>nabor</strong> R package to
-implement K-D trees via the <strong>libnabo</strong> library. Since K-D
-trees are based on Euclidean distance, if <code>euclidean</code> is set
-to <code>FALSE</code> to work with longitude and latitude data,
-<strong>GeoThinneR</strong> will transform the coordinates into XYZ
-Cartesian coordinates. Additionally, by setting
-<code>space_partitioning</code> to <code>TRUE</code>, the space will be
-divided into grids before computing the K-D tree, which can be more
-memory-efficient for large datasets.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<p>A <em>kd</em>-tree is a binary tree that partitions space into
+regions to optimize nearest neighbor searches. The
+<code>search_type="kd_tree"</code> method uses the
+<strong>nabor</strong> R package to implement <em>kd</em>-trees via the
+<strong>libnabo</strong> library. This method is more memory-efficient
+than brute force. Since this implementation of <em>kd</em>-trees is
+based on Euclidean distance, when working with geographic coordinates
+(<code>distance = "haversine"</code>), <strong>GeoThinneR</strong>
+transforms the coordinates into XYZ Cartesian coordinates. Although this
+method scales better than the brute-force method for large datasets,
+since we want to identify all neighboring points of each query point,
+its performance can still be improved for very large datasets.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">kd_tree_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"kd_tree"</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>,</span>
+<span>  search_type <span class="op">=</span> <span class="st">"kd_tree"</span>,</span>
 <span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.191   0.001   0.192</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1795</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">kd_tree_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1391</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="r-trees">R-trees<a class="anchor" aria-label="anchor" href="#r-trees"></a>
+<h4 id="local-kd-trees">Local <em>kd</em>-trees<a class="anchor" aria-label="anchor" href="#local-kd-trees"></a>
 </h4>
-<p>R-trees are widely used for spatial searching, especially with
-geographic coordinates. While R-trees have a slightly higher
-construction cost compared to other methods, they speed up searches.
-This method uses the same parameters as the K-D tree method. In
-<strong>GeoThinneR</strong>, R-trees are implemented as a slightly
-modified version of the <strong>rtree</strong> R package, which is based
-on the <strong>Boost</strong> geometry library. In order to use R-tree
-you need to install the modified package from GitHub using
-<code>remotes::install_github("jmestret/rtree")</code>. This
-modification allows for computing both Euclidean distance
-(<code>euclidean = TRUE</code>) and Haversine distance
-(<code>euclidean = FALSE</code>) for geographic coordinates.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<p>To reduce the complexity of searching within a single huge
+<em>kd</em>-tree containing all points from the dataset, we propose a
+simple modification: creating small local <em>kd</em>-trees by dividing
+the spatial domain into multiple smaller regions, each with its own tree
+(<code>search_type="local_kd_tree"</code>). This notably reduces memory
+usage, allowing this thinning method to be used for very large datasets
+on personal computers. Additionally, you can run in parallel this method
+to improve speed using the <code>n_cores</code> parameter.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">local_kd_tree_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"r_tree"</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>,</span>
+<span>  search_type <span class="op">=</span> <span class="st">"local_kd_tree"</span>,</span>
 <span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">local_kd_tree_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1391</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="rounding-and-hashing">Rounding and hashing<a class="anchor" aria-label="anchor" href="#rounding-and-hashing"></a>
+<h4 id="restricted-neighbor-search">Restricted neighbor search<a class="anchor" aria-label="anchor" href="#restricted-neighbor-search"></a>
 </h4>
-<p>This method reduces data complexity and is particularly useful in
-specific scenarios. First, the coordinates of the data points are
-rounded to a specified precision based on the thinning distance. The
-rounded coordinates are then hashed into a grid where each cell is
-identified by a unique combination of longitude and latitude values. The
-algorithm iterates through the grid cells, checking the distance between
-points within the same cell and neighboring cells, and removes points
-that fall within the thinning distance. This method can also be seen as
-a form of precision-based thinning.</p>
-<p>The distance between points can be calculated using either the
-Haversine or Euclidean formula. This method is very memory-efficient and
-fast, especially with large datasets and large thinning distances.
-However, the main drawback is that it usually does not find the optimal
-maximum number of points to retain, as it removes them without computing
-all distances.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<p>Another way to reduce the computational complexity of
+<em>kd</em>-tree neighbor searches is by limiting the number of
+neighbors to find. In the <code><a href="https://rdrr.io/pkg/nabor/man/knn.html" class="external-link">nabor::knn()</a></code> function, we can
+specify the number of neighbors to search for (<code>k</code>). For
+spatial thinning, we need to identify all neighbors for each point,
+which increases computational cost by setting <code>k</code> to the
+total number of points (<code>n</code>). However, with the
+<code>search_type="k_estimation"</code> method, we can estimate the
+maximum number of neighbors a point can have based on the spatial
+density of points, thereby reducing the <code>k</code> parameter. This
+method is particularly useful when datasets are not highly clustered, as
+it estimates a smaller <code>k</code> value, significantly reducing
+computational complexity.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">k_estimation_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"round_hash"</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"distance"</span>,</span>
+<span>  search_type <span class="op">=</span> <span class="st">"k_estimation"</span>,</span>
 <span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.080   0.000   0.079</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1790</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">k_estimation_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1391</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="grid-based-methods">Grid-based methods<a class="anchor" aria-label="anchor" href="#grid-based-methods"></a>
+<h3 id="grid-based-thinning">Grid-based thinning<a class="anchor" aria-label="anchor" href="#grid-based-thinning"></a>
 </h3>
-<div class="section level4">
-<h4 id="grid-sampling">Grid sampling<a class="anchor" aria-label="anchor" href="#grid-sampling"></a>
-</h4>
 <p>Grid sampling is a standard method where the area is divided into a
-grid, and points are sampled from each grid cell. This method is very
-fast and memory-efficient. There are two main ways to apply grid
-sampling: (i) Define the characteristics of the grid, and (ii) pass your
-own grid as a raster (<code>SpatRaster</code>).</p>
+grid, and <code>n</code> points are sampled from each grid cell. This
+method is very fast and memory-efficient. The only drawback is that you
+cannot ensure a minimum distance between points. There are two main ways
+to apply grid sampling in <strong>GeoThinneR</strong>: (i) define the
+characteristics of the grid, or (ii) pass your own grid as a raster
+(<code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code>).</p>
 <p>For the first method, you can use the <code>thin_dist</code>
 parameter to define the grid cell size (the distance in km will be
-approximated to degrees to define the grid cell size), or you can pass
-the resolution of the grid (e.g., <code>resolution = 0.25</code> for
-0.25x0.25-degree cells). If you want to align the grid with external
-data or covariate layers, you can pass the <code>origin</code> argument
-as a tuple of two values (e.g., <code>c(0, 0)</code>). Similarly, you
-can specify the coordinate reference system (CRS) of your grid
-(<code>crs</code>).</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+approximated to degrees to define the grid cell size, one degree roughly
+111.32 km), or you can pass the resolution of the grid (e.g.,
+<code>resolution = 0.25</code> for 0.25x0.25-degree cells). If you want
+to align the grid with external data or covariate layers, you can pass
+the <code>origin</code> argument as a tuple of two values (e.g.,
+<code>c(0, 0)</code>). Similarly, you can specify the coordinate
+reference system (CRS) of your grid (<code>crs</code>).</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span><span class="va">grid_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"grid"</span>, </span>
+<span>  method <span class="op">=</span> <span class="st">"grid"</span>,</span>
 <span>  resolution <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  crs <span class="op">=</span> <span class="st">"epsg:4326"</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>, <span class="co"># one point per grid cell</span></span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.051   0.000   0.052</span></span></code></pre></div>
-<p>Alternatively, you can pass a <code>SpatRaster</code> object, and
-that grid will be used for the thinning process.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rast_obj</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">20</span>, xmax <span class="op">=</span> <span class="fl">20</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, ymax <span class="op">=</span> <span class="fl">10</span>, res <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    0.01    0.00    0.03</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
+<p>Alternatively, you can pass a <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object,
+and that grid will be used for the thinning process.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rast_obj</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, xmax <span class="op">=</span> <span class="fl">10</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, ymax <span class="op">=</span> <span class="fl">5</span>, res <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span><span class="va">grid_raster_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"grid"</span>, </span>
 <span>  raster_obj <span class="op">=</span> <span class="va">rast_obj</span>,</span>
-<span>  trials <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.002   0.000   0.002</span></span></code></pre></div>
-<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-</div>
+<span><span class="co">#&gt;       0       0       0</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_raster_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="coordinate-precision-based-methods">Coordinate Precision-Based Methods<a class="anchor" aria-label="anchor" href="#coordinate-precision-based-methods"></a>
+<h3 id="precision-thinning">Precision thinning<a class="anchor" aria-label="anchor" href="#precision-thinning"></a>
 </h3>
-<div class="section level4">
-<h4 id="precision-thinning">Precision Thinning<a class="anchor" aria-label="anchor" href="#precision-thinning"></a>
-</h4>
 <p>In this approach, coordinates are rounded to a certain precision to
 remove points that fall too close together. After removing points based
 on coordinate precision, the coordinate values are restored to their
-original locations. This is the simplest method and is very useful when
-working with data from different sources with varying coordinate
-precisions. To use it, you need to define the <code>precision</code>
-parameter, indicating the number of decimals to which the coordinates
-should be rounded.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+original locations. This is the simplest method and is more of a
+filtering when working with data from different sources with varying
+coordinate precision. To use it, you need to define the
+<code>precision</code> parameter, indicating the number of decimals to
+which the coordinates should be rounded.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
-<span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span><span class="va">precision_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"precision"</span>, </span>
 <span>  precision <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -451,17 +565,17 @@ should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.004   0.000   0.004</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 775</span></span></code></pre></div>
+<span><span class="co">#&gt;    0.00    0.00    0.02</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">precision_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 230</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 <p>These are the methods implemented in <strong>GeoThinneR</strong>.
 Depending on your specific dataset and research needs, one method may be
 more suitable than others.</p>
 </div>
 </div>
-</div>
 <div class="section level2">
-<h2 id="additional-features">Additional features<a class="anchor" aria-label="anchor" href="#additional-features"></a>
+<h2 id="additional-customization-features">Additional customization features<a class="anchor" aria-label="anchor" href="#additional-customization-features"></a>
 </h2>
 <div class="section level3">
 <h3 id="spatial-thinning-by-group">Spatial thinning by group<a class="anchor" aria-label="anchor" href="#spatial-thinning-by-group"></a>
@@ -473,103 +587,99 @@ specify the column containing the grouping factor, and the thinning will
 be performed separately for each group. For example, in the simulated
 data where we have two species, we can use this parameter to thin each
 species independently:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">thin_sim_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">all_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
-<span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  thin_dist <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">thin_sim_data_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span><span class="va">grouped_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sim_data</span>,</span>
 <span>  group_col <span class="op">=</span> <span class="st">"sp"</span>,</span>
-<span>  thin_dist <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  thin_dist <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1795</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_sim_data_group</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1889</span></span></code></pre></div>
-<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-15-1.png" width="50%"><img src="GeoThinneR_files/figure-html/unnamed-chunk-15-2.png" width="50%"></p>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">all_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 167</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grouped_thin</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 321</span></span></code></pre></div>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-23-1.png" width="50%"><img src="GeoThinneR_files/figure-html/unnamed-chunk-23-2.png" width="50%"></p>
 </div>
 <div class="section level3">
 <h3 id="fixed-number-of-points">Fixed number of points<a class="anchor" aria-label="anchor" href="#fixed-number-of-points"></a>
 </h3>
 <p>What if you need to retain a fixed number of points that best covers
-the area where your data points are located? The
+the area where your data points are located, or for class balancing? The
 <code>target_points</code> parameter allows you to specify the number of
 points to keep, and the function will return that number of points
 spaced as separated as possible. Additionally, you can also set a
 <code>thin_dist</code> parameter so that no points closer than this
 distance will be retained. Currently, this approach is only implemented
-using the brute force method, so be cautious when applying it to very
-large datasets.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">thin_real_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">caretta</span>, </span>
+using the brute force method (<code>method = "distance"</code> and
+<code>search_type = "brute"</code>), so be cautious when applying it to
+very large datasets.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">targeted_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">caretta</span>,</span>
+<span>  lon_col <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat_col <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span>  target_points <span class="op">=</span> <span class="fl">150</span>,</span>
 <span>  thin_dist <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2024-10-05 07:04:59</span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2025-04-24 10:44:07 </span></span>
+<span><span class="co">#&gt; Thinning using method: distance</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
-<span><span class="co">#&gt; Total execution time: 2.59 seconds</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Thinning process completed.</span></span>
+<span><span class="co">#&gt; Total execution time: 4.39 seconds</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">targeted_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">medit</span>, color <span class="op">=</span> <span class="st">"#353839"</span>, fill <span class="op">=</span> <span class="st">"antiquewhite"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>  <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,color <span class="op">=</span> <span class="st">"#5183B3"</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"C. caretta Mediterranean Sea Occurrences"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>      panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/gray.html" class="external-link">gray</a></span><span class="op">(</span><span class="fl">.5</span><span class="op">)</span>,linetype <span class="op">=</span> <span class="st">"dashed"</span>,linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>      panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
-<span>      axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>      legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
-<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="GeoThinneR_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="select-points-by-priority">Select points by priority<a class="anchor" aria-label="anchor" href="#select-points-by-priority"></a>
 </h3>
 <p>In some scenarios, you may want to prioritize certain points based on
-a specific criterion, such as uncertainty, data quality, or recency. The
-<code>priority</code> parameter allows you to pass a vector representing
-the priority of each point. Currently, this feature can be used with the
-<code>grid</code> and <code>precision</code> methods. You can use this
-argument to prioritize points based on any criteria, such as
-uncertainty, year of observation, or data quality.</p>
+a specific criterion, such as uncertainty, data quality, or any other
+variable. The <code>priority</code> parameter allows you to pass a
+vector representing the priority of each point. Currently, this feature
+can be used with the <code>"grid"</code> and <code>"precision"</code>
+methods.</p>
 <p>For example, in the sea turtle data downloaded from GBIF, there is a
 column named <code>coordinateUncertaintyInMeters</code>. We can use this
 to prioritize points with lower uncertainty within each grid cell (in
 the <code>grid</code> method) or when rounding coordinates (in the
 <code>precision</code> method). Keep in mind that bigger uncertainty
 values represent less priority so we have to reverse this values.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">thin_real_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">grid_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">caretta</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"precision"</span>,</span>
-<span>  precision <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  lon_col <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat_col <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"grid"</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Substracting the maximum - the highest uncertainty becomes the lowest priority and vice versa.</span></span>
-<span><span class="va">priority</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">caretta</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span><span class="op">)</span> <span class="op">-</span> <span class="va">caretta</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span></span>
-<span><span class="va">thin_real_data_uncert</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span><span class="va">priority</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">caretta</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">-</span> <span class="va">caretta</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span></span>
+<span><span class="va">priority_thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">caretta</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"precision"</span>,</span>
-<span>  precision <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  lon_col <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  lat_col <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"grid"</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  priority <span class="op">=</span> <span class="va">priority</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">thin_real_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 35557.72</span></span>
-<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">thin_real_data_uncert</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 21235.14</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_thin</span><span class="op">)</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 35513.54</span></span>
+<span><span class="fu"><a href="https://rspatial.github.io/terra/reference/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">priority_thin</span> <span class="op">)</span><span class="op">$</span><span class="va">coordinateUncertaintyInMeters</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 17260.05</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -580,22 +690,22 @@ many others who have developed methods and packages for working with
 spatial data and thinning techniques. Our goal with
 <strong>GeoThinneR</strong> is to offer additional flexibility in method
 selection and to address specific needs we encountered while using other
-packages. We would like to acknowledge and mention other tools that may
-be suitable for your work:</p>
+packages. We would like to mention other tools that may be suitable for
+your work:</p>
 <ul>
 <li>
-<strong>spThin</strong>: The <code>thin</code> function provides a
+<strong>spThin</strong>: The <code>thin()</code> function provides a
 brute-force spatial thinning of data, maximizing the number of retained
 points through random iterative repetitions, using the Haversine
 distance.</li>
 <li>
-<strong>enmSdmX</strong>: Includes the <code>geoThin</code>
+<strong>enmSdmX</strong>: Includes the <code>geoThin()</code>
 function, which calculates all pairwise distances between points for
 thinning purposes.</li>
 <li>
-<strong>dismo</strong>: The <code>gridSample</code> function samples
-points using a grid as stratification, providing an efficient method for
-spatial thinning.</li>
+<strong>dismo</strong>: The <code>gridSample()</code> function
+samples points using a grid as stratification, providing an efficient
+method for spatial thinning.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -613,8 +723,8 @@ Software Engineering for Robotics, 3(1), 2-12.</p></li>
 <li><p>Hijmans, R.J., Phillips, S., Leathwick, J., &amp; Elith, J.
 (2023). <em>dismo: Species Distribution Modeling</em>. R Package Version
 1.3-14. <a href="https://cran.r-project.org/package=dismo" class="external-link uri">https://cran.r-project.org/package=dismo</a></p></li>
-<li><p>Johnson, K., &amp; Hunziker, P. (2021). <em>rtree: R-Trees for
-point data in R</em>. R Package Version 0.2.0. <a href="https://github.com/akoyabio/rtree" class="external-link uri">https://github.com/akoyabio/rtree</a></p></li>
+<li><p>Mestre-Tomás J (2025). GeoThinneR: Efficient Spatial Thinning of
+Species Occurrences. R package version 2.0.0, <a href="https://github.com/jmestret/GeoThinneR" class="external-link uri">https://github.com/jmestret/GeoThinneR</a></p></li>
 <li><p>Smith, A. B., Murphy, S. J., Henderson, D., &amp; Erickson, K. D.
 (2023). <em>Including imprecisely georeferenced specimens improves
 accuracy of species distribution models and estimates of niche
@@ -622,70 +732,73 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355.</p></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+<h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.4.1 (2024-06-14)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 22.04.5 LTS</span></span>
+<span><span class="co">#&gt; R version 4.3.3 (2024-02-29 ucrt)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Windows 11 x64 (build 26100)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
-<span><span class="co">#&gt;  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
-<span><span class="co">#&gt; [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
+<span><span class="co">#&gt; [1] LC_COLLATE=Spanish_Spain.utf8  LC_CTYPE=Spanish_Spain.utf8   </span></span>
+<span><span class="co">#&gt; [3] LC_MONETARY=Spanish_Spain.utf8 LC_NUMERIC=C                  </span></span>
+<span><span class="co">#&gt; [5] LC_TIME=Spanish_Spain.utf8    </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; time zone: UTC</span></span>
-<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; time zone: Europe/Madrid</span></span>
+<span><span class="co">#&gt; tzcode source: internal</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_3.5.1    sf_1.0-17        terra_1.7-78     GeoThinneR_1.0.0</span></span>
+<span><span class="co">#&gt; [1] ggplot2_3.5.1    sf_1.0-21        terra_1.7-78     GeoThinneR_2.0.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] sass_0.4.9         utf8_1.2.4         class_7.3-22       KernSmooth_2.23-24</span></span>
-<span><span class="co">#&gt;  [5] digest_0.6.37      magrittr_2.0.3     evaluate_1.0.0     grid_4.4.1        </span></span>
-<span><span class="co">#&gt;  [9] fastmap_1.2.0      maps_3.4.2         jsonlite_1.8.9     e1071_1.7-16      </span></span>
-<span><span class="co">#&gt; [13] DBI_1.2.3          spam_2.11-0        fansi_1.0.6        viridisLite_0.4.2 </span></span>
-<span><span class="co">#&gt; [17] scales_1.3.0       codetools_0.2-20   textshaping_0.4.0  jquerylib_0.1.4   </span></span>
-<span><span class="co">#&gt; [21] cli_3.6.3          rlang_1.1.4        units_0.8-5        munsell_0.5.1     </span></span>
-<span><span class="co">#&gt; [25] withr_3.0.1        cachem_1.1.0       yaml_2.3.10        tools_4.4.1       </span></span>
-<span><span class="co">#&gt; [29] colorspace_2.1-1   vctrs_0.6.5        R6_2.5.1           matrixStats_1.4.1 </span></span>
-<span><span class="co">#&gt; [33] nabor_0.5.0        proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-10   </span></span>
-<span><span class="co">#&gt; [37] fs_1.6.4           ragg_1.3.3         pkgconfig_2.0.3    desc_1.4.3        </span></span>
-<span><span class="co">#&gt; [41] pkgdown_2.1.1      pillar_1.9.0       bslib_0.8.0        gtable_0.3.5      </span></span>
-<span><span class="co">#&gt; [45] data.table_1.16.0  glue_1.8.0         Rcpp_1.0.13        fields_16.3       </span></span>
-<span><span class="co">#&gt; [49] systemfonts_1.1.0  xfun_0.48          tibble_3.2.1       highr_0.11        </span></span>
-<span><span class="co">#&gt; [53] knitr_1.48         farver_2.1.2       htmltools_0.5.8.1  rmarkdown_2.28    </span></span>
-<span><span class="co">#&gt; [57] labeling_0.4.3     dotCall64_1.1-1    compiler_4.4.1</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] dotCall64_1.1-1    gtable_0.3.5       spam_2.10-0        xfun_0.51         </span></span>
+<span><span class="co">#&gt;  [5] bslib_0.8.0        htmlwidgets_1.6.4  vctrs_0.6.5        tools_4.3.3       </span></span>
+<span><span class="co">#&gt;  [9] generics_0.1.3     tibble_3.2.1       proxy_0.4-27       fansi_1.0.6       </span></span>
+<span><span class="co">#&gt; [13] highr_0.11         pkgconfig_2.0.3    KernSmooth_2.23-22 data.table_1.15.4 </span></span>
+<span><span class="co">#&gt; [17] desc_1.4.3         lifecycle_1.0.4    compiler_4.3.3     farver_2.1.2      </span></span>
+<span><span class="co">#&gt; [21] fields_15.2        textshaping_0.3.7  munsell_0.5.1      codetools_0.2-19  </span></span>
+<span><span class="co">#&gt; [25] htmltools_0.5.8.1  maps_3.4.2         class_7.3-22       sass_0.4.9        </span></span>
+<span><span class="co">#&gt; [29] yaml_2.3.10        pillar_1.9.0       pkgdown_2.0.8      jquerylib_0.1.4   </span></span>
+<span><span class="co">#&gt; [33] classInt_0.4-10    cachem_1.0.8       wk_0.9.2           iterators_1.0.14  </span></span>
+<span><span class="co">#&gt; [37] foreach_1.5.2      nabor_0.5.0        tidyselect_1.2.1   digest_0.6.35     </span></span>
+<span><span class="co">#&gt; [41] dplyr_1.1.4        purrr_1.0.2        labeling_0.4.3     fastmap_1.1.1     </span></span>
+<span><span class="co">#&gt; [45] grid_4.3.3         colorspace_2.1-1   cli_3.6.2          magrittr_2.0.3    </span></span>
+<span><span class="co">#&gt; [49] utf8_1.2.4         e1071_1.7-14       withr_3.0.1        scales_1.3.0      </span></span>
+<span><span class="co">#&gt; [53] rmarkdown_2.28     matrixStats_1.3.0  ragg_1.3.0         memoise_2.0.1     </span></span>
+<span><span class="co">#&gt; [57] evaluate_0.24.0    knitr_1.48         viridisLite_0.4.2  s2_1.1.7          </span></span>
+<span><span class="co">#&gt; [61] rlang_1.1.3        Rcpp_1.0.12        glue_1.7.0         DBI_1.2.3         </span></span>
+<span><span class="co">#&gt; [65] rstudioapi_0.16.0  jsonlite_1.8.8     R6_2.5.1           systemfonts_1.1.0 </span></span>
+<span><span class="co">#&gt; [69] fs_1.6.3           units_0.8-5</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jorge Mestre-Tomás.</p>
+  <p></p>
+<p>Developed by Jorge Mestre-Tomás.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
 </div>
 
+  
 
-
-
+  
 
   </body>
 </html>
