@@ -73,6 +73,6 @@ We welcome contributions! If you have suggestions for improvements or new featur
 
 ## How to cite GeoThinneR
 
-The GeoThinneR paper is currently in preparation. Meanwhile, you can cite the package using:
+The GeoThinneR manuscript is currently in progress. In the meantime, you can cite the [preprint](https://doi.org/10.48550/arXiv.2505.07867) as follows:
 
-> Mestre-Tomás J (2025). GeoThinneR: Efficient Spatial Thinning of Species Occurrences. R package version 2.0.0, https://github.com/jmestret/GeoThinneR
+> Mestre-Tomás, J. (2025). GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data. arXiv preprint arXiv:2505.07867. DOI: https://doi.org/10.48550/arXiv.2505.07867
