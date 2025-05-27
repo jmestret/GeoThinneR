@@ -1,78 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/articles/GeoThinneR.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/calculate_spatial_coverage.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/caretta.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/compute_nearest_neighbor_distances.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_brute.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_kdtree.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_local_kdtree.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/distance_thinning.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/estimate_k_max.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/GeoThinned.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/grid_thinning.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/lon_lat_to_cartesian.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/max_thinning_algorithm.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/precision_thinning.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/select_target_points.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/thin_points.html</loc>
-  </url>
-  <url>
-    <loc>https://jmestret.github.io/GeoThinneR/reference/thunnus.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://jmestret.github.io/GeoThinneR/404.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/LICENSE-text.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/LICENSE.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/articles/GeoThinneR.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/articles/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/authors.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/news/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/GeoThinned.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/calculate_spatial_coverage.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/caretta.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/compute_nearest_neighbor_distances.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_brute.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_kdtree.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_local_kdtree.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/distance_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/estimate_k_max.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/grid_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/index.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/lon_lat_to_cartesian.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/max_thinning_algorithm.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/precision_thinning.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/select_target_points.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/thin_points.html</loc></url>
+<url><loc>https://jmestret.github.io/GeoThinneR/reference/thunnus.html</loc></url>
 </urlset>
+
