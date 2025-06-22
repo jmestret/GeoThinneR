@@ -39,7 +39,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.0" id="geothinner-200">GeoThinneR 2.0.0<a class="anchor" aria-label="anchor" href="#geothinner-200"></a></h2><p class="text-muted">CRAN release: 2025-04-24</p>
+<h2 class="pkg-version" data-toc-text="development version" id="geothinner-development-version">GeoThinneR (development version)<a class="anchor" aria-label="anchor" href="#geothinner-development-version"></a></h2>
+<div class="section level3">
+<h3 id="added-development-version">Added<a class="anchor" aria-label="anchor" href="#added-development-version"></a></h3>
+<ul><li>Support for the <code>priority</code> parameter in the <code>"distance"</code> thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (<a href="https://github.com/jmestret/GeoThinneR/issues/1" class="external-link">#1</a>).</li>
+<li>Support for <code>NA</code> values in the <code>priority</code> vector. These are treated as the lowest priority and trigger a warning.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changed-development-version">Changed<a class="anchor" aria-label="anchor" href="#changed-development-version"></a></h3>
+<ul><li>The <code>"grid"</code> and <code>"precision"</code> methods now handle <code>priority</code> ties by randomly selecting among equally prioritized points.</li>
+<li>Updated the vignette section on the <code>priority</code> parameter.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.0" id="geothinner-200---24042025">GeoThinneR 2.0.0 - 24/04/2025<a class="anchor" aria-label="anchor" href="#geothinner-200---24042025"></a></h2><p class="text-muted">CRAN release: 2025-04-24</p>
 <p><strong>Breaking changes</strong>. This version is backward-incompatible with earlier versions of GeoThinneR.</p>
 <div class="section level3">
 <h3 id="major-changes-2-0-0">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-2-0-0"></a></h3>
@@ -73,12 +86,12 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0" id="geothinner-110">GeoThinneR 1.1.0<a class="anchor" aria-label="anchor" href="#geothinner-110"></a></h2><p class="text-muted">CRAN release: 2024-10-03</p>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="geothinner-110---03102024">GeoThinneR 1.1.0 - 03/10/2024<a class="anchor" aria-label="anchor" href="#geothinner-110---03102024"></a></h2><p class="text-muted">CRAN release: 2024-10-03</p>
 <ul><li>Removed non-CRAN dependency (<code>rtree</code>) and associated functions related to R-Trees structure thinning method (<code>r_tree_thinning()</code>).</li>
 <li>Minor improvements to documentation.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.0" id="geothinner-100">GeoThinneR 1.0.0<a class="anchor" aria-label="anchor" href="#geothinner-100"></a></h2><p class="text-muted">CRAN release: 2024-09-02</p>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="geothinner-100---02092024">GeoThinneR 1.0.0 - 02/09/2024<a class="anchor" aria-label="anchor" href="#geothinner-100---02092024"></a></h2><p class="text-muted">CRAN release: 2024-09-02</p>
 <ul><li>Initial release!</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -78,7 +78,7 @@ It can perform multiple trials of this process and return the results for all or
 
 
 <dt id="arg-priority">priority<a class="anchor" aria-label="anchor" href="#arg-priority"></a></dt>
-<dd><p>A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.</p></dd>
+<dd><p>A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -118,7 +118,7 @@ but setting `all_trials = TRUE` will return the results of all trials.</p>
 <span class="r-in"><span><span class="va">result_single</span> <span class="op">&lt;-</span> <span class="fu">precision_thinning</span><span class="op">(</span><span class="va">coords</span>, precision <span class="op">=</span> <span class="fl">2</span>, trials <span class="op">=</span> <span class="fl">1</span>, all_trials <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result_single</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE  TRUE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE  TRUE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

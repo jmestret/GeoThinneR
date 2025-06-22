@@ -54,7 +54,12 @@ supports multiple trials to find the optimal thinning solution.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">max_thinning_algorithm</span><span class="op">(</span><span class="va">neighbor_indices</span>, <span class="va">trials</span>, all_trials <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">max_thinning_algorithm</span><span class="op">(</span></span>
+<span>  <span class="va">neighbor_indices</span>,</span>
+<span>  <span class="va">trials</span>,</span>
+<span>  all_trials <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  priority <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +77,10 @@ supports multiple trials to find the optimal thinning solution.</p>
 <dt id="arg-all-trials">all_trials<a class="anchor" aria-label="anchor" href="#arg-all-trials"></a></dt>
 <dd><p>A logical value indicating whether to return results of all attempts (`TRUE`) or only the best attempt with the most points retained (`FALSE`). Default is `FALSE`.</p></dd>
 
+
+<dt id="arg-priority">priority<a class="anchor" aria-label="anchor" href="#arg-priority"></a></dt>
+<dd><p>A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -87,7 +96,7 @@ supports multiple trials to find the optimal thinning solution.</p>
 <span class="r-in"><span><span class="va">kept_points</span> <span class="op">&lt;-</span> <span class="fu">max_thinning_algorithm</span><span class="op">(</span><span class="va">neighbor_indices</span>, <span class="va">trials</span>, <span class="va">all_trials</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">kept_points</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE FALSE  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  TRUE FALSE FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
