@@ -8,6 +8,7 @@
 #' @param neighbor_indices A list of integer vectors where each element contains the indices of the neighboring points for each point in the dataset.
 #' @param trials A positive integer specifying the number of thinning trials to perform. Default is 10.
 #' @param all_trials A logical value indicating whether to return results of all attempts (`TRUE`) or only the best attempt with the most points retained (`FALSE`). Default is `FALSE`.
+#' @param priority A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).
 #'
 #' @return A list of logical vectors indicating which points are kept in each trial if all_trials is TRUE; otherwise, a list with a single logical vector indicating the points kept in the best trial.
 #'
@@ -20,7 +21,7 @@
 #' print(kept_points)
 #'
 #' @export
-max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE) {
+max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE, priority = NULL) {
   # Compute initial neighbor counts
   n <- length(neighbor_indices)
   neighbor_counts <- lengths(neighbor_indices)
@@ -39,7 +40,11 @@ max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE)
       # Find indices of points with the maximum neighbors
       points_to_remove <- which(neighbor_counts_trial == max_neighbors)
       if (length(points_to_remove) > 1) {
-        points_to_remove <- points_to_remove[as.integer(stats::runif(1, 1, length(points_to_remove)))]
+        if (!is.null(priority)) {
+          points_to_remove <- points_to_remove[sample(which(priority[points_to_remove] == min(priority[points_to_remove])), 1)]
+        } else {
+          points_to_remove <- points_to_remove[as.integer(ceiling(stats::runif(1, 0, length(points_to_remove))))]
+        }
       }
 
       # Recompute neighbor counts for remaining points

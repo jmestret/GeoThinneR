@@ -53,4 +53,5 @@ test_that("precision_thinning handles a single coordinate", {
 test_that("precision_thinning validates input parameters", {
   expect_error(precision_thinning(coordinates, precision = -1), "`precision` must be a non-negative integer.")
   expect_error(precision_thinning(coordinates, precision = 2, priority = 1), "'priority' must be a numeric vector with same length as number of points.")
+  expect_warning(precision_thinning(coordinates, precision = 2, priority = c(NA, 2, 3)), "NA values found in 'priority'.")
 })

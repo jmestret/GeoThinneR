@@ -11,7 +11,7 @@
 #' @param trials An integer specifying the number of trials to perform for thinning (default: 10).
 #' @param all_trials A logical value indicating whether to return results for all trials (`TRUE`) or just the first trial (`FALSE`, default).
 #' @param crs An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, `epsg:4326`). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.
-#' @param priority A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.
+#' @param priority A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).
 #' @return A list of logical vectors indicating which points to keep for each trial.
 #' @examples
 #' # Example: Grid thinning using thin_dist
@@ -45,6 +45,11 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
   if (!is.null(priority)){
     if (!is.numeric(priority) || length(priority) != nrow(coordinates)){
       stop("'priority' must be a numeric vector with same length as number of points.")
+    }
+
+    if (any(is.na(priority))){
+      warning("NA values found in 'priority'. Replacing with lowest priority (-Inf).")
+      priority[is.na(priority)] <- -Inf
     }
   }
 
@@ -86,7 +91,7 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
     if (is.null(priority)){
       sort_order <- stats::runif(nrow(coordinates))
     } else {
-      sort_order <- priority
+      sort_order <- rank(-priority, ties.method = "random")
     }
     keep_points_trial <- data.table::data.table(
       id = seq_len(nrow(coordinates)),

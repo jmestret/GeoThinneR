@@ -11,6 +11,7 @@ distance_thinning(
   all_trials = FALSE,
   search_type = c("local_kd_tree", "k_estimation", "kd_tree", "brute"),
   target_points = NULL,
+  priority = NULL,
   distance = c("haversine", "euclidean"),
   R = 6371,
   n_cores = 1
@@ -28,6 +29,8 @@ distance_thinning(
 \item{search_type}{A character string indicating the neighbor search method `c("local_kd_tree", "k_estimation", "kd_tree", "brute")`. The default value is `local_kd_tree`. See details.}
 
 \item{target_points}{Optional integer specifying the number of points to retain. If `NULL` (default), the function tries to maximize the number of points retained.}
+
+\item{priority}{A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).}
 
 \item{distance}{Distance metric to use `c("haversine", "euclidean")`. Default is Haversine for geographic coordinates.}
 

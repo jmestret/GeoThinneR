@@ -10,6 +10,7 @@
 #' @param all_trials A logical indicating whether to return results of all attempts (`TRUE`) or only the best attempt with the most points retained (`FALSE`). Default is `FALSE`.
 #' @param search_type A character string indicating the neighbor search method `c("local_kd_tree", "k_estimation", "kd_tree", "brute")`. The default value is `local_kd_tree`. See details.
 #' @param target_points Optional integer specifying the number of points to retain. If `NULL` (default), the function tries to maximize the number of points retained.
+#' @param priority A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).
 #' @param distance Distance metric to use `c("haversine", "euclidean")`. Default is Haversine for geographic coordinates.
 #' @param R Radius of the Earth in kilometers (default: 6371 km).
 #' @param n_cores Number of cores for parallel processing (only for `"local_kd_tree"`). Default is 1.
@@ -40,7 +41,7 @@
 #' @export
 distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_trials = FALSE,
                               search_type = c("local_kd_tree", "k_estimation", "kd_tree", "brute"),
-                              target_points = NULL, distance = c("haversine", "euclidean"),
+                              target_points = NULL, priority = NULL, distance = c("haversine", "euclidean"),
                               R = 6371, n_cores = 1) {
 
   # Input validation
@@ -60,6 +61,17 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
     search_type <- "brute"
   }
 
+  if (!is.null(priority)){
+    if (!is.numeric(priority) | length(priority) != nrow(coordinates)){
+      stop("'priority' must be a numeric vector with same length as number of points.")
+    }
+
+    if (any(is.na(priority))){
+      warning("NA values found in 'priority'. Replacing with lowest priority (-Inf).")
+      priority[is.na(priority)] <- -Inf
+    }
+  }
+
   if (is.null(target_points)){
     # Determine neighbor search method
     neighbor_indices <- switch(
@@ -72,7 +84,7 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
     )
 
     # Run thinning algorithm to keep as max points as possible
-    kept_points <- max_thinning_algorithm(neighbor_indices, trials, all_trials)
+    kept_points <- max_thinning_algorithm(neighbor_indices, trials, all_trials = all_trials, priority = priority)
   } else { # Try to select the exact number of points as much separated as possible
     # Compute neighbors
     if (distance == "haversine") {

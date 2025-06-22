@@ -1,4 +1,18 @@
-# GeoThinneR 2.0.0
+All notable changes to this project will be documented in this file.
+
+# GeoThinneR (development version)
+
+## Added
+
+* Support for the `priority` parameter in the `"distance"` thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (#1).
+* Support for `NA` values in the `priority` vector. These are treated as the lowest priority and trigger a warning.
+
+## Changed
+
+* The `"grid"` and `"precision"` methods now handle `priority` ties by randomly selecting among equally prioritized points.
+* Updated the vignette section on the `priority` parameter.
+
+# GeoThinneR 2.0.0 - 24/04/2025
 
 **Breaking changes**. This version is backward-incompatible with earlier versions of GeoThinneR.
 
@@ -26,11 +40,11 @@
 * Improved documentation, error messages, and reproducibility behavior across all functions.
 * Updated the package vignette to reflect all changes.
 
-# GeoThinneR 1.1.0
+# GeoThinneR 1.1.0 - 03/10/2024
 
 * Removed non-CRAN dependency (`rtree`) and associated functions related to R-Trees structure thinning method (`r_tree_thinning()`).
 * Minor improvements to documentation.
 
-# GeoThinneR 1.0.0 
+# GeoThinneR 1.0.0 - 02/09/2024 
 
 * Initial release!

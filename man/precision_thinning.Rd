@@ -21,7 +21,7 @@ precision_thinning(
 
 \item{all_trials}{A logical value indicating whether to return results for all trials (`TRUE`) or just the first/best trial (`FALSE`). Default is `FALSE`.}
 
-\item{priority}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+\item{priority}{A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).}
 }
 \value{
 If `all_trials` is `FALSE`, returns a logical vector indicating which points were kept in the first trial.

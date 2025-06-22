@@ -455,12 +455,22 @@ ggplot() +
 
 ## Select points by priority
 
-In some scenarios, you may want to prioritize certain points based on a specific criterion, such as uncertainty, data quality, or any other variable. The `priority` parameter allows you to pass a vector representing the priority of each point. Currently, this feature can be used with the `"grid"` and `"precision"` methods.
+In some scenarios, you may want to prioritize certain points based on a specific variable, such as coordinate uncertainty, data quality, or any other variable. The `priority` parameter allows you to assign a numeric weight to each point, where higher values indicate higher importance, and these points are more likely to be retained during thinning. This feature is available for the `"distance"`, `"grid"` and `"precision"` methods.
 
-For example, in the sea turtle data downloaded from GBIF, there is a column named `coordinateUncertaintyInMeters`. We can use this to prioritize points with lower uncertainty within each grid cell (in the `grid` method) or when rounding coordinates (in the `precision` method). Keep in mind that bigger uncertainty values represent less priority so we have to reverse this values.
-
+For example, in the sea turtle data downloaded from GBIF, there is a column named `coordinateUncertaintyInMeters`. To prioritize records with lower uncertainty, you can invert the values so that smaller uncertainties receive higher priority. A simple way to do this is:
 
 ```{r}
+# Invert uncertainty to give more priority to lower uncertainty records
+priority <- -caretta$coordinateUncertaintyInMeters
+
+# For example, handle NAs by assigning lowest possible priority
+priority[is.na(priority)] <- min(priority, na.rm = TRUE) - 1
+```
+
+Then apply thinning using the priority weights:
+
+```{r}
+# Standard grid thinning (no priority)
 grid_thin <- thin_points(
   data = caretta,
   lon_col = "decimalLongitude",
@@ -470,8 +480,7 @@ grid_thin <- thin_points(
   seed = 123
 )
 
-# Substracting the maximum - the highest uncertainty becomes the lowest priority and vice versa.
-priority <- max(caretta$coordinateUncertaintyInMeters, na.rm = TRUE) - caretta$coordinateUncertaintyInMeters
+# Grid thinning with priority
 priority_thin <- thin_points(
   data = caretta,
   lon_col = "decimalLongitude",
@@ -483,8 +492,16 @@ priority_thin <- thin_points(
 )
 
 mean(largest(grid_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
-mean(largest(priority_thin )$coordinateUncertaintyInMeters, na.rm = TRUE)
+mean(largest(priority_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
 ```
+
+**Notes**
+
+* Higher `priority` values mean the point is more likely to be retained.
+* In `"grid"` and `"precision"` methods, when multiple points fall into the same grid cell or rounded coordinate, the one with highest priority is kept.
+* In the `"distance"` method, priority is used to resolve tie situations where multiple points have the same spatial influence; the point with lowest priority is dropped.
+* If multiple points have the same priority, one is selected at random.
+* By default, if provided `NA` values in `priority`, they are treated as the lowest possible priority.
 
 # Other Packages
 

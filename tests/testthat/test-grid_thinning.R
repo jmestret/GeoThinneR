@@ -52,4 +52,8 @@ test_that("grid_thinning invalid input", {
   # grid_thinning with wrongly formated n
   expect_error(grid_thinning(coordinates, resolution = 2, n = -1), "`n` must be a positive integer specifying the maximum number of points per grid cell.")
 
+  # grid_thinning with NA priority values warning
+  expect_warning(grid_thinning(coordinates, resolution = 2, priority = c(NA, 2, 3)), "NA values found in 'priority'.")
+
+
 })

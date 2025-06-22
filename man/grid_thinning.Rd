@@ -36,7 +36,7 @@ grid_thinning(
 
 \item{crs}{An optional CRS (Coordinate Reference System) to project the coordinates and raster (default WGS84, `epsg:4326`). This can be an EPSG code, a PROJ.4 string, or a `terra::crs` object.}
 
-\item{priority}{A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.}
+\item{priority}{A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).}
 }
 \value{
 A list of logical vectors indicating which points to keep for each trial.

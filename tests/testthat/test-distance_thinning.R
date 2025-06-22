@@ -105,3 +105,16 @@ test_that("All methods find same neighbors", {
   expect_true(identical(brute, k_estimation))
   expect_true(identical(brute, local_kd_tree))
 })
+
+
+test_that("distance_thinning works with priority", {
+  priority <- 1:nrow(coords)
+  result_priority <- distance_thinning(coords, search_type = "brute", thin_dist = 0.1, trials = 1, priority = priority)
+
+  # distance_thinning with wrongly formated priority
+  expect_error(distance_thinning(coords, search_type = "brute", thin_dist = 0.1, trials = 1, priority = 1), "'priority' must be a numeric vector with same length as number of points.")
+  expect_warning(distance_thinning(coords, search_type = "brute", thin_dist = 0.1, trials = 1, priority = c(NA, 2:nrow(coords))), "NA values found in 'priority'.")
+
+  expect_length(result_priority[[1]], nrow(coords))
+  expect_true(sum(result_priority[[1]]) < nrow(coords))
+})

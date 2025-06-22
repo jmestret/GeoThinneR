@@ -7,7 +7,7 @@
 #' @param precision A positive integer specifying the number of decimal places to which coordinates should be rounded. Default is 4.
 #' @param trials A positive integer specifying the number of thinning trials to perform. Default is 10.
 #' @param all_trials A logical value indicating whether to return results for all trials (`TRUE`) or just the first/best trial (`FALSE`). Default is `FALSE`.
-#' @param priority A numeric vector of the same length as the number of points with numerical values indicating the priority of each point. Instead of eliminating points randomly, higher values are preferred during thinning.
+#' @param priority A numeric vector of the same length as the number of points, specifying a priority weight for each point. Higher values indicate higher importance and are favored when selecting which points to retain. Priority is used to guide selection when multiple candidate points are otherwise equally valid (e.g., points in the same grid cell, with the same rounded coordinates, or with the same number of neighbors).
 #' @return If `all_trials` is `FALSE`, returns a logical vector indicating which points were kept in the first trial.
 #' If `all_trials` is `TRUE`, returns a list of logical vectors, one for each trial.
 #'
@@ -37,6 +37,11 @@ precision_thinning <- function(coordinates, precision = 4, trials = 10, all_tria
     if (!is.numeric(priority) | length(priority) != nrow(coordinates)){
       stop("'priority' must be a numeric vector with same length as number of points.")
     }
+
+    if (any(is.na(priority))){
+      warning("NA values found in 'priority'. Replacing with lowest priority (-Inf).")
+      priority[is.na(priority)] <- -Inf
+    }
   }
 
   # Initialize results list for trials
@@ -48,7 +53,7 @@ precision_thinning <- function(coordinates, precision = 4, trials = 10, all_tria
     if (is.null(priority)){
       sort_order <- stats::runif(nrow(coordinates))
     } else {
-      sort_order <- priority
+      sort_order <- rank(-priority, ties.method = "random")
     }
     keep_points_trial <- data.table::data.table(
       id = seq_len(nrow(coordinates)),
