@@ -46,7 +46,7 @@ new_GeoThinned <- function(retained, method, params = list(), original_data = NU
 print.GeoThinned <- function(x, ...) {
   cat("GeoThinned object\n")
   cat("Method used:", x$method, "\n")
-  cat("Number of trials:", length(x$retained), "\n")
+  cat("Number of trials:", x$params$trials, paste0("(", length(x$retained), " trials returned)\n"))
   cat("Points retained in largest trial:", sum(x$retained[[largest_index(x)]]), "\n")
   invisible(x)
 }
