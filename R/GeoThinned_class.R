@@ -70,15 +70,23 @@ summary.GeoThinned <- function(object, ...) {
   nnd_orig <- compute_nearest_neighbor_distances(original_coords, distance = distance_type)
   nnd_thin <- compute_nearest_neighbor_distances(thinned_coords, distance = distance_type)
 
-  coverage_orig <- calculate_spatial_coverage(original_coords, distance = distance_type)
-  coverage_thin <- calculate_spatial_coverage(thinned_coords, distance = distance_type)
+  if (object$method %in% c("grid", "precision") && distance_type == "haversine") {
+    message("Note: Nearest neighbor distances and spatial coverage are computed using Haversine geometry by default.")
+  }
 
   if (n_thin < 3) {
     warning("Fewer than 3 points in thinned set. Spatial coverage may not be meaningful.")
   }
 
-  if (object$method %in% c("grid", "precision")) {
-    message("Note: Nearest neighbor distances and spatial coverage are computed using Haversine geometry by default.")
+  has_updated_s2 <- requireNamespace("s2", quietly = TRUE) && utils::packageVersion("s2") >= "1.1.0"
+
+  if (distance_type != "haversine" || has_updated_s2) {
+    coverage_orig <- calculate_spatial_coverage(original_coords, distance = distance_type)
+    coverage_thin <- calculate_spatial_coverage(thinned_coords, distance = distance_type)
+  } else {
+    message("Spatial coverage not computed for geographic coordinates: requires 's2' (>= 1.1.0). Please update the 's2' package.")
+    coverage_orig <- NA
+    coverage_thin <- NA
   }
 
   summary <- list(

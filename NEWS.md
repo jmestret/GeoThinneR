@@ -11,6 +11,12 @@ All notable changes to this project will be documented in this file.
 
 * The `"grid"` and `"precision"` methods now handle `priority` ties by randomly selecting among equally prioritized points.
 * Updated the vignette section on the `priority` parameter.
+* Added `s2 (>= 1.1.0)` to *Suggests* in the DESCRIPTION file.
+
+## Fixed
+
+* `print()` now reports both the number of trials run and returned (#3).
+* `summary()` no longer errors when `s2` is missing or too old. Now spatial coverage is set to `NA` with a message (#3).
 
 # GeoThinneR 2.0.0 - 24/04/2025
 
