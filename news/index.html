@@ -42,7 +42,11 @@
 <h2 class="pkg-version" data-toc-text="development version" id="geothinner-development-version">GeoThinneR (development version)<a class="anchor" aria-label="anchor" href="#geothinner-development-version"></a></h2>
 <div class="section level3">
 <h3 id="added-development-version">Added<a class="anchor" aria-label="anchor" href="#added-development-version"></a></h3>
-<ul><li>Support for the <code>priority</code> parameter in the <code>"distance"</code> thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (<a href="https://github.com/jmestret/GeoThinneR/issues/1" class="external-link">#1</a>).</li>
+<ul><li>Added <code><a href="../reference/is_lonlat.html">is_lonlat()</a></code> helper function to check for valid longitude/latitude ranges.</li>
+<li>A warning is printed when coordinates lie outside the typical global longitude/latitude ranges.</li>
+<li>
+<code><a href="https://rspatial.github.io/terra/reference/summary.html" class="external-link">summary()</a></code> now allows to choose which trial to summarise using the <code>trial</code> argument.</li>
+<li>Support for the <code>priority</code> parameter in the <code>"distance"</code> thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (<a href="https://github.com/jmestret/GeoThinneR/issues/1" class="external-link">#1</a>).</li>
 <li>Support for <code>NA</code> values in the <code>priority</code> vector. These are treated as the lowest priority and trigger a warning.</li>
 </ul></div>
 <div class="section level3">
@@ -111,7 +115,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

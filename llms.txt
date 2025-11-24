@@ -1,0 +1,173 @@
+# GeoThinneR - An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data
+
+## Overview
+
+**GeoThinneR** is an R package designed for efficient spatial thinning
+of species occurrence records and other geospatial point data. It
+integrates three primary thinning methods (**distance-based, grid-based,
+and precision-based thinning**) into a single package, eliminating the
+need to switch between multiple tools. GeoThinneR implements algorithms
+based on kd-tree structures for nearest-neighbor searches, significantly
+improving performance and **scalability for large datasets**.
+Additionally, the package provides custom **functionalities** useful for
+species distribution modeling (SDM), such as thinning by group (e.g.,
+multiple species), retaining an exact number of points, and prioritizing
+records based on user-defined variables. These features make GeoThinneR
+a valuable tool for handling large-scale occurrence datasets.
+
+![](reference/figures/README-GeoThinneR_summary.png)
+
+GeoThinneR has been developed as an alternative tool for spatial
+thinning to mitigate the effects of sampling bias in SDM. Various
+approaches exist to address sampling bias, each suited to different
+scenarios. Below are some references discussing methods for bias
+correction and spatial thinning:
+
+- Boria, R. A., Olson, L. E., Goodman, S. M., & Anderson, R. P. (2014).
+  Spatial filtering to reduce sampling bias can improve the performance
+  of ecological niche models. *Ecological modelling, 275*, 73-77.
+  <https://doi.org/10.1016/j.ecolmodel.2013.12.012>
+- Veloz, S. D. (2009). Spatially autocorrelated sampling falsely
+  inflates measures of accuracy for presence‐only niche models. *Journal
+  of biogeography, 36*(12),
+  2290-2299.<https://doi.org/10.1111/j.1365-2699.2009.02174.x>
+- Moudrý, V., Bazzichetto, M., Remelgado, R., Devillers, R., Lenoir, J.,
+  Mateo, R.G., Lembrechts, J.J., Sillero, N., Lecours, V., Cord, A.F.,
+  Barták, V., Balej, P., Rocchini, D., Torresani, M., Arenas-Castro, S.,
+  Man, M., Prajzlerová, D., Gdulová, K., Prošek, J., Marchetto, E.,
+  Zarzo-Arias, A., Gábor, L., Leroy, F., Martini, M., Malavasi, M.,
+  Cazzolla Gatti, R., Wild, J. and Šímová, P. (2024), Optimising
+  occurrence data in species distribution models: sample size,
+  positional uncertainty, and sampling bias matter. *Ecography, 2024*:
+  e07294. <https://doi.org/10.1111/ecog.07294>
+
+## Getting started
+
+You can install **GeoThinneR** from CRAN with:
+
+``` r
+install.packages("GeoThinneR")
+```
+
+To install the **development version** from GitHub, use:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("jmestret/GeoThinneR")
+```
+
+Using GeoThinneR is simple. The main function,
+[`thin_points()`](https://jmestret.github.io/GeoThinneR/reference/thin_points.md),
+applies spatial thinning using a user-specified method and thinning
+constraint.
+
+``` r
+library(GeoThinneR)
+
+# Distance-based thinning (minimum separation of 10 km)
+thin_points(data, method = "distance", thin_dist = 10)
+
+# Grid-based thinning (grid resolution of 0.1 degrees)
+thin_points(data, method = "grid", resolution = 0.1)
+
+# Precision-based thinning (rounding coordinates to 1 decimal place)
+thin_points(data, method = "precision", precision = 1)
+```
+
+## Documentation
+
+For detailed documentation, guides, and usage examples, please visit the
+[official package
+documentation](https://jmestret.github.io/GeoThinneR/).
+
+## Contributing
+
+We welcome contributions! If you have suggestions for improvements or
+new features, please open an issue or submit a pull request on our
+[GitHub repository](https://github.com/jmestret/GeoThinneR).
+
+## How to cite GeoThinneR
+
+The GeoThinneR manuscript is currently in progress. In the meantime, you
+can cite the [preprint](https://doi.org/10.48550/arXiv.2505.07867) as
+follows:
+
+> Mestre-Tomás, J. (2025). GeoThinneR: An R Package for Efficient
+> Spatial Thinning of Species Occurrences and Point Data. arXiv preprint
+> arXiv:2505.07867. DOI: <https://doi.org/10.48550/arXiv.2505.07867>
+
+# Package index
+
+## Wrapper function
+
+- [`thin_points()`](https://jmestret.github.io/GeoThinneR/reference/thin_points.md)
+  : Spatial Thinning of Points
+
+## Methods functions
+
+- [`distance_thinning()`](https://jmestret.github.io/GeoThinneR/reference/distance_thinning.md)
+  : Perform Distance-Based Thinning
+- [`grid_thinning()`](https://jmestret.github.io/GeoThinneR/reference/grid_thinning.md)
+  : Perform Grid-Based Thinning of Spatial Points
+- [`precision_thinning()`](https://jmestret.github.io/GeoThinneR/reference/precision_thinning.md)
+  : Precision Thinning of Spatial Points
+
+## Distance-based methods
+
+- [`compute_neighbors_brute()`](https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_brute.md)
+  : Compute Neighbors Using Brute-Force
+- [`compute_neighbors_kdtree()`](https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_kdtree.md)
+  : Compute Neighbors Using kd-Tree
+- [`compute_neighbors_local_kdtree()`](https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_local_kdtree.md)
+  : Compute Neighbors Using Local kd-Trees
+- [`estimate_k_max()`](https://jmestret.github.io/GeoThinneR/reference/estimate_k_max.md)
+  : Estimate Maximum Neighbors for kd-Tree Thinning
+- [`select_target_points()`](https://jmestret.github.io/GeoThinneR/reference/select_target_points.md)
+  : Select Target Number of Points for Spatial Thinning
+
+## Helper functions
+
+- [`is_lonlat()`](https://jmestret.github.io/GeoThinneR/reference/is_lonlat.md)
+  : Check for Longitude/Latitude Coordinates
+- [`max_thinning_algorithm()`](https://jmestret.github.io/GeoThinneR/reference/max_thinning_algorithm.md)
+  : Thinning Algorithm for Spatial Data
+- [`lon_lat_to_cartesian()`](https://jmestret.github.io/GeoThinneR/reference/lon_lat_to_cartesian.md)
+  : Convert Geographic Coordinates to Cartesian Coordinates
+- [`calculate_spatial_coverage()`](https://jmestret.github.io/GeoThinneR/reference/calculate_spatial_coverage.md)
+  : Calculate Spatial Coverage (Convex Hull Area)
+- [`compute_nearest_neighbor_distances()`](https://jmestret.github.io/GeoThinneR/reference/compute_nearest_neighbor_distances.md)
+  : Compute Nearest Neighbor Distances
+
+## Class
+
+- [`as_GeoThinned()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`new_GeoThinned()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`print(`*`<GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`summary(`*`<GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`print(`*`<summary.GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`plot(`*`<GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`largest()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`largest_index()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`get_trial()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  [`as_sf()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
+  : GeoThinned Object Constructor and Methods
+
+## Datasets
+
+- [`caretta`](https://jmestret.github.io/GeoThinneR/reference/caretta.md)
+  :
+
+  Loggerhead Sea Turtle (*Caretta caretta*) Occurrence Records in the
+  Mediterranean Sea
+
+- [`thunnus`](https://jmestret.github.io/GeoThinneR/reference/thunnus.md)
+  :
+
+  Yellowfin Tuna (*Thunnus albacares*) Worldwide Occurrence Records
+
+# Articles
+
+### All vignettes
+
+- [Getting started with
+  GeoThinneR](https://jmestret.github.io/GeoThinneR/articles/GeoThinneR.md):
