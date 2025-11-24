@@ -32,6 +32,7 @@ reference:
   - '`select_target_points`'
 - title: Helper functions
   contents:
+  - '`is_lonlat`'
   - '`max_thinning_algorithm`'
   - '`lon_lat_to_cartesian`'
   - '`calculate_spatial_coverage`'

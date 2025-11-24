@@ -4,6 +4,7 @@
 #' point density while maintaining spatial representation. Points are thinned
 #' based on a specified distance, grid, or decimal precision, with support for
 #' multiple trials and optional grouping.
+#' By default, only the largest subset is returned. To return all trials, set `all_trials = TRUE`.
 #'
 #' @param data A data frame or tibble containing the input points to thin. Must contain longitude and latitude columns.
 #' @param lon_col Character name of the column with longitude coordinates (default: `"lon"`).
@@ -23,6 +24,8 @@
 #'   \item `method`: The thinning method used.
 #'   \item `params`: A list of the thinning parameters used.
 #' }
+#' By default, `thin_points()` returns only the trial with the largest number of retained points.
+#' To access all thinning trials, set `all_trials = TRUE`; otherwise, functions such as `largest()` and `get_trial()` will always refer to the same subset.
 #'
 #' @details
 #' The following thinning methods are available:
@@ -128,6 +131,12 @@ thin_points <- function(data, lon_col = "lon", lat_col = "lat", group_col = NULL
   }
   if (!lon_col %in% colnames(data) || !lat_col %in% colnames(data)) {
     stop("Specified longitude or latitude columns do not exist in the data.")
+  }
+  if (!is_lonlat(data[,lon_col], data[, lat_col])) {
+    warning(
+      "Input coordinates lie outside the typical longitude/latitude global ranges. ",
+      "GeoThinneR assumes decimal degrees when using the Haversine distance."
+    )
   }
   if (!is.null(group_col) && !(group_col %in% colnames(data))) {
     stop("Specified grouping column does not exist in the data.")

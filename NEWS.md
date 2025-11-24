@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## Added
 
+* Added `is_lonlat()` helper function to check for valid longitude/latitude ranges.
+* A warning is printed when coordinates lie outside the typical global longitude/latitude ranges.
+* `summary()` now allows to choose which trial to summarise using the `trial` argument.
 * Support for the `priority` parameter in the `"distance"` thinning method. When multiple candidate points have the same number of neighbors, the point with the lowest priority is removed (#1).
 * Support for `NA` values in the `priority` vector. These are treated as the lowest priority and trigger a warning.
 

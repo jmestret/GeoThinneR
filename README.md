@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GeoThinneR - An R Package for Spatial Thinning <a href="https://jmestret.github.io/GeoThinneR/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+# GeoThinneR - An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data <a href="https://jmestret.github.io/GeoThinneR/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 

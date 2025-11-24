@@ -23,7 +23,7 @@ new_GeoThinned(retained, method, params = list(), original_data = NULL)
 
 \method{print}{GeoThinned}(x, ...)
 
-\method{summary}{GeoThinned}(object, ...)
+\method{summary}{GeoThinned}(object, trial = NULL, ...)
 
 \method{print}{summary.GeoThinned}(x, ...)
 
@@ -70,7 +70,7 @@ as_sf(x, ...)
 
 \item{object}{An object of class \code{GeoThinned}.}
 
-\item{trial}{Integer index of the thinning trial to extract (for \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.}
+\item{trial}{Integer index of the thinning trial to extract (for \code{summary()}, \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.}
 
 \item{show_original}{Logical, whether to show original points.}
 
@@ -88,6 +88,7 @@ as_sf(x, ...)
 }
 \value{
 A \code{GeoThinned} object or associated results (summary, plot, trial subset).
+When `thin_points()` is run with `all_trials = FALSE`, the returned object contains only the largest trial; therefore all methods refer to this single subset.
 }
 \description{
 Create and interact with spatial thinning results stored in a GeoThinned object.

@@ -11,7 +11,8 @@ test_that("thin_points works with valid input", {
                               lon_col = "lon",
                               lat_col = "lat",
                               trials = 5,
-                              seed = 123)
+                              seed = 123,
+                              verbose = TRUE)
   expect_equal(length(thinned_data$retained[[1]]), 100) # Check the number of rows in the first trial
 })
 
@@ -81,7 +82,9 @@ test_that("thin_points handles invalid inputs correctly", {
   expect_error(thin_points(NULL), "Specified longitude or latitude columns do not exist")
   expect_error(thin_points(data.frame(x = 1:10, y = 1:10), lon_col = "lon", lat_col = "lat"),
                "Specified longitude or latitude columns do not exist")
+  expect_error(thin_points(data.frame(lon = c("a", "b", "c"),lat = 1:3), lon_col = NULL), "Error: The first two columns must be numeric")
   expect_error(thin_points(sample_data, trials = -1), "`trials` must be a positive integer")
   expect_error(thin_points(sample_data, all_trials = "yes"), "`all_trials` must be a logical value")
   expect_error(thin_points(sample_data, group_col = "unknown"), "Specified grouping column does not exist")
+  expect_warning(thin_points(data.frame(lon = c(10, 200), lat = c(20, 30))), "Input coordinates lie outside the typical longitude/latitude global ranges.")
 })

@@ -38,8 +38,9 @@ library(ggplot2)
 ```
 
 We'll use two dataset to demonstrate the use of **GeoThinneR**:
-1. A **simulated a dataset** with `n = 2000` random occurrences randomly distributed within a 40 x 20 degree area for two artificial species.
-2. A **real-world dataset** containing loggerhead sea turtle (*Caretta caretta*) occurrences in the Mediterranean Sea downloaded from GBIF (\url{https://www.gbif.org/}) and included with the package.
+
+1. A **simulated a dataset** with `n = 2000` random occurrences randomly distributed within a 20 x 10 degree area for two artificial species.
+2. A **real-world dataset** containing loggerhead sea turtle (*Caretta caretta*) occurrences in the Mediterranean Sea downloaded from [GBIF](https://doi.org/10.15468/dl.9jcjrm) and included with the package.
 
 ```{r load data, message=FALSE, results='hide'}
 # Set seed for reproducibility
@@ -114,7 +115,7 @@ quick_thin <- thin_points(
 quick_thin
 ```
 
-This command applies spatial thinning ensuring no two retained points are closer than 20 km (`thin_dist`). The algorithm runs 5 random trials (`trials`) and return the results of all trials (`all_trials = TRUE`).
+This command applies spatial thinning ensuring no two retained points are closer than 20 km (`thin_dist`). We specified to run 5 random trials (`trials`). By default, it returns only the trial that retains the largest subset of points, but because we set `all_trials = TRUE`, all trials are returned.
 
 ### Exploring the GeoThinned object
 
@@ -124,13 +125,13 @@ The output of `thin_points()` is a `GeoThinned` object, which contains:
 - `x$params`: the parameters used for thinning
 - `x$original_data`: the original dataset
 
-You can apply basic methods for inspecting the object such as `print()`, `summary()`, and `plot()`. The `summary()` function provides detailed information about the thinning process, including the number of points retained in each trial, the nearest neighbor distance (NND), and the coverage of the retained points.
+You can apply basic methods for inspecting the object such as `print()`, `summary()`, and `plot()`. The `summary()` function provides detailed information about the thinning process, including the number of points retained after thinning, the nearest neighbor distance (NND), and the spatial coverage of the retained points. By default, the summary shows the metrics for the trial that retains the largest number of points, but you can also specify a specific trial using the `trial` argument.
 
 ```{r}
 summary(quick_thin)
 ```
 
-We see that from 2000, we retained the 69.6% of points (1391), and the minimum distance between points has increased without reducing too much the spatial coverage or extent of the points compared to the original dataset.
+We see that from 2000, we retained the 69.5% of points (1390), and the minimum distance between points has increased without reducing too much the spatial coverage or extent of the points compared to the original dataset.
 
 ```{r}
 plot(quick_thin)
@@ -513,15 +514,15 @@ The **GeoThinneR** package was inspired by the work of many others who have deve
 
 # References
 
-- Aiello‐Lammens, M. E., Boria, R. A., Radosavljevic, A., Vilela, B., and Anderson, R. P. (2015). *spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models*. Ecography, 38(5), 541-545.
+- Aiello‐Lammens, M. E., Boria, R. A., Radosavljevic, A., Vilela, B., and Anderson, R. P. (2015). *spThin: an R package for spatial thinning of species occurrence records for use in ecological niche models*. Ecography, 38(5), 541-545. https://doi.org/10.1111/ecog.01132
 
-- Elseberg, J., Magnenat, S., Siegwart, R., & Nüchter, A. (2012). *Comparison of nearest-neighbor-search strategies and implementations for efficient shape registration*. Journal of Software Engineering for Robotics, 3(1), 2-12.
+- Elseberg, J., Magnenat, S., Siegwart, R., & Nüchter, A. (2012). *Comparison of nearest-neighbor-search strategies and implementations for efficient shape registration*. Journal of Software Engineering for Robotics, 3(1), 2-12. https://hdl.handle.net/10446/86202
 
 - Hijmans, R.J., Phillips, S., Leathwick, J., & Elith, J. (2023). *dismo: Species Distribution Modeling*. R Package Version 1.3-14. https://cran.r-project.org/package=dismo
 
 - Mestre-Tomás J (2025). GeoThinneR: Efficient Spatial Thinning of Species Occurrences. R package version 2.0.0, https://github.com/jmestret/GeoThinneR
 
-- Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023). *Including imprecisely georeferenced specimens improves accuracy of species distribution models and estimates of niche breadth*. Global Ecology and Biogeography, 32(3), 342-355.
+- Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023). *Including imprecisely georeferenced specimens improves accuracy of species distribution models and estimates of niche breadth*. Global Ecology and Biogeography, 32(3), 342-355. https://doi.org/10.1111/geb.13628
 
 # Session info
 

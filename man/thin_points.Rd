@@ -46,12 +46,15 @@ A `GeoThinned` object (S3 class), which contains:
   \item `method`: The thinning method used.
   \item `params`: A list of the thinning parameters used.
 }
+By default, `thin_points()` returns only the trial with the largest number of retained points.
+To access all thinning trials, set `all_trials = TRUE`; otherwise, functions such as `largest()` and `get_trial()` will always refer to the same subset.
 }
 \description{
 This function performs spatial thinning of geographic points to reduce
 point density while maintaining spatial representation. Points are thinned
 based on a specified distance, grid, or decimal precision, with support for
 multiple trials and optional grouping.
+By default, only the largest subset is returned. To return all trials, set `all_trials = TRUE`.
 }
 \details{
 The following thinning methods are available:
