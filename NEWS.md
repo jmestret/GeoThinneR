@@ -2,6 +2,8 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+# GeoThinneR 2.1.0 - 24/11/2025
+
 ## Added
 
 * Added `is_lonlat()` helper function to check for valid longitude/latitude ranges.
