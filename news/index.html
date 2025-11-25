@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GeoThinneR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,8 +40,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="geothinner-development-version">GeoThinneR (development version)<a class="anchor" aria-label="anchor" href="#geothinner-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.0" id="geothinner-210---24112025">GeoThinneR 2.1.0 - 24/11/2025<a class="anchor" aria-label="anchor" href="#geothinner-210---24112025"></a></h2><p class="text-muted">CRAN release: 2025-11-25</p>
 <div class="section level3">
-<h3 id="added-development-version">Added<a class="anchor" aria-label="anchor" href="#added-development-version"></a></h3>
+<h3 id="added-2-1-0">Added<a class="anchor" aria-label="anchor" href="#added-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/is_lonlat.html">is_lonlat()</a></code> helper function to check for valid longitude/latitude ranges.</li>
 <li>A warning is printed when coordinates lie outside the typical global longitude/latitude ranges.</li>
 <li>
@@ -50,13 +53,13 @@
 <li>Support for <code>NA</code> values in the <code>priority</code> vector. These are treated as the lowest priority and trigger a warning.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changed-development-version">Changed<a class="anchor" aria-label="anchor" href="#changed-development-version"></a></h3>
+<h3 id="changed-2-1-0">Changed<a class="anchor" aria-label="anchor" href="#changed-2-1-0"></a></h3>
 <ul><li>The <code>"grid"</code> and <code>"precision"</code> methods now handle <code>priority</code> ties by randomly selecting among equally prioritized points.</li>
 <li>Updated the vignette section on the <code>priority</code> parameter.</li>
 <li>Added <code>s2 (&gt;= 1.1.0)</code> to <em>Suggests</em> in the DESCRIPTION file.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="fixed-development-version">Fixed<a class="anchor" aria-label="anchor" href="#fixed-development-version"></a></h3>
+<h3 id="fixed-2-1-0">Fixed<a class="anchor" aria-label="anchor" href="#fixed-2-1-0"></a></h3>
 <ul><li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> now reports both the number of trials run and returned (<a href="https://github.com/jmestret/GeoThinneR/issues/3" class="external-link">#3</a>).</li>
 <li>

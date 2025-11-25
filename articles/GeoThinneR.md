@@ -468,7 +468,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.017   0.000   0.015
+#>   0.017   0.000   0.016
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -490,7 +490,7 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.004   0.000   0.003
+#>   0.005   0.000   0.004
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
@@ -519,7 +519,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.003   0.000   0.003
+#>   0.004   0.000   0.003
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -586,11 +586,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2025-11-24 12:46:56 
+#> Starting spatial thinning at 2025-11-25 07:54:27 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 3.86 seconds
+#> Total execution time: 4.1 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -731,7 +731,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.1    sf_1.0-22        terra_1.8-80     GeoThinneR_2.0.0
+#> [1] ggplot2_4.0.1    sf_1.0-22        terra_1.8-80     GeoThinneR_2.1.0
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] s2_1.1.9           sass_0.4.10        class_7.3-23       KernSmooth_2.23-26

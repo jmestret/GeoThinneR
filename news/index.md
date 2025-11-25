@@ -2,6 +2,10 @@
 
 ## GeoThinneR (development version)
 
+## GeoThinneR 2.1.0 - 24/11/2025
+
+CRAN release: 2025-11-25
+
 ### Added
 
 - Added
