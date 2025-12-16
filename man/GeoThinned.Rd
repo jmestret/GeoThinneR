@@ -93,6 +93,11 @@ When `thin_points()` is run with `all_trials = FALSE`, the returned object conta
 \description{
 Create and interact with spatial thinning results stored in a GeoThinned object.
 }
+\details{
+When the 's2' package is not installed or the installed version is lower than 1.1.0,
+the spatial coverage metric for geographic coordinates from the \code{summary()} is not computed.
+This is an optional summary metric and does not affect the thinning process or any other package functionality.
+}
 \seealso{
 \code{\link{thin_points}}
 }

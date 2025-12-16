@@ -18,6 +18,11 @@
 #' @param main Title of the plot.
 #' @param ... Additional arguments (ignored).
 #'
+#' @details
+#' When the 's2' package is not installed or the installed version is lower than 1.1.0,
+#' the spatial coverage metric for geographic coordinates from the \code{summary()} is not computed.
+#' This is an optional summary metric and does not affect the thinning process or any other package functionality.
+#'
 #' @return A \code{GeoThinned} object or associated results (summary, plot, trial subset).
 #' When `thin_points()` is run with `all_trials = FALSE`, the returned object contains only the largest trial; therefore all methods refer to this single subset.
 #' @seealso \code{\link{thin_points}}
@@ -92,7 +97,7 @@ summary.GeoThinned <- function(object, trial = NULL, ...) {
     coverage_orig <- calculate_spatial_coverage(original_coords, distance = distance_type)
     coverage_thin <- calculate_spatial_coverage(thinned_coords, distance = distance_type)
   } else {
-    message("Spatial coverage not computed for geographic coordinates: requires 's2' (>= 1.1.0). Please update the 's2' package.")
+    message("Spatial coverage is an optional summary metric and is not computed because package 's2' (>= 1.1.0) is not available. Please install or update 's2' to enable this metric.")
     coverage_orig <- NA
     coverage_thin <- NA
   }
