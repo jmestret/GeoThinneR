@@ -126,6 +126,14 @@ subset). When \`thin_points()\` is run with \`all_trials = FALSE\`, the
 returned object contains only the largest trial; therefore all methods
 refer to this single subset.
 
+## Details
+
+When the 's2' package is not installed or the installed version is lower
+than 1.1.0, the spatial coverage metric for geographic coordinates from
+the [`summary()`](https://rdrr.io/r/base/summary.html) is not computed.
+This is an optional summary metric and does not affect the thinning
+process or any other package functionality.
+
 ## See also
 
 [`thin_points`](https://jmestret.github.io/GeoThinneR/reference/thin_points.md)

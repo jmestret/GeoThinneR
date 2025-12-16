@@ -2,6 +2,11 @@
 
 ## GeoThinneR (development version)
 
+### Changed
+
+- Clarified printed message and documentation for the optional spatial
+  coverage metric when `s2` (\>= 1.1.0) is not available.
+
 ## GeoThinneR 2.1.0 - 24/11/2025
 
 CRAN release: 2025-11-25

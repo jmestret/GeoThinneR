@@ -65,7 +65,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Getting started with GeoThinneR</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.0/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
       <div class="d-none name"><code>GeoThinneR.Rmd</code></div>
     </div>
 
@@ -509,7 +509,7 @@ reference system (CRS) of your grid (<code>crs</code>).</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.018   0.000   0.015</span></span>
+<span><span class="co">#&gt;   0.018   0.000   0.016</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
 <p>Alternatively, you can pass a <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object,
@@ -554,7 +554,7 @@ which the coordinates should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.003   0.000   0.003</span></span>
+<span><span class="co">#&gt;   0.004   0.000   0.003</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">precision_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 230</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" width="700"></p>
@@ -619,11 +619,11 @@ very large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2025-11-25 07:57:17 </span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2025-12-16 12:00:02 </span></span>
 <span><span class="co">#&gt; Thinning using method: distance</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
 <span><span class="co">#&gt; Thinning process completed.</span></span>
-<span><span class="co">#&gt; Total execution time: 4.11 seconds</span></span>
+<span><span class="co">#&gt; Total execution time: 4.03 seconds</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">targeted_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" width="700"></p>
@@ -770,7 +770,7 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355. <a href="https://
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_4.0.1    sf_1.0-22        terra_1.8-80     GeoThinneR_2.1.0</span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.1    sf_1.0-23        terra_1.8-86     GeoThinneR_2.1.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] s2_1.1.9           sass_0.4.10        class_7.3-23       KernSmooth_2.23-26</span></span>
@@ -779,13 +779,13 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355. <a href="https://
 <span><span class="co">#&gt; [13] foreach_1.5.2      jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3         </span></span>
 <span><span class="co">#&gt; [17] spam_2.11-1        viridisLite_0.4.2  scales_1.4.0       codetools_0.2-20  </span></span>
 <span><span class="co">#&gt; [21] textshaping_1.0.4  jquerylib_0.1.4    cli_3.6.5          rlang_1.1.6       </span></span>
-<span><span class="co">#&gt; [25] units_1.0-0        withr_3.0.2        cachem_1.1.0       yaml_2.3.10       </span></span>
+<span><span class="co">#&gt; [25] units_1.0-0        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       </span></span>
 <span><span class="co">#&gt; [29] tools_4.5.2        vctrs_0.6.5        R6_2.6.1           matrixStats_1.5.0 </span></span>
-<span><span class="co">#&gt; [33] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-11    nabor_0.5.0       </span></span>
+<span><span class="co">#&gt; [33] proxy_0.4-28       lifecycle_1.0.4    classInt_0.4-11    nabor_0.5.0       </span></span>
 <span><span class="co">#&gt; [37] fs_1.6.6           ragg_1.5.0         desc_1.4.3         pkgdown_2.2.0     </span></span>
 <span><span class="co">#&gt; [41] bslib_0.9.0        gtable_0.3.6       glue_1.8.0         data.table_1.17.8 </span></span>
 <span><span class="co">#&gt; [45] Rcpp_1.1.0         fields_17.1        systemfonts_1.3.1  xfun_0.54         </span></span>
-<span><span class="co">#&gt; [49] knitr_1.50         farver_2.1.2       htmltools_0.5.8.1  rmarkdown_2.30    </span></span>
+<span><span class="co">#&gt; [49] knitr_1.50         farver_2.1.2       htmltools_0.5.9    rmarkdown_2.30    </span></span>
 <span><span class="co">#&gt; [53] labeling_0.4.3     wk_0.9.4           dotCall64_1.2      compiler_4.5.2    </span></span>
 <span><span class="co">#&gt; [57] S7_0.2.1</span></span></code></pre></div>
 </div>
