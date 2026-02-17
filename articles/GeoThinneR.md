@@ -468,7 +468,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.018   0.000   0.016
+#>   0.018   0.001   0.016
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -490,7 +490,7 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.005   0.000   0.003
+#>   0.005   0.000   0.004
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
@@ -586,11 +586,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2025-12-16 12:00:02 
+#> Starting spatial thinning at 2026-02-17 11:22:46 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 4.03 seconds
+#> Total execution time: 3.82 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -731,22 +731,26 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.1    sf_1.0-23        terra_1.8-86     GeoThinneR_2.1.0
+#> [1] ggplot2_4.0.2    sf_1.0-24        terra_1.8-93     GeoThinneR_2.1.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] s2_1.1.9           sass_0.4.10        class_7.3-23       KernSmooth_2.23-26
-#>  [5] digest_0.6.39      magrittr_2.0.4     evaluate_1.0.5     grid_4.5.2        
-#>  [9] RColorBrewer_1.1-3 iterators_1.0.14   fastmap_1.2.0      maps_3.4.3        
-#> [13] foreach_1.5.2      jsonlite_2.0.0     e1071_1.7-16       DBI_1.2.3         
-#> [17] spam_2.11-1        viridisLite_0.4.2  scales_1.4.0       codetools_0.2-20  
-#> [21] textshaping_1.0.4  jquerylib_0.1.4    cli_3.6.5          rlang_1.1.6       
-#> [25] units_1.0-0        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       
-#> [29] tools_4.5.2        vctrs_0.6.5        R6_2.6.1           matrixStats_1.5.0 
-#> [33] proxy_0.4-28       lifecycle_1.0.4    classInt_0.4-11    nabor_0.5.0       
-#> [37] fs_1.6.6           ragg_1.5.0         desc_1.4.3         pkgdown_2.2.0     
-#> [41] bslib_0.9.0        gtable_0.3.6       glue_1.8.0         data.table_1.17.8 
-#> [45] Rcpp_1.1.0         fields_17.1        systemfonts_1.3.1  xfun_0.54         
-#> [49] knitr_1.50         farver_2.1.2       htmltools_0.5.9    rmarkdown_2.30    
-#> [53] labeling_0.4.3     wk_0.9.4           dotCall64_1.2      compiler_4.5.2    
-#> [57] S7_0.2.1
+#>  [1] s2_1.1.9            sass_0.4.10         class_7.3-23       
+#>  [4] KernSmooth_2.23-26  digest_0.6.39       magrittr_2.0.4     
+#>  [7] evaluate_1.0.5      grid_4.5.2          RColorBrewer_1.1-3 
+#> [10] iterators_1.0.14    fastmap_1.2.0       maps_3.4.3         
+#> [13] foreach_1.5.2       jsonlite_2.0.0      e1071_1.7-17       
+#> [16] DBI_1.2.3           spam_2.11-3         viridisLite_0.4.3  
+#> [19] scales_1.4.0        codetools_0.2-20    textshaping_1.0.4  
+#> [22] jquerylib_0.1.4     cli_3.6.5           rlang_1.1.7        
+#> [25] units_1.0-0         withr_3.0.2         cachem_1.1.0       
+#> [28] yaml_2.3.12         tools_4.5.2         vctrs_0.7.1        
+#> [31] R6_2.6.1            matrixStats_1.5.0   proxy_0.4-29       
+#> [34] lifecycle_1.0.5     classInt_0.4-11     nabor_0.5.0        
+#> [37] fs_1.6.6            ragg_1.5.0          desc_1.4.3         
+#> [40] pkgdown_2.2.0       bslib_0.10.0        gtable_0.3.6       
+#> [43] glue_1.8.0          data.table_1.18.2.1 Rcpp_1.1.1         
+#> [46] fields_17.1         systemfonts_1.3.1   xfun_0.56          
+#> [49] knitr_1.51          farver_2.1.2        htmltools_0.5.9    
+#> [52] rmarkdown_2.30      labeling_0.4.3      wk_0.9.5           
+#> [55] dotCall64_1.2       compiler_4.5.2      S7_0.2.1
 ```

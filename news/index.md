@@ -7,6 +7,14 @@
 - Clarified printed message and documentation for the optional spatial
   coverage metric when `s2` (\>= 1.1.0) is not available.
 
+### Fixed
+
+- Fixed integer overflow warning with large datasets when using
+  distance-based thinning with local kd-trees method. The issue was in
+  the [`split()`](https://rspatial.github.io/terra/reference/split.html)
+  function used to assign points to grid cells.
+  ([\#4](https://github.com/jmestret/GeoThinneR/issues/4))
+
 ## GeoThinneR 2.1.0 - 24/11/2025
 
 CRAN release: 2025-11-25
