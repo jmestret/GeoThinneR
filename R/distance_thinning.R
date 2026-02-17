@@ -234,7 +234,9 @@ compute_neighbors_local_kdtree <- function(coordinates, thin_dist, distance = c(
     grid_coords <- floor(cartesian_points / thin_dist)
 
     # Create a list to store points by grid cell
-    grid_dict <- split(seq_len(n), list(grid_coords[,1], grid_coords[,2], grid_coords[,3]), drop = TRUE)
+    #grid_dict <- split(seq_len(n), list(grid_coords[,1], grid_coords[,2], grid_coords[,3]), drop = TRUE)
+    cell_keys <- paste(grid_coords[, 1], grid_coords[, 2], grid_coords[, 3], sep = ".")
+    grid_dict <- split(seq_len(n), cell_keys)
 
   } else if (distance == "euclidean"){
     cartesian_points <- coordinates
