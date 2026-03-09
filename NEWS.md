@@ -2,6 +2,8 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+# GeoThinneR 2.1.1 - 17/02/2026
+
 ## Changed
 
 * Clarified printed message and documentation for the optional spatial coverage metric when `s2` (>= 1.1.0) is not available.
