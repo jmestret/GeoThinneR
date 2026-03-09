@@ -2,6 +2,10 @@
 
 ## GeoThinneR (development version)
 
+## GeoThinneR 2.1.1 - 17/02/2026
+
+CRAN release: 2026-02-18
+
 ### Changed
 
 - Clarified printed message and documentation for the optional spatial

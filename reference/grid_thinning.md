@@ -97,19 +97,19 @@ coords <- matrix(c(-122.4194, 37.7749,
 result <- grid_thinning(coords, thin_dist = 10, trials = 5, all_trials = TRUE)
 print(result)
 #> [[1]]
-#> [1]  TRUE  TRUE FALSE
+#> [1] FALSE  TRUE  TRUE
 #> 
 #> [[2]]
-#> [1]  TRUE  TRUE FALSE
+#> [1] FALSE  TRUE  TRUE
 #> 
 #> [[3]]
-#> [1] FALSE  TRUE  TRUE
+#> [1]  TRUE  TRUE FALSE
 #> 
 #> [[4]]
 #> [1] FALSE  TRUE  TRUE
 #> 
 #> [[5]]
-#> [1] FALSE  TRUE  TRUE
+#> [1]  TRUE  TRUE FALSE
 #> 
 
 # Example: Grid thinning using a custom resolution
@@ -121,7 +121,7 @@ print(result_res)
 
 # Example: Using a custom raster object
 library(terra)
-#> terra 1.8.93
+#> terra 1.9.1
 rast_obj <- terra::rast(nrows = 100, ncols = 100, xmin = -123, xmax = -121, ymin = 36, ymax = 38)
 result_raster <- grid_thinning(coords, raster_obj = rast_obj, trials = 5)
 print(result_raster)

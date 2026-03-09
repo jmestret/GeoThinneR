@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GeoThinneR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -509,7 +509,7 @@ reference system (CRS) of your grid (<code>crs</code>).</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.018   0.001   0.016</span></span>
+<span><span class="co">#&gt;   0.019   0.000   0.017</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
 <p>Alternatively, you can pass a <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object,
@@ -527,7 +527,7 @@ and that grid will be used for the thinning process.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.005   0.000   0.004</span></span>
+<span><span class="co">#&gt;   0.006   0.000   0.003</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_raster_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="700"></p>
@@ -554,7 +554,7 @@ which the coordinates should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.004   0.000   0.003</span></span>
+<span><span class="co">#&gt;   0.004   0.000   0.004</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">precision_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 230</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="700"></p>
@@ -619,11 +619,11 @@ very large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2026-02-17 11:22:46 </span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2026-03-09 14:34:44 </span></span>
 <span><span class="co">#&gt; Thinning using method: distance</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
 <span><span class="co">#&gt; Thinning process completed.</span></span>
-<span><span class="co">#&gt; Total execution time: 3.82 seconds</span></span>
+<span><span class="co">#&gt; Total execution time: 3.84 seconds</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">targeted_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="700"></p>
@@ -770,7 +770,7 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355. <a href="https://
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] ggplot2_4.0.2    sf_1.0-24        terra_1.8-93     GeoThinneR_2.1.0</span></span>
+<span><span class="co">#&gt; [1] ggplot2_4.0.2    sf_1.1-0         terra_1.9-1      GeoThinneR_2.1.1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] s2_1.1.9            sass_0.4.10         class_7.3-23       </span></span>
@@ -778,17 +778,17 @@ breadth</em>. Global Ecology and Biogeography, 32(3), 342-355. <a href="https://
 <span><span class="co">#&gt;  [7] evaluate_1.0.5      grid_4.5.2          RColorBrewer_1.1-3 </span></span>
 <span><span class="co">#&gt; [10] iterators_1.0.14    fastmap_1.2.0       maps_3.4.3         </span></span>
 <span><span class="co">#&gt; [13] foreach_1.5.2       jsonlite_2.0.0      e1071_1.7-17       </span></span>
-<span><span class="co">#&gt; [16] DBI_1.2.3           spam_2.11-3         viridisLite_0.4.3  </span></span>
-<span><span class="co">#&gt; [19] scales_1.4.0        codetools_0.2-20    textshaping_1.0.4  </span></span>
+<span><span class="co">#&gt; [16] DBI_1.3.0           spam_2.11-3         viridisLite_0.4.3  </span></span>
+<span><span class="co">#&gt; [19] scales_1.4.0        codetools_0.2-20    textshaping_1.0.5  </span></span>
 <span><span class="co">#&gt; [22] jquerylib_0.1.4     cli_3.6.5           rlang_1.1.7        </span></span>
 <span><span class="co">#&gt; [25] units_1.0-0         withr_3.0.2         cachem_1.1.0       </span></span>
 <span><span class="co">#&gt; [28] yaml_2.3.12         tools_4.5.2         vctrs_0.7.1        </span></span>
 <span><span class="co">#&gt; [31] R6_2.6.1            matrixStats_1.5.0   proxy_0.4-29       </span></span>
 <span><span class="co">#&gt; [34] lifecycle_1.0.5     classInt_0.4-11     nabor_0.5.0        </span></span>
-<span><span class="co">#&gt; [37] fs_1.6.6            ragg_1.5.0          desc_1.4.3         </span></span>
+<span><span class="co">#&gt; [37] fs_1.6.7            ragg_1.5.1          desc_1.4.3         </span></span>
 <span><span class="co">#&gt; [40] pkgdown_2.2.0       bslib_0.10.0        gtable_0.3.6       </span></span>
 <span><span class="co">#&gt; [43] glue_1.8.0          data.table_1.18.2.1 Rcpp_1.1.1         </span></span>
-<span><span class="co">#&gt; [46] fields_17.1         systemfonts_1.3.1   xfun_0.56          </span></span>
+<span><span class="co">#&gt; [46] fields_17.1         systemfonts_1.3.2   xfun_0.56          </span></span>
 <span><span class="co">#&gt; [49] knitr_1.51          farver_2.1.2        htmltools_0.5.9    </span></span>
 <span><span class="co">#&gt; [52] rmarkdown_2.30      labeling_0.4.3      wk_0.9.5           </span></span>
 <span><span class="co">#&gt; [55] dotCall64_1.2       compiler_4.5.2      S7_0.2.1</span></span></code></pre></div>
