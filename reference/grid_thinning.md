@@ -121,7 +121,7 @@ print(result_res)
 
 # Example: Using a custom raster object
 library(terra)
-#> terra 1.9.1
+#> terra 1.9.34
 rast_obj <- terra::rast(nrows = 100, ncols = 100, xmin = -123, xmax = -121, ymin = 36, ymax = 38)
 result_raster <- grid_thinning(coords, raster_obj = rast_obj, trials = 5)
 print(result_raster)

@@ -30,6 +30,7 @@ To get started with **GeoThinneR**, we begin by loading the packages
 used in this vignette:
 
 ``` r
+
 library(GeoThinneR)
 library(terra)
 library(sf)
@@ -47,6 +48,7 @@ We’ll use two dataset to demonstrate the use of **GeoThinneR**:
     package.
 
 ``` r
+
 # Set seed for reproducibility
 set.seed(123)
 
@@ -101,6 +103,7 @@ Let’s quickly thin the simulated dataset using a simple distance-based
 method:
 
 ``` r
+
 # Apply spatial thinning to the simulated data
 quick_thin <- thin_points(
   data = sim_data,     # Dataframe with coordinates
@@ -149,6 +152,7 @@ retains the largest number of points, but you can also specify a
 specific trial using the `trial` argument.
 
 ``` r
+
 summary(quick_thin)
 #> Summary of GeoThinneR Results
 #> -----------------------------
@@ -177,6 +181,7 @@ the spatial coverage or extent of the points compared to the original
 dataset.
 
 ``` r
+
 plot(quick_thin)
 ```
 
@@ -189,6 +194,7 @@ You can use `seed` for reproducibility. By setting, `all_trials = FALSE`
 it will just return the trial that kept the most points.
 
 ``` r
+
 # Number of kept points in each trial
 sapply(quick_thin$retained, sum)
 #> [1] 1390 1388 1388 1388 1387
@@ -200,6 +206,7 @@ points using the
 function.
 
 ``` r
+
 head(largest(quick_thin))
 #>          lon        lat  sp
 #> 1 -4.2484496 -3.4032602 sp2
@@ -215,6 +222,7 @@ If you want to access points from a specific trial, you can use the
 function, which returns the thinned dataset for that trial.
 
 ``` r
+
 head(get_trial(quick_thin, trial = 2)) 
 #>          lon        lat  sp
 #> 1 -4.2484496 -3.4032602 sp2
@@ -232,6 +240,7 @@ points were retained in each trial. You can use this to filter the
 original data and get the removed points.
 
 ``` r
+
 trial <- 2
 head(quick_thin$original_data[!quick_thin$retained[[trial]], ])
 #>         lon         lat  sp
@@ -249,6 +258,7 @@ to convert the thinned dataset to a `sf` object, which is useful for
 plotting and spatial analysis.
 
 ``` r
+
 sf_thinned <- as_sf(quick_thin)
 class(sf_thinned)
 #> [1] "sf"         "data.frame"
@@ -263,6 +273,7 @@ largest trial (the one with the maximum number of points retained,
 `all_trials` set to `FALSE`).
 
 ``` r
+
 # Apply spatial thinning to the real data
 caretta_thin <- thin_points(
   data = caretta, # We will not specify lon_col, lat_col as they are in position 1 and 2
@@ -316,10 +327,11 @@ dataset and the desired thinning distance:
   remove is low or not very clustered, if not similar or worse than
   `"local_kd_tree"`.
 
-You can find the benchmarking results for each method in the package
-manuscript (see references).
+You can find the benchmarking results for each method in the published
+article (see references).
 
 ``` r
+
 dist_thin <- thin_points(sim_data, method = "distance", thin_dist = 25, trials = 3)
 plot(dist_thin)
 ```
@@ -340,6 +352,7 @@ very time and memory consuming, as it requires computing all pairwise
 comparisons.
 
 ``` r
+
 brute_thin <- thin_points(
   data = sim_data,
   method = "distance",
@@ -368,6 +381,7 @@ points of each query point, its performance can still be improved for
 very large datasets.
 
 ``` r
+
 kd_tree_thin <- thin_points(
   data = sim_data,
   method = "distance",
@@ -393,6 +407,7 @@ personal computers. Additionally, you can run in parallel this method to
 improve speed using the `n_cores` parameter.
 
 ``` r
+
 local_kd_tree_thin <- thin_points(
   data = sim_data,
   method = "distance",
@@ -422,6 +437,7 @@ it estimates a smaller `k` value, significantly reducing computational
 complexity.
 
 ``` r
+
 k_estimation_thin <- thin_points(
   data = sim_data,
   method = "distance",
@@ -455,6 +471,7 @@ of two values (e.g., `c(0, 0)`). Similarly, you can specify the
 coordinate reference system (CRS) of your grid (`crs`).
 
 ``` r
+
 system.time(
 grid_thin <- thin_points(
   data = sim_data,
@@ -468,7 +485,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.018   0.000   0.017
+#>   0.021   0.001   0.018
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -478,6 +495,7 @@ Alternatively, you can pass a
 object, and that grid will be used for the thinning process.
 
 ``` r
+
 rast_obj <- terra::rast(xmin = -10, xmax = 10, ymin = -5, ymax = 5, res = 1)
 system.time(
 grid_raster_thin <- thin_points(
@@ -490,7 +508,7 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.006   0.000   0.004
+#>   0.007   0.000   0.005
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
@@ -509,6 +527,7 @@ parameter, indicating the number of decimals to which the coordinates
 should be rounded.
 
 ``` r
+
 system.time(
 precision_thin <- thin_points(
   data = sim_data,
@@ -519,7 +538,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.004   0.000   0.003
+#>   0.005   0.001   0.004
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -543,6 +562,7 @@ where we have two species, we can use this parameter to thin each
 species independently:
 
 ``` r
+
 all_thin <- thin_points(
   data = sim_data,
   thin_dist = 100,
@@ -576,6 +596,7 @@ method (`method = "distance"` and `search_type = "brute"`), so be
 cautious when applying it to very large datasets.
 
 ``` r
+
 targeted_thin <- thin_points(
   data = caretta,
   lon_col = "decimalLongitude",
@@ -586,11 +607,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-03-09 14:37:18 
+#> Starting spatial thinning at 2026-08-07 14:46:10 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 3.83 seconds
+#> Total execution time: 3.97 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -613,6 +634,7 @@ lower uncertainty, you can invert the values so that smaller
 uncertainties receive higher priority. A simple way to do this is:
 
 ``` r
+
 # Invert uncertainty to give more priority to lower uncertainty records
 priority <- -caretta$coordinateUncertaintyInMeters
 
@@ -623,6 +645,7 @@ priority[is.na(priority)] <- min(priority, na.rm = TRUE) - 1
 Then apply thinning using the priority weights:
 
 ``` r
+
 # Standard grid thinning (no priority)
 grid_thin <- thin_points(
   data = caretta,
@@ -672,9 +695,11 @@ flexibility in method selection and to address specific needs we
 encountered while using other packages. We would like to mention other
 tools that may be suitable for your work:
 
-- **spThin**: The `thin()` function provides a brute-force spatial
-  thinning of data, maximizing the number of retained points through
-  random iterative repetitions, using the Haversine distance.
+- **spThin**: The
+  [`thin()`](https://rspatial.github.io/terra/reference/thin.html)
+  function provides a brute-force spatial thinning of data, maximizing
+  the number of retained points through random iterative repetitions,
+  using the Haversine distance.
 - **enmSdmX**: Includes the `geoThin()` function, which calculates all
   pairwise distances between points for thinning purposes.
 - **dismo**: The `gridSample()` function samples points using a grid as
@@ -696,9 +721,9 @@ tools that may be suitable for your work:
   *dismo: Species Distribution Modeling*. R Package Version 1.3-14.
   <https://cran.r-project.org/package=dismo>
 
-- Mestre-Tomás J (2025). GeoThinneR: Efficient Spatial Thinning of
-  Species Occurrences. R package version 2.0.0,
-  <https://github.com/jmestret/GeoThinneR>
+- Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient
+  Spatial Thinning of Species Occurrences and Point Data. *The R
+  Journal, 18*(1), 299-314. <https://doi.org/10.32614/RJ-2026-006>
 
 - Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023).
   *Including imprecisely georeferenced specimens improves accuracy of
@@ -709,10 +734,11 @@ tools that may be suitable for your work:
 ## Session info
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -731,26 +757,22 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.2    sf_1.1-0         terra_1.9-1      GeoThinneR_2.1.1
+#> [1] ggplot2_4.0.3    sf_1.1-2         terra_1.9-34     GeoThinneR_2.1.2
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] s2_1.1.9            sass_0.4.10         class_7.3-23       
-#>  [4] KernSmooth_2.23-26  digest_0.6.39       magrittr_2.0.4     
-#>  [7] evaluate_1.0.5      grid_4.5.2          RColorBrewer_1.1-3 
-#> [10] iterators_1.0.14    fastmap_1.2.0       maps_3.4.3         
-#> [13] foreach_1.5.2       jsonlite_2.0.0      e1071_1.7-17       
-#> [16] DBI_1.3.0           spam_2.11-3         viridisLite_0.4.3  
-#> [19] scales_1.4.0        codetools_0.2-20    textshaping_1.0.5  
-#> [22] jquerylib_0.1.4     cli_3.6.5           rlang_1.1.7        
-#> [25] units_1.0-0         withr_3.0.2         cachem_1.1.0       
-#> [28] yaml_2.3.12         tools_4.5.2         vctrs_0.7.1        
-#> [31] R6_2.6.1            matrixStats_1.5.0   proxy_0.4-29       
-#> [34] lifecycle_1.0.5     classInt_0.4-11     nabor_0.5.0        
-#> [37] fs_1.6.7            ragg_1.5.1          desc_1.4.3         
-#> [40] pkgdown_2.2.0       bslib_0.10.0        gtable_0.3.6       
-#> [43] glue_1.8.0          data.table_1.18.2.1 Rcpp_1.1.1         
-#> [46] fields_17.1         systemfonts_1.3.2   xfun_0.56          
-#> [49] knitr_1.51          farver_2.1.2        htmltools_0.5.9    
-#> [52] rmarkdown_2.30      labeling_0.4.3      wk_0.9.5           
-#> [55] dotCall64_1.2       compiler_4.5.2      S7_0.2.1
+#>  [1] s2_1.1.11          sass_0.4.10        class_7.3-23       KernSmooth_2.23-26
+#>  [5] digest_0.6.39      evaluate_1.0.5     grid_4.6.1         RColorBrewer_1.1-3
+#>  [9] iterators_1.0.14   fastmap_1.2.0      maps_3.4.3         foreach_1.5.2     
+#> [13] jsonlite_2.0.0     e1071_1.7-17       DBI_1.3.0          spam_2.11-4       
+#> [17] viridisLite_0.4.3  scales_1.4.0       codetools_0.2-20   textshaping_1.0.5 
+#> [21] jquerylib_0.1.4    cli_3.6.6          rlang_1.3.0        units_1.0-1       
+#> [25] withr_3.0.3        cachem_1.1.0       yaml_2.3.12        otel_0.2.0        
+#> [29] tools_4.6.1        vctrs_0.7.3        R6_2.6.1           matrixStats_1.5.0 
+#> [33] proxy_0.4-29       lifecycle_1.0.5    classInt_0.4-11    nabor_0.5.0       
+#> [37] fs_2.1.0           ragg_1.5.2         desc_1.4.3         pkgdown_2.2.1     
+#> [41] bslib_0.12.0       gtable_0.3.6       glue_1.8.1         data.table_1.18.4 
+#> [45] Rcpp_1.1.2         fields_17.3        systemfonts_1.3.2  xfun_0.60         
+#> [49] knitr_1.51         farver_2.1.2       htmltools_0.5.9    rmarkdown_2.31    
+#> [53] labeling_0.4.3     wk_0.9.5           dotCall64_1.2      compiler_4.6.1    
+#> [57] S7_0.2.2
 ```
