@@ -223,7 +223,7 @@ In general, the choice of search method depends on the size of the dataset and t
 - `search_type="local_kd_tree"` (default): Faster than `"kd_tree"` and reduces memory usage. Can be parallelized to improve speed.
 - `search_type="k_estimation"`: Very fast when the number of points to remove is low or not very clustered, if not similar or worse than `"local_kd_tree"`.
 
-You can find the benchmarking results for each method in the package manuscript (see references).
+You can find the benchmarking results for each method in the published article (see references).
 
 ```{r}
 dist_thin <- thin_points(sim_data, method = "distance", thin_dist = 25, trials = 3)
@@ -520,7 +520,7 @@ The **GeoThinneR** package was inspired by the work of many others who have deve
 
 - Hijmans, R.J., Phillips, S., Leathwick, J., & Elith, J. (2023). *dismo: Species Distribution Modeling*. R Package Version 1.3-14. https://cran.r-project.org/package=dismo
 
-- Mestre-Tomás J (2025). GeoThinneR: Efficient Spatial Thinning of Species Occurrences. R package version 2.0.0, https://github.com/jmestret/GeoThinneR
+- Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data. *The R Journal, 18*(1), 299-314. https://doi.org/10.32614/RJ-2026-006
 
 - Smith, A. B., Murphy, S. J., Henderson, D., & Erickson, K. D. (2023). *Including imprecisely georeferenced specimens improves accuracy of species distribution models and estimates of niche breadth*. Global Ecology and Biogeography, 32(3), 342-355. https://doi.org/10.1111/geb.13628
 

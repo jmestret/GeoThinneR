@@ -1,11 +1,14 @@
-citHeader("To cite in publications, please use:")
+citHeader("To cite GeoThinneR in publications, please use:")
 
-# GeoThinneR manuscript
+# GeoThinneR publication
 bibentry(
   bibtype  = "Article",
   title    = "GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data",
   author   = c(person("Jorge", "Mestre-Tomás")),
-  journal  = "arXiv preprint",
-  year     = "2025",
-  doi      = "10.48550/arXiv.2505.07867"
+  journal  = "The R Journal",
+  year     = "2026",
+  volume   = "18",
+  number   = "1",
+  pages    = "299--314",
+  doi      = "10.32614/RJ-2026-006"
 )

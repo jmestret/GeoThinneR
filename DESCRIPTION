@@ -1,7 +1,7 @@
 Type: Package
 Package: GeoThinneR
 Title: Efficient Spatial Thinning of Species Occurrences
-Version: 2.1.1
+Version: 2.1.2
 Authors@R: 
     person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8983-3417"))
@@ -43,4 +43,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
