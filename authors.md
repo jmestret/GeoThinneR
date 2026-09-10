@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/jmestret/GeoThinneR/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/jmestret/GeoThinneR/blob/v2.1.2/inst/CITATION)
 
 Mestre-Tomás J (2026). “GeoThinneR: An R Package for Efficient Spatial
 Thinning of Species Occurrences and Point Data.” *The R Journal*,

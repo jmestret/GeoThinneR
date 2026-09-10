@@ -4,6 +4,8 @@
 
 ## GeoThinneR 2.1.2 - 07/08/2026
 
+CRAN release: 2026-08-25
+
 ### Changed
 
 - Updated the paper citation from preprint to the published R Journal
