@@ -20,7 +20,8 @@ distance_thinning(
   priority = NULL,
   distance = c("haversine", "euclidean"),
   R = 6371,
-  n_cores = 1
+  n_cores = 1,
+  duplicates = c("collapse", "keep")
 )
 ```
 
@@ -83,6 +84,13 @@ distance_thinning(
   Number of cores for parallel processing (only for
   \`"local_kd_tree"\`). Default is 1.
 
+- duplicates:
+
+  A character string indicating how exact duplicate coordinates are
+  handled: \`"collapse"\` keeps one observation per location before the
+  neighbor search, while \`"keep"\` processes every row. Default is
+  \`"collapse"\`.
+
 ## Value
 
 A list. If \`all_trials\` is \`FALSE\`, the list contains a single
@@ -97,6 +105,13 @@ searches. - \`"local_kd_tree"\`: Builds multiple smaller kd-trees for
 better scalability. - \`"k_estimation"\`: Approximates a maximum number
 of neighbors per point to reduce search complexity. - \`"brute"\`:
 Computes all pairwise distances (inefficient for large datasets).
+
+When \`duplicates = "collapse"\`, exact duplicate locations are reduced
+to one representative observation before finding neighbors. If
+\`priority\` is provided, the highest-priority row is selected, with
+ties broken randomly. Otherwise, the representative is selected
+randomly. The returned logical vectors always have the same length and
+order as the original coordinates.
 
 ## Examples
 

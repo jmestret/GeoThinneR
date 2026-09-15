@@ -35,8 +35,8 @@ otherwise.
 ## Examples
 
 ``` r
-is_lonlat(lon = c(-3, 10, 179), lat = c(40, -20, 5))
+GeoThinneR:::is_lonlat(lon = c(-3, 10, 179), lat = c(40, -20, 5))
 #> [1] TRUE
-is_lonlat(lon = c(100000, 150000), lat = c(4500000, 4600000))
+GeoThinneR:::is_lonlat(lon = c(100000, 150000), lat = c(4500000, 4600000))
 #> [1] FALSE
 ```

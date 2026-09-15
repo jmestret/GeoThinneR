@@ -39,7 +39,7 @@ The function uses a histogram-based binning approach for efficiency and low memo
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Estimate Maximum Neighbors for kd-Tree Thinning</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.2/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
       <div class="d-none name"><code>estimate_k_max.Rd</code></div>
     </div>
 
@@ -90,7 +90,7 @@ The function identifies the densest grid cells and their immediate neighbors to 
 <span class="r-in"><span><span class="va">coordinates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">200</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Estimate k for kd-tree thinning</span></span></span>
-<span class="r-in"><span><span class="va">k_max</span> <span class="op">&lt;-</span> <span class="fu">estimate_k_max</span><span class="op">(</span><span class="va">coordinates</span>, thin_dist <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">k_max</span> <span class="op">&lt;-</span> <span class="fu">GeoThinneR</span><span class="fu">:::</span><span class="fu">estimate_k_max</span><span class="op">(</span><span class="va">coordinates</span>, thin_dist <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">k_max</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
 <span class="r-in"><span></span></span>

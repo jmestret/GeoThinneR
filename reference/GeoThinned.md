@@ -8,8 +8,6 @@ object.
 ``` r
 as_GeoThinned(retained, method, params = list(), original_data = NULL)
 
-new_GeoThinned(retained, method, params = list(), original_data = NULL)
-
 # S3 method for class 'GeoThinned'
 print(x, ...)
 

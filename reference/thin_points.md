@@ -141,6 +141,12 @@ The specific parameters for distance-based thinning are:
   Number of cores for parallel processing (only for '"local_kd_tree"').
   Default is 1.
 
+- \`duplicates\`:
+
+  How exact duplicate coordinates are handled: '"collapse"' keeps one
+  observation per location before the neighbor search, while '"keep"'
+  processes every row. Default is '"collapse"'.
+
 **Grid-based thinning**
 
 The specific parameters for grid-based thinning are:

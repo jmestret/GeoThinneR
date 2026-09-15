@@ -29,8 +29,8 @@ compute_nearest_neighbor_distances(
 
 ## Value
 
-A numeric vector of nearest neighbor distances, in meters (haversine) or
-in map units (euclidean).
+A numeric vector of nearest neighbor distances, in kilometers
+(Haversine) or in map units (Euclidean).
 
 ## Examples
 
@@ -38,13 +38,15 @@ in map units (euclidean).
 # Example with geographic (longitude/latitude) coordinates
 set.seed(123)
 coords_geo <- matrix(cbind(runif(10, -10, 10), runif(10, 40, 50)), ncol = 2)
-nnd_haversine <- compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
+nnd_haversine <- GeoThinneR:::compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
 print(round(nnd_haversine, 2))  # in km
-#>  [1] 243.85 199.19 315.93 199.19 105.54 356.71  98.62 105.54  98.62 315.93
+#>  [1] 243.85 199.19 315.93 199.19 105.54 356.71  98.62 105.54  98.62 243.85
 
 # Example with projected coordinates (Euclidean)
 coords_proj <- matrix(runif(20), ncol = 2) * 100  # e.g., meters or map units
-nnd_euclidean <- compute_nearest_neighbor_distances(coords_proj, distance = "euclidean")
+nnd_euclidean <- GeoThinneR:::compute_nearest_neighbor_distances(
+  coords_proj, distance = "euclidean"
+)
 print(round(nnd_euclidean, 2))
 #>  [1] 19.76 20.59 11.79 19.76 20.14 22.35 11.79 20.14 16.63 16.63
 ```

@@ -338,6 +338,47 @@ plot(dist_thin)
 
 ![](GeoThinneR_files/figure-html/unnamed-chunk-12-1.png)
 
+#### Duplicate coordinates
+
+By default, exact duplicate coordinates are collapsed before the
+neighbor search (`duplicates = "collapse"`). This reduces computation
+and prevents repeated records at one location from influencing the
+thinning decisions. One observation per duplicated location is passed to
+the thinning algorithm, and the result is then mapped back to the
+original rows. Use `duplicates = "keep"` to process every duplicate row,
+as in previous versions (\<v2.2.0).
+
+``` r
+
+duplicate_data <- data.frame(
+  lon = c(-3, -3, -3, 0),
+  lat = c(40, 40, 40, 43),
+  record = c("A", "B", "C", "D")
+)
+
+# Recommended and default behavior
+duplicates_collapsed <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "collapse", seed = 123
+)
+largest(duplicates_collapsed)
+#>   lon lat record
+#> 3  -3  40      C
+#> 4   0  43      D
+
+# Previous behavior, processing every row during neighbor searches
+duplicates_kept <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "keep", seed = 123
+)
+largest(duplicates_kept)
+#>   lon lat record
+#> 2  -3  40      B
+#> 4   0  43      D
+```
+
 #### Brute force
 
 This is the most common greedy method for calculating the distance
@@ -485,7 +526,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.018   0.000   0.016
+#>   0.019   0.001   0.018
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -508,12 +549,12 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.007   0.000   0.004
+#>   0.005   0.000   0.004
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
 
-![](GeoThinneR_files/figure-html/unnamed-chunk-19-1.png)
+![](GeoThinneR_files/figure-html/unnamed-chunk-20-1.png)
 
 ### Precision thinning
 
@@ -538,12 +579,12 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.005   0.000   0.004
+#>   0.004   0.001   0.003
 nrow(largest(precision_thin))
 #> [1] 230
 ```
 
-![](GeoThinneR_files/figure-html/unnamed-chunk-21-1.png)
+![](GeoThinneR_files/figure-html/unnamed-chunk-22-1.png)
 
 These are the methods implemented in **GeoThinneR**. Depending on your
 specific dataset and research needs, one method may be more suitable
@@ -581,7 +622,7 @@ nrow(largest(grouped_thin))
 #> [1] 319
 ```
 
-![](GeoThinneR_files/figure-html/unnamed-chunk-23-1.png)![](GeoThinneR_files/figure-html/unnamed-chunk-23-2.png)
+![](GeoThinneR_files/figure-html/unnamed-chunk-24-1.png)![](GeoThinneR_files/figure-html/unnamed-chunk-24-2.png)
 
 ### Fixed number of points
 
@@ -607,16 +648,16 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-09-10 12:51:43 
+#> Starting spatial thinning at 2026-09-15 11:46:03 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 4.05 seconds
+#> Total execution time: 4.22 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
 
-![](GeoThinneR_files/figure-html/unnamed-chunk-25-1.png)
+![](GeoThinneR_files/figure-html/unnamed-chunk-26-1.png)
 
 ### Select points by priority
 
@@ -670,7 +711,7 @@ priority_thin <- thin_points(
 mean(largest(grid_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
 #> [1] 35513.54
 mean(largest(priority_thin)$coordinateUncertaintyInMeters, na.rm = TRUE)
-#> [1] 138288
+#> [1] 17260.05
 ```
 
 **Notes**
@@ -757,7 +798,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.3    sf_1.1-2         terra_1.9-50     GeoThinneR_2.1.2
+#> [1] ggplot2_4.0.3    sf_1.1-3         terra_1.9-50     GeoThinneR_2.1.2
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] s2_1.1.12           sass_0.4.10         class_7.3-23       
@@ -777,6 +818,6 @@ sessionInfo()
 #> [43] glue_1.8.1          data.table_1.18.6.1 Rcpp_1.1.2         
 #> [46] fields_17.3         systemfonts_1.3.2   xfun_0.60          
 #> [49] knitr_1.52          farver_2.1.2        htmltools_0.5.9    
-#> [52] rmarkdown_2.32      labeling_0.4.3      wk_0.9.5           
-#> [55] dotCall64_1.2       compiler_4.6.1      S7_0.2.2
+#> [52] rmarkdown_2.32      labeling_0.4.3      dotCall64_1.2      
+#> [55] wk_0.9.5            compiler_4.6.1      S7_0.2.2
 ```

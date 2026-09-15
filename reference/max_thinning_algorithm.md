@@ -58,7 +58,7 @@ indicating the points kept in the best trial.
 neighbor_indices <- list(c(2, 3), c(1, 3), c(1, 2))
 trials <- 5
 all_trials <- FALSE
-kept_points <- max_thinning_algorithm(neighbor_indices, trials, all_trials)
+kept_points <- GeoThinneR:::max_thinning_algorithm(neighbor_indices, trials, all_trials)
 print(kept_points)
 #> [[1]]
 #> [1]  TRUE FALSE FALSE

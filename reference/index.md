@@ -43,7 +43,6 @@
 ## Class
 
 - [`as_GeoThinned()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
-  [`new_GeoThinned()`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
   [`print(`*`<GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
   [`summary(`*`<GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)
   [`print(`*`<summary.GeoThinned>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinned.md)

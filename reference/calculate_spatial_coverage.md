@@ -30,13 +30,13 @@ A numeric value representing the convex hull area (km2 or unit2).
 # Geographic coordinates (lon/lat)
 set.seed(456)
 coords_geo <- matrix(cbind(runif(10, -10, 10), runif(10, 40, 50)), ncol = 2)
-area_haversine <- calculate_spatial_coverage(coords_geo, distance = "haversine")
+area_haversine <- GeoThinneR:::calculate_spatial_coverage(coords_geo, distance = "haversine")
 print(round(area_haversine, 2))  # in km2
 #> [1] 585502.8
 
 # Projected coordinates (Euclidean/map units)
 coords_proj <- matrix(runif(20), ncol = 2) * 100  # e.g., map units
-area_euclidean <- calculate_spatial_coverage(coords_proj, distance = "euclidean")
+area_euclidean <- GeoThinneR:::calculate_spatial_coverage(coords_proj, distance = "euclidean")
 print(round(area_euclidean, 2))  # in unit2
 #> [1] 4134.5
 ```

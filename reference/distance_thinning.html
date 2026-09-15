@@ -39,7 +39,7 @@ The function removes points that are closer than a specified distance to each ot
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Perform Distance-Based Thinning</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.2/R/distance_thinning.R" class="external-link"><code>R/distance_thinning.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/R/distance_thinning.R" class="external-link"><code>R/distance_thinning.R</code></a></small>
       <div class="d-none name"><code>distance_thinning.Rd</code></div>
     </div>
 
@@ -61,7 +61,8 @@ The function removes points that are closer than a specified distance to each ot
 <span>  priority <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"haversine"</span>, <span class="st">"euclidean"</span><span class="op">)</span>,</span>
 <span>  R <span class="op">=</span> <span class="fl">6371</span>,</span>
-<span>  n_cores <span class="op">=</span> <span class="fl">1</span></span>
+<span>  n_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  duplicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"collapse"</span>, <span class="st">"keep"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -108,6 +109,10 @@ The function removes points that are closer than a specified distance to each ot
 <dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
 <dd><p>Number of cores for parallel processing (only for `"local_kd_tree"`). Default is 1.</p></dd>
 
+
+<dt id="arg-duplicates">duplicates<a class="anchor" aria-label="anchor" href="#arg-duplicates"></a></dt>
+<dd><p>A character string indicating how exact duplicate coordinates are handled: `"collapse"` keeps one observation per location before the neighbor search, while `"keep"` processes every row. Default is `"collapse"`.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -119,6 +124,11 @@ The function removes points that are closer than a specified distance to each ot
 - `"local_kd_tree"`: Builds multiple smaller kd-trees for better scalability.
 - `"k_estimation"`: Approximates a maximum number of neighbors per point to reduce search complexity.
 - `"brute"`: Computes all pairwise distances (inefficient for large datasets).</p>
+<p>When `duplicates = "collapse"`, exact duplicate locations are reduced to one
+representative observation before finding neighbors. If `priority` is provided,
+the highest-priority row is selected, with ties broken randomly. Otherwise, the
+representative is selected randomly. The returned logical vectors always
+have the same length and order as the original coordinates.</p>
     </div>
 
     <div class="section level2">

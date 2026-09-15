@@ -35,7 +35,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compute Nearest Neighbor Distances</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.2/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/R/utils.R" class="external-link"><code>R/utils.R</code></a></small>
       <div class="d-none name"><code>compute_nearest_neighbor_distances.Rd</code></div>
     </div>
 
@@ -70,7 +70,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric vector of nearest neighbor distances, in meters (haversine) or in map units (euclidean).</p>
+    <p>A numeric vector of nearest neighbor distances, in kilometers (Haversine) or in map units (Euclidean).</p>
     </div>
 
     <div class="section level2">
@@ -78,13 +78,15 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example with geographic (longitude/latitude) coordinates</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">coords_geo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">nnd_haversine</span> <span class="op">&lt;-</span> <span class="fu">compute_nearest_neighbor_distances</span><span class="op">(</span><span class="va">coords_geo</span>, distance <span class="op">=</span> <span class="st">"haversine"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">nnd_haversine</span> <span class="op">&lt;-</span> <span class="fu">GeoThinneR</span><span class="fu">:::</span><span class="fu">compute_nearest_neighbor_distances</span><span class="op">(</span><span class="va">coords_geo</span>, distance <span class="op">=</span> <span class="st">"haversine"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">nnd_haversine</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>  <span class="co"># in km</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 243.85 199.19 315.93 199.19 105.54 356.71  98.62 105.54  98.62 315.93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 243.85 199.19 315.93 199.19 105.54 356.71  98.62 105.54  98.62 243.85</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example with projected coordinates (Euclidean)</span></span></span>
 <span class="r-in"><span><span class="va">coords_proj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>  <span class="co"># e.g., meters or map units</span></span></span>
-<span class="r-in"><span><span class="va">nnd_euclidean</span> <span class="op">&lt;-</span> <span class="fu">compute_nearest_neighbor_distances</span><span class="op">(</span><span class="va">coords_proj</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">nnd_euclidean</span> <span class="op">&lt;-</span> <span class="fu">GeoThinneR</span><span class="fu">:::</span><span class="fu">compute_nearest_neighbor_distances</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">coords_proj</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">nnd_euclidean</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 19.76 20.59 11.79 19.76 20.14 22.35 11.79 20.14 16.63 16.63</span>
 <span class="r-in"><span></span></span>

@@ -37,7 +37,7 @@ the distance between selected points."><meta property="og:image" content="https:
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Select Target Number of Points for Spatial Thinning</h1>
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.2/R/thinning_algorithm.R" class="external-link"><code>R/thinning_algorithm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/R/thinning_algorithm.R" class="external-link"><code>R/thinning_algorithm.R</code></a></small>
       <div class="d-none name"><code>select_target_points.Rd</code></div>
     </div>
 
@@ -94,8 +94,9 @@ the distance between selected points.</p>
 <span class="r-in"><span>                        <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Select 2 points maximizing distance</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">select_target_points</span><span class="op">(</span><span class="va">dist_matrix</span>, target_points <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                              thin_dist <span class="op">=</span> <span class="fl">4</span>, trials <span class="op">=</span> <span class="fl">5</span>, all_trials <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">GeoThinneR</span><span class="fu">:::</span><span class="fu">select_target_points</span><span class="op">(</span><span class="va">dist_matrix</span>, target_points <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                                            thin_dist <span class="op">=</span> <span class="fl">4</span>, trials <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>                                            all_trials <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

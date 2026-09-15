@@ -34,7 +34,7 @@ coordinates.
 ``` r
 lon <- c(-122.4194, 0)
 lat <- c(37.7749, 0)
-lon_lat_to_cartesian(lon, lat)
+GeoThinneR:::lon_lat_to_cartesian(lon, lat)
 #>              x         y        z
 #> [1,] -2699.749 -4250.942 3902.625
 #> [2,]  6371.000     0.000    0.000
