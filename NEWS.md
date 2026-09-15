@@ -2,6 +2,21 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+## Added
+
+* Added a `duplicates` argument to distance thinning, allowing exact duplicate coordinates to be collapsed before neighbor searches or retained for processing.
+
+## Changed
+
+* Moved some helper functions to internal while keeping the user thinning API unchanged.
+
+## Fixed
+
+* Fixed an issue introduced in version 2.1.0 where priority ordering was reversed in grid- and precision-based thinning.
+* Fixed `sample()` indexing when tie breaking in distance thinning, ensuring that a unique lowest-priority candidate is correctly selected for removal.
+* Improved consistency between Haversine and kd-tree distance thresholds by using the equivalent 3D chord distance.
+* Corrected geographic nearest neighbor distances printed in `summary()`.
+
 # GeoThinneR 2.1.2 - 07/08/2026
 
 ## Changed

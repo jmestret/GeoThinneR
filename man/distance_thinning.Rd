@@ -14,7 +14,8 @@ distance_thinning(
   priority = NULL,
   distance = c("haversine", "euclidean"),
   R = 6371,
-  n_cores = 1
+  n_cores = 1,
+  duplicates = c("collapse", "keep")
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ distance_thinning(
 \item{R}{Radius of the Earth in kilometers (default: 6371 km).}
 
 \item{n_cores}{Number of cores for parallel processing (only for `"local_kd_tree"`). Default is 1.}
+
+\item{duplicates}{A character string indicating how exact duplicate coordinates are handled: `"collapse"` keeps one observation per location before the neighbor search, while `"keep"` processes every row. Default is `"collapse"`.}
 }
 \value{
 A list. If `all_trials` is `FALSE`, the list contains a single logical vector indicating which points are kept in the best trial. If `all_trials` is `TRUE`, the list contains a logical vector for each trial.
@@ -51,6 +54,12 @@ The function removes points that are closer than a specified distance to each ot
 - `"local_kd_tree"`: Builds multiple smaller kd-trees for better scalability.
 - `"k_estimation"`: Approximates a maximum number of neighbors per point to reduce search complexity.
 - `"brute"`: Computes all pairwise distances (inefficient for large datasets).
+
+When `duplicates = "collapse"`, exact duplicate locations are reduced to one
+representative observation before finding neighbors. If `priority` is provided,
+the highest-priority row is selected, with ties broken randomly. Otherwise, the
+representative is selected randomly. The returned logical vectors always
+have the same length and order as the original coordinates.
 }
 \examples{
 # Generate sample coordinates

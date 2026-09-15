@@ -34,7 +34,8 @@ set.seed(123)
 coordinates <- matrix(runif(200, min = -10, max = 10), ncol = 2)
 
 # Estimate k for kd-tree thinning
-k_max <- estimate_k_max(coordinates, thin_dist = 50)
+k_max <- GeoThinneR:::estimate_k_max(coordinates, thin_dist = 50)
 print(k_max)
 
 }
+\keyword{internal}

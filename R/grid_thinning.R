@@ -91,7 +91,7 @@ grid_thinning <- function(coordinates, thin_dist = NULL, resolution = NULL, orig
     if (is.null(priority)){
       sort_order <- stats::runif(nrow(coordinates))
     } else {
-      sort_order <- rank(-priority, ties.method = "random")
+      sort_order <- rank(priority, ties.method = "random")
     }
     keep_points_trial <- data.table::data.table(
       id = seq_len(nrow(coordinates)),

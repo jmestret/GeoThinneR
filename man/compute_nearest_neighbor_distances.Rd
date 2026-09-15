@@ -18,7 +18,7 @@ compute_nearest_neighbor_distances(
 \item{R}{Radius of the Earth in kilometers. Default is 6371.}
 }
 \value{
-A numeric vector of nearest neighbor distances, in meters (haversine) or in map units (euclidean).
+A numeric vector of nearest neighbor distances, in kilometers (Haversine) or in map units (Euclidean).
 }
 \description{
 Calculates nearest neighbor distances using geodesic or Euclidean distance.
@@ -27,12 +27,15 @@ Calculates nearest neighbor distances using geodesic or Euclidean distance.
 # Example with geographic (longitude/latitude) coordinates
 set.seed(123)
 coords_geo <- matrix(cbind(runif(10, -10, 10), runif(10, 40, 50)), ncol = 2)
-nnd_haversine <- compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
+nnd_haversine <- GeoThinneR:::compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
 print(round(nnd_haversine, 2))  # in km
 
 # Example with projected coordinates (Euclidean)
 coords_proj <- matrix(runif(20), ncol = 2) * 100  # e.g., meters or map units
-nnd_euclidean <- compute_nearest_neighbor_distances(coords_proj, distance = "euclidean")
+nnd_euclidean <- GeoThinneR:::compute_nearest_neighbor_distances(
+  coords_proj, distance = "euclidean"
+)
 print(round(nnd_euclidean, 2))
 
 }
+\keyword{internal}

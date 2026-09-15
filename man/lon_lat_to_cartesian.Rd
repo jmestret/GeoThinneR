@@ -22,5 +22,6 @@ This function converts geographic coordinates, given as longitude and latitude i
 \examples{
 lon <- c(-122.4194, 0)
 lat <- c(37.7749, 0)
-lon_lat_to_cartesian(lon, lat)
+GeoThinneR:::lon_lat_to_cartesian(lon, lat)
 }
+\keyword{internal}

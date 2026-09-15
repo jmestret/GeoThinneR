@@ -47,6 +47,7 @@
 #'  \item{`R`}{The radius of the Earth in kilometers. Default is 6371 km.}
 #'  \item{`target_points`}{Optional integer specifying the number of points to retain. If 'NULL' (default), the function tries to maximize the number of points retained.}
 #'  \item{`n_cores`}{Number of cores for parallel processing (only for '"local_kd_tree"'). Default is 1.}
+#'  \item{`duplicates`}{How exact duplicate coordinates are handled: '"collapse"' keeps one observation per location before the neighbor search, while '"keep"' processes every row. Default is '"collapse"'.}
 #' }
 #'
 #' \strong{Grid-based thinning}

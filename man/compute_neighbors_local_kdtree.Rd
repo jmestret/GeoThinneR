@@ -36,6 +36,7 @@ set.seed(123)
 coords <- matrix(runif(20, min = -180, max = 180), ncol = 2)
 
 # Compute neighbors using local kd-trees with Euclidean distance
-neighbors <- compute_neighbors_local_kdtree(coords, thin_dist = 10, n_cores = 1)
+neighbors <- GeoThinneR:::compute_neighbors_local_kdtree(coords, thin_dist = 10, n_cores = 1)
 
 }
+\keyword{internal}

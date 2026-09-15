@@ -2,7 +2,6 @@
 % Please edit documentation in R/GeoThinned_class.R
 \name{as_GeoThinned}
 \alias{as_GeoThinned}
-\alias{new_GeoThinned}
 \alias{print.GeoThinned}
 \alias{summary.GeoThinned}
 \alias{print.summary.GeoThinned}
@@ -18,8 +17,6 @@
 \title{GeoThinned Object Constructor and Methods}
 \usage{
 as_GeoThinned(retained, method, params = list(), original_data = NULL)
-
-new_GeoThinned(retained, method, params = list(), original_data = NULL)
 
 \method{print}{GeoThinned}(x, ...)
 

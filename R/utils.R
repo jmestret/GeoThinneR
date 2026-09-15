@@ -13,10 +13,10 @@
 #' @return A logical value. `TRUE` if values are within the ranges and `FALSE` otherwise.
 #'
 #' @examples
-#' is_lonlat(lon = c(-3, 10, 179), lat = c(40, -20, 5))
-#' is_lonlat(lon = c(100000, 150000), lat = c(4500000, 4600000))
+#' GeoThinneR:::is_lonlat(lon = c(-3, 10, 179), lat = c(40, -20, 5))
+#' GeoThinneR:::is_lonlat(lon = c(100000, 150000), lat = c(4500000, 4600000))
 #'
-#' @export
+#' @keywords internal
 is_lonlat <- function(lon, lat, tolerance = 0.1) {
   lon_ok <- all(lon >= -180 - tolerance & lon <= 180 + tolerance, na.rm = TRUE)
   lat_ok <- all(lat >= -90  - tolerance & lat <=  90 + tolerance, na.rm = TRUE)
@@ -35,8 +35,8 @@ is_lonlat <- function(lon, lat, tolerance = 0.1) {
 #' @examples
 #' lon <- c(-122.4194, 0)
 #' lat <- c(37.7749, 0)
-#' lon_lat_to_cartesian(lon, lat)
-#' @export
+#' GeoThinneR:::lon_lat_to_cartesian(lon, lat)
+#' @keywords internal
 lon_lat_to_cartesian <- function(lon, lat, R = 6371) {
   lat_rad <- lat * pi / 180
   lon_rad <- lon * pi / 180
@@ -71,10 +71,10 @@ lon_lat_to_cartesian <- function(lon, lat, R = 6371) {
 #' coordinates <- matrix(runif(200, min = -10, max = 10), ncol = 2)
 #'
 #' # Estimate k for kd-tree thinning
-#' k_max <- estimate_k_max(coordinates, thin_dist = 50)
+#' k_max <- GeoThinneR:::estimate_k_max(coordinates, thin_dist = 50)
 #' print(k_max)
 #'
-#' @export
+#' @keywords internal
 estimate_k_max <- function(coordinates, thin_dist, distance = c("haversine", "euclidean")) {
   # Validate inputs
   if (!is.numeric(thin_dist) || thin_dist <= 0) {
@@ -139,36 +139,35 @@ estimate_k_max <- function(coordinates, thin_dist, distance = c("haversine", "eu
 #' @param distance A character string: "haversine" (default) or "euclidean".
 #' @param R Radius of the Earth in kilometers. Default is 6371.
 #'
-#' @return A numeric vector of nearest neighbor distances, in meters (haversine) or in map units (euclidean).
+#' @return A numeric vector of nearest neighbor distances, in kilometers (Haversine) or in map units (Euclidean).
 #'
 #' @examples
 #' # Example with geographic (longitude/latitude) coordinates
 #' set.seed(123)
 #' coords_geo <- matrix(cbind(runif(10, -10, 10), runif(10, 40, 50)), ncol = 2)
-#' nnd_haversine <- compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
+#' nnd_haversine <- GeoThinneR:::compute_nearest_neighbor_distances(coords_geo, distance = "haversine")
 #' print(round(nnd_haversine, 2))  # in km
 #'
 #' # Example with projected coordinates (Euclidean)
 #' coords_proj <- matrix(runif(20), ncol = 2) * 100  # e.g., meters or map units
-#' nnd_euclidean <- compute_nearest_neighbor_distances(coords_proj, distance = "euclidean")
+#' nnd_euclidean <- GeoThinneR:::compute_nearest_neighbor_distances(
+#'   coords_proj, distance = "euclidean"
+#' )
 #' print(round(nnd_euclidean, 2))
 #'
-#' @export
+#' @keywords internal
 compute_nearest_neighbor_distances <- function(coordinates, distance = "haversine", R = 6371) {
   if (nrow(coordinates) < 2) return(rep(NA, nrow(coordinates)))
-
-  kd_result <- nabor::knn(coordinates, k = 2)
-  nearest_idx <- kd_result$nn.idx[, 2]
+  distance <- match.arg(distance, c("haversine", "euclidean"))
 
   if (distance == "haversine") {
-    dists <- numeric(nrow(coordinates))
-    for (i in seq_len(nrow(coordinates))) {
-      dists[i] <- fields::rdist.earth(coordinates[i, , drop = FALSE],
-                                      coordinates[nearest_idx[i], , drop = FALSE],
-                                      miles = FALSE, R = R)[1, 1]  # km
-    }
+    cartesian_points <- lon_lat_to_cartesian(coordinates[, 1], coordinates[, 2], R)
+    kd_result <- nabor::knn(cartesian_points, k = 2)
+    chord_distances <- kd_result$nn.dists[, 2]
+    dists <- 2 * R * asin(pmin(chord_distances / (2 * R), 1))
   } else {
     # Return raw Euclidean distance from kd-tree
+    kd_result <- nabor::knn(coordinates, k = 2)
     dists <- kd_result$nn.dists[, 2]  # already in native units
   }
 
@@ -191,15 +190,15 @@ compute_nearest_neighbor_distances <- function(coordinates, distance = "haversin
 #' # Geographic coordinates (lon/lat)
 #' set.seed(456)
 #' coords_geo <- matrix(cbind(runif(10, -10, 10), runif(10, 40, 50)), ncol = 2)
-#' area_haversine <- calculate_spatial_coverage(coords_geo, distance = "haversine")
+#' area_haversine <- GeoThinneR:::calculate_spatial_coverage(coords_geo, distance = "haversine")
 #' print(round(area_haversine, 2))  # in km2
 #'
 #' # Projected coordinates (Euclidean/map units)
 #' coords_proj <- matrix(runif(20), ncol = 2) * 100  # e.g., map units
-#' area_euclidean <- calculate_spatial_coverage(coords_proj, distance = "euclidean")
+#' area_euclidean <- GeoThinneR:::calculate_spatial_coverage(coords_proj, distance = "euclidean")
 #' print(round(area_euclidean, 2))  # in unit2
 #'
-#' @export
+#' @keywords internal
 calculate_spatial_coverage <- function(coordinates, distance = "haversine") {
   if (nrow(unique(coordinates)) < 3) return(0)
 

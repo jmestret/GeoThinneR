@@ -106,6 +106,59 @@ test_that("All methods find same neighbors", {
   expect_true(identical(brute, local_kd_tree))
 })
 
+test_that("Haversine distance and 3D chords return same results", {
+  R <- 6371
+  thin_dist <- 1000
+  actual_distance <- 1000.5
+  longitude_difference <- actual_distance / R * 180 / pi
+  # These points are exactly 1000.5 km apart according to the spherical great-circle model
+  coordinates <- matrix(c(0, 0, longitude_difference, 0), ncol = 2, byrow = TRUE)
+
+  haversine <- compute_neighbors_brute(coordinates, thin_dist = 1000, distance = "haversine", R = R)
+  cartesian <- compute_neighbors_kdtree(coordinates, thin_dist = 1000, k = 2, distance = "haversine", R = R)
+
+  expect_true(all(lengths(haversine) == 0))
+  expect_true(all(lengths(cartesian) == 0))
+})
+
+test_that("distance_thinning handles duplicate coordinates", {
+  duplicate_coords <- matrix(c(0, 0, 0, 0, 0, 0, 10, 10), ncol = 2, byrow = TRUE)
+  priority <- c(1, 3, 2, 0)
+  expected <- c(FALSE, TRUE, FALSE, TRUE)
+
+  default <- distance_thinning(
+    duplicate_coords, thin_dist = 1, trials = 1,
+    search_type = "brute", priority = priority,
+    distance = "euclidean"
+  )
+  expect_identical(default[[1]], expected)
+
+  random <- distance_thinning(
+    duplicate_coords, thin_dist = 1, trials = 1,
+    search_type = "brute", distance = "euclidean",
+    duplicates = "collapse"
+  )
+  expect_equal(sum(random[[1]][1:3]), 1)
+  expect_true(random[[1]][4])
+
+  for (search_type in c("brute", "kd_tree", "local_kd_tree")) {
+    collapsed <- distance_thinning(
+      duplicate_coords, thin_dist = 1, trials = 1,
+      search_type = search_type, priority = priority,
+      distance = "euclidean", duplicates = "collapse"
+    )
+    kept <- distance_thinning(
+      duplicate_coords, thin_dist = 1, trials = 1,
+      search_type = search_type, priority = priority,
+      distance = "euclidean", duplicates = "keep"
+    )
+
+    expect_identical(collapsed[[1]], expected)
+    expect_identical(kept[[1]], expected)
+  }
+
+  expect_error(distance_thinning(duplicate_coords, duplicates = "invalid"), "should be one of")
+})
 
 test_that("distance_thinning works with priority", {
   priority <- 1:nrow(coords)

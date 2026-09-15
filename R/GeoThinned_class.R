@@ -32,8 +32,13 @@ as_GeoThinned <- function(retained, method, params = list(), original_data = NUL
   new_GeoThinned(retained = retained, method = method, params = params, original_data = original_data)
 }
 
-#' @rdname GeoThinned
-#' @export
+#' Internal GeoThinned Constructor
+#'
+#' Low-level constructor used internally to create a `GeoThinned` object.
+#'
+#' @inheritParams as_GeoThinned
+#' @return A `GeoThinned` object.
+#' @keywords internal
 new_GeoThinned <- function(retained, method, params = list(), original_data = NULL) {
   structure(
     list(

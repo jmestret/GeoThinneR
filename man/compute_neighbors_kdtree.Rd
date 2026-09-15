@@ -39,6 +39,7 @@ set.seed(123)
 coords <- matrix(runif(20, min = -180, max = 180), ncol = 2)
 
 # Compute neighbors using kd-tree
-neighbors <- compute_neighbors_kdtree(coords, thin_dist = 10,)
+neighbors <- GeoThinneR:::compute_neighbors_kdtree(coords, thin_dist = 10)
 
 }
+\keyword{internal}

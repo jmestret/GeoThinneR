@@ -14,12 +14,19 @@
 #' @param distance Distance metric to use `c("haversine", "euclidean")`. Default is Haversine for geographic coordinates.
 #' @param R Radius of the Earth in kilometers (default: 6371 km).
 #' @param n_cores Number of cores for parallel processing (only for `"local_kd_tree"`). Default is 1.
+#' @param duplicates A character string indicating how exact duplicate coordinates are handled: `"collapse"` keeps one observation per location before the neighbor search, while `"keep"` processes every row. Default is `"collapse"`.
 #'
 #' @details
 #' - `"kd_tree"`: Uses a single kd-tree for efficient nearest-neighbor searches.
 #' - `"local_kd_tree"`: Builds multiple smaller kd-trees for better scalability.
 #' - `"k_estimation"`: Approximates a maximum number of neighbors per point to reduce search complexity.
 #' - `"brute"`: Computes all pairwise distances (inefficient for large datasets).
+#'
+#' When `duplicates = "collapse"`, exact duplicate locations are reduced to one
+#' representative observation before finding neighbors. If `priority` is provided,
+#' the highest-priority row is selected, with ties broken randomly. Otherwise, the
+#' representative is selected randomly. The returned logical vectors always
+#' have the same length and order as the original coordinates.
 #'
 #' @return A list. If `all_trials` is `FALSE`, the list contains a single logical vector indicating which points are kept in the best trial. If `all_trials` is `TRUE`, the list contains a logical vector for each trial.
 #'
@@ -42,7 +49,7 @@
 distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_trials = FALSE,
                               search_type = c("local_kd_tree", "k_estimation", "kd_tree", "brute"),
                               target_points = NULL, priority = NULL, distance = c("haversine", "euclidean"),
-                              R = 6371, n_cores = 1) {
+                              R = 6371, n_cores = 1, duplicates = c("collapse", "keep")) {
 
   # Input validation
   if (!is.matrix(coordinates) || ncol(coordinates) != 2) {
@@ -53,6 +60,7 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
   }
   distance <- match.arg(distance)
   search_type <- match.arg(search_type)
+  duplicates <- match.arg(duplicates)
   if (!is.null(target_points)){ # Use brute-force algorithm as we need all pairwise distances
     if (!is.numeric(target_points) || target_points <= 0) {
       stop("`target_points` must be a positive number.")
@@ -69,6 +77,35 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
     if (any(is.na(priority))){
       warning("NA values found in 'priority'. Replacing with lowest priority (-Inf).")
       priority[is.na(priority)] <- -Inf
+    }
+  }
+
+  original_n <- nrow(coordinates)
+  representative_indices <- seq_len(original_n)
+
+  if (duplicates == "collapse") {
+    duplicate_rows <- duplicated(coordinates, MARGIN = 1)
+
+    if (any(duplicate_rows)) {
+      duplicate_rows <- duplicate_rows | duplicated(coordinates, MARGIN = 1, fromLast = TRUE)
+      singleton_indices <- which(!duplicate_rows)
+      duplicate_indices <- which(duplicate_rows)
+      duplicate_coordinates <- coordinates[duplicate_indices, , drop = FALSE]
+
+      if (is.null(priority)) {
+        candidate_order <- sample.int(length(duplicate_indices))
+      } else {
+        candidate_order <- order(-priority[duplicate_indices], stats::runif(length(duplicate_indices)))
+      }
+
+      first_duplicate <- !duplicated(duplicate_coordinates[candidate_order, , drop = FALSE], MARGIN = 1)
+      representative_duplicates <- duplicate_indices[candidate_order[first_duplicate]]
+      representative_indices <- sort(c(singleton_indices, representative_duplicates))
+      coordinates <- coordinates[representative_indices, , drop = FALSE]
+
+      if (!is.null(priority)) {
+        priority <- priority[representative_indices]
+      }
     }
   }
 
@@ -97,6 +134,14 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
     kept_points <- select_target_points(dist_mat, target_points, thin_dist, trials, all_trials)
   }
 
+  if (length(representative_indices) < original_n) {
+    kept_points <- lapply(kept_points, function(kept_unique) {
+      kept_original <- rep(FALSE, original_n)
+      kept_original[representative_indices[kept_unique]] <- TRUE
+      kept_original
+    })
+  }
+
   return(kept_points)
 }
 
@@ -118,9 +163,9 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
 #' coords <- matrix(runif(20, min = -180, max = 180), ncol = 2)
 #'
 #' # Compute neighbors using brute fore
-#' neighbors <- compute_neighbors_brute(coords, thin_dist = 10,)
+#' neighbors <- GeoThinneR:::compute_neighbors_brute(coords, thin_dist = 10)
 #'
-#' @export
+#' @keywords internal
 compute_neighbors_brute <- function(coordinates, thin_dist, distance = c("haversine", "euclidean"), R = 6371) {
   # Initialize a list to store neighbor indices
   n <- nrow(coordinates)
@@ -163,9 +208,9 @@ compute_neighbors_brute <- function(coordinates, thin_dist, distance = c("havers
 #' coords <- matrix(runif(20, min = -180, max = 180), ncol = 2)
 #'
 #' # Compute neighbors using kd-tree
-#' neighbors <- compute_neighbors_kdtree(coords, thin_dist = 10,)
+#' neighbors <- GeoThinneR:::compute_neighbors_kdtree(coords, thin_dist = 10)
 #'
-#' @export
+#' @keywords internal
 compute_neighbors_kdtree <- function(coordinates, thin_dist, k = NULL, distance = c("haversine", "euclidean"), R = 6371) {
   # Initialize a list to store neighbor indices
   n <- nrow(coordinates)
@@ -180,17 +225,19 @@ compute_neighbors_kdtree <- function(coordinates, thin_dist, k = NULL, distance 
   # Convert geographic coordinates to Cartesian coordinates if lon lat
   if (distance == "haversine") {
     cartesian_points <- t(apply(coordinates, 1, function(row) lon_lat_to_cartesian(row[1], row[2], R)))
+    search_radius <- 2 * R * sin(thin_dist / (2 * R))
   } else if (distance == "euclidean"){
     cartesian_points <- coordinates
+    search_radius <- thin_dist
   }
 
   # Build kd-tree and find neighbors within the specified radius
-  kd_tree <- nabor::knn(cartesian_points, k = k, radius = thin_dist)
+  kd_tree <- nabor::knn(cartesian_points, k = k, radius = search_radius)
 
   # Create a list of neighbor indices excluding self-reference
   for (i in seq_len(n)) {
     neighbors <- kd_tree$nn.idx[i, ]
-    neighbor_indices[[i]] <- neighbors[neighbors != 0][-1] # Exclude self
+    neighbor_indices[[i]] <- neighbors[neighbors != 0 & neighbors != i] # Exclude 0s and self
   }
 
   return(neighbor_indices)
@@ -215,10 +262,10 @@ compute_neighbors_kdtree <- function(coordinates, thin_dist, k = NULL, distance 
 #' coords <- matrix(runif(20, min = -180, max = 180), ncol = 2)
 #'
 #' # Compute neighbors using local kd-trees with Euclidean distance
-#' neighbors <- compute_neighbors_local_kdtree(coords, thin_dist = 10, n_cores = 1)
+#' neighbors <- GeoThinneR:::compute_neighbors_local_kdtree(coords, thin_dist = 10, n_cores = 1)
 #'
 #' @importFrom foreach %dopar%
-#' @export
+#' @keywords internal
 compute_neighbors_local_kdtree <- function(coordinates, thin_dist, distance = c("haversine", "euclidean"), R = 6371, n_cores = 1) {
   # Initialize a list to store neighbor indices
   n <- nrow(coordinates)
@@ -230,8 +277,9 @@ compute_neighbors_local_kdtree <- function(coordinates, thin_dist, distance = c(
   # Convert geographic coordinates to Cartesian coordinates if lon lat
   if (distance == "haversine") {
     cartesian_points <- t(apply(coordinates, 1, function(row) lon_lat_to_cartesian(row[1], row[2], R)))
+    search_radius <- 2 * R * sin(thin_dist / (2 * R))
     # Assign points to 3D grid using integer indexing
-    grid_coords <- floor(cartesian_points / thin_dist)
+    grid_coords <- floor(cartesian_points / search_radius)
 
     # Create a list to store points by grid cell
     #grid_dict <- split(seq_len(n), list(grid_coords[,1], grid_coords[,2], grid_coords[,3]), drop = TRUE)
@@ -240,9 +288,10 @@ compute_neighbors_local_kdtree <- function(coordinates, thin_dist, distance = c(
 
   } else if (distance == "euclidean"){
     cartesian_points <- coordinates
+    search_radius <- thin_dist
 
     # Assign points to 2D grid
-    grid_coords <- floor(cartesian_points / thin_dist)
+    grid_coords <- floor(cartesian_points / search_radius)
     grid_dict <- split(seq_len(n), list(grid_coords[,1], grid_coords[,2], 0), drop = TRUE)
   }
 
@@ -275,15 +324,16 @@ compute_neighbors_local_kdtree <- function(coordinates, thin_dist, distance = c(
     cell_points <- cartesian_points[cell_ids, , drop = FALSE]
     combined_points <- cartesian_points[neighbor_ids, , drop = FALSE]
 
-    kd_tree <- nabor::knn(data = combined_points, query = cell_points, k = nrow(combined_points), radius = thin_dist)
+    kd_tree <- nabor::knn(data = combined_points, query = cell_points, k = nrow(combined_points), radius = search_radius)
 
     # Loop through each point in the current grid cell
     result <- vector("list", length(cell_ids))
     for (i in seq_along(cell_ids)) {
       neighbors <- kd_tree$nn.idx[i, ]
 
-      # Remove self-reference and map back to original indices
-      result[[i]] <- neighbor_ids[neighbors[neighbors != 0]][-1]
+      # Map local positions back to original indices and remove self-reference
+      mapped_neighbors <- neighbor_ids[neighbors[neighbors != 0L]]
+      result[[i]] <- mapped_neighbors[mapped_neighbors != cell_ids[i]]
     }
 
     names(result) <- cell_ids

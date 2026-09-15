@@ -53,7 +53,7 @@ precision_thinning <- function(coordinates, precision = 4, trials = 10, all_tria
     if (is.null(priority)){
       sort_order <- stats::runif(nrow(coordinates))
     } else {
-      sort_order <- rank(-priority, ties.method = "random")
+      sort_order <- rank(priority, ties.method = "random")
     }
     keep_points_trial <- data.table::data.table(
       id = seq_len(nrow(coordinates)),

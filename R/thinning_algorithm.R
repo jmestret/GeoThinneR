@@ -17,10 +17,10 @@
 #' neighbor_indices <- list(c(2, 3), c(1, 3), c(1, 2))
 #' trials <- 5
 #' all_trials <- FALSE
-#' kept_points <- max_thinning_algorithm(neighbor_indices, trials, all_trials)
+#' kept_points <- GeoThinneR:::max_thinning_algorithm(neighbor_indices, trials, all_trials)
 #' print(kept_points)
 #'
-#' @export
+#' @keywords internal
 max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE, priority = NULL) {
   # Compute initial neighbor counts
   n <- length(neighbor_indices)
@@ -41,7 +41,9 @@ max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE,
       points_to_remove <- which(neighbor_counts_trial == max_neighbors)
       if (length(points_to_remove) > 1) {
         if (!is.null(priority)) {
-          points_to_remove <- points_to_remove[sample(which(priority[points_to_remove] == min(priority[points_to_remove])), 1)]
+          lowest_priority_positions <- which(priority[points_to_remove] == min(priority[points_to_remove]))
+          selected_position <- lowest_priority_positions[sample.int(length(lowest_priority_positions), 1)]
+          points_to_remove <- points_to_remove[selected_position]
         } else {
           points_to_remove <- points_to_remove[as.integer(ceiling(stats::runif(1, 0, length(points_to_remove))))]
         }
@@ -93,10 +95,11 @@ max_thinning_algorithm <- function(neighbor_indices, trials, all_trials = FALSE,
 #'                         5, 3, 0), ncol = 3)
 #'
 #' # Select 2 points maximizing distance
-#'result <- select_target_points(dist_matrix, target_points = 2,
-#'                               thin_dist = 4, trials = 5, all_trials = TRUE)
+#' result <- GeoThinneR:::select_target_points(dist_matrix, target_points = 2,
+#'                                             thin_dist = 4, trials = 5,
+#'                                             all_trials = TRUE)
 #'
-#' @export
+#' @keywords internal
 select_target_points <- function(distance_matrix, target_points, thin_dist, trials, all_trials = FALSE) {
   # Initialize results list for trials
   n <- nrow(distance_matrix)

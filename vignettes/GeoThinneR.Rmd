@@ -230,6 +230,34 @@ dist_thin <- thin_points(sim_data, method = "distance", thin_dist = 25, trials =
 plot(dist_thin)
 ```
 
+### Duplicate coordinates
+
+By default, exact duplicate coordinates are collapsed before the neighbor search (`duplicates = "collapse"`). This reduces computation and prevents repeated records at one location from influencing the thinning decisions. One observation per duplicated location is passed to the thinning algorithm, and the result is then mapped back to the original rows. Use `duplicates = "keep"` to process every duplicate row, as in previous versions (<v2.2.0).
+
+```{r}
+duplicate_data <- data.frame(
+  lon = c(-3, -3, -3, 0),
+  lat = c(40, 40, 40, 43),
+  record = c("A", "B", "C", "D")
+)
+
+# Recommended and default behavior
+duplicates_collapsed <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "collapse", seed = 123
+)
+largest(duplicates_collapsed)
+
+# Previous behavior, processing every row during neighbor searches
+duplicates_kept <- thin_points(
+  duplicate_data, method = "distance", thin_dist = 10,
+  search_type = "brute", trials = 1,
+  duplicates = "keep", seed = 123
+)
+largest(duplicates_kept)
+```
+
 
 ### Brute force
 

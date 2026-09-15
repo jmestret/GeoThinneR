@@ -37,7 +37,9 @@ dist_matrix <- matrix(c(0, 2, 5,
                         5, 3, 0), ncol = 3)
 
 # Select 2 points maximizing distance
-result <- select_target_points(dist_matrix, target_points = 2,
-                              thin_dist = 4, trials = 5, all_trials = TRUE)
+result <- GeoThinneR:::select_target_points(dist_matrix, target_points = 2,
+                                            thin_dist = 4, trials = 5,
+                                            all_trials = TRUE)
 
 }
+\keyword{internal}
