@@ -136,7 +136,7 @@ test_that("distance_thinning handles duplicate coordinates", {
   random <- distance_thinning(
     duplicate_coords, thin_dist = 1, trials = 1,
     search_type = "brute", distance = "euclidean",
-    duplicates = "collapse"
+    duplicates = "remove"
   )
   expect_equal(sum(random[[1]][1:3]), 1)
   expect_true(random[[1]][4])
@@ -145,7 +145,7 @@ test_that("distance_thinning handles duplicate coordinates", {
     collapsed <- distance_thinning(
       duplicate_coords, thin_dist = 1, trials = 1,
       search_type = search_type, priority = priority,
-      distance = "euclidean", duplicates = "collapse"
+      distance = "euclidean", duplicates = "remove"
     )
     kept <- distance_thinning(
       duplicate_coords, thin_dist = 1, trials = 1,

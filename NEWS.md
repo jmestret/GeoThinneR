@@ -2,9 +2,11 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+# GeoThinneR 2.1.3 - 12/10/2026
+
 ## Added
 
-* Added a `duplicates` argument to distance thinning, allowing exact duplicate coordinates to be collapsed before neighbor searches or retained for processing.
+* Added a `duplicates` argument to distance thinning, allowing exact duplicate coordinates to be removed before neighbor searches or retained for processing.
 
 ## Changed
 

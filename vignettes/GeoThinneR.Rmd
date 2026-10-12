@@ -232,7 +232,7 @@ plot(dist_thin)
 
 ### Duplicate coordinates
 
-By default, exact duplicate coordinates are collapsed before the neighbor search (`duplicates = "collapse"`). This reduces computation and prevents repeated records at one location from influencing the thinning decisions. One observation per duplicated location is passed to the thinning algorithm, and the result is then mapped back to the original rows. Use `duplicates = "keep"` to process every duplicate row, as in previous versions (<v2.2.0).
+Exact duplicate coordinates can be removed before the neighbor search (`duplicates = "remove"`). This reduces computation and prevents repeated records at one location from influencing the thinning decisions. One observation per duplicated location is passed to the thinning algorithm, and the result is then mapped back to the original rows. Use `duplicates = "keep"` to process every duplicate row (default to match the behaviour of previous versions).
 
 ```{r}
 duplicate_data <- data.frame(
@@ -245,7 +245,7 @@ duplicate_data <- data.frame(
 duplicates_collapsed <- thin_points(
   duplicate_data, method = "distance", thin_dist = 10,
   search_type = "brute", trials = 1,
-  duplicates = "collapse", seed = 123
+  duplicates = "remove", seed = 123
 )
 largest(duplicates_collapsed)
 

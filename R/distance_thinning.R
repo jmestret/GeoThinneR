@@ -14,7 +14,7 @@
 #' @param distance Distance metric to use `c("haversine", "euclidean")`. Default is Haversine for geographic coordinates.
 #' @param R Radius of the Earth in kilometers (default: 6371 km).
 #' @param n_cores Number of cores for parallel processing (only for `"local_kd_tree"`). Default is 1.
-#' @param duplicates A character string indicating how exact duplicate coordinates are handled: `"collapse"` keeps one observation per location before the neighbor search, while `"keep"` processes every row. Default is `"collapse"`.
+#' @param duplicates A character string indicating how exact duplicate coordinates are handled: `"remove"` keeps one observation per location before the neighbor search, while `"keep"` processes every row. Default is `"keep"` to maintain behavior with previous versions.
 #'
 #' @details
 #' - `"kd_tree"`: Uses a single kd-tree for efficient nearest-neighbor searches.
@@ -22,7 +22,7 @@
 #' - `"k_estimation"`: Approximates a maximum number of neighbors per point to reduce search complexity.
 #' - `"brute"`: Computes all pairwise distances (inefficient for large datasets).
 #'
-#' When `duplicates = "collapse"`, exact duplicate locations are reduced to one
+#' When `duplicates = "remove"`, exact duplicate locations are reduced to one
 #' representative observation before finding neighbors. If `priority` is provided,
 #' the highest-priority row is selected, with ties broken randomly. Otherwise, the
 #' representative is selected randomly. The returned logical vectors always
@@ -49,7 +49,7 @@
 distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_trials = FALSE,
                               search_type = c("local_kd_tree", "k_estimation", "kd_tree", "brute"),
                               target_points = NULL, priority = NULL, distance = c("haversine", "euclidean"),
-                              R = 6371, n_cores = 1, duplicates = c("collapse", "keep")) {
+                              R = 6371, n_cores = 1, duplicates = c("keep", "remove")) {
 
   # Input validation
   if (!is.matrix(coordinates) || ncol(coordinates) != 2) {
@@ -83,7 +83,7 @@ distance_thinning <- function(coordinates, thin_dist = 10, trials = 10, all_tria
   original_n <- nrow(coordinates)
   representative_indices <- seq_len(original_n)
 
-  if (duplicates == "collapse") {
+  if (duplicates == "remove") {
     duplicate_rows <- duplicated(coordinates, MARGIN = 1)
 
     if (any(duplicate_rows)) {
