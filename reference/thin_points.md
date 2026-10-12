@@ -143,9 +143,10 @@ The specific parameters for distance-based thinning are:
 
 - \`duplicates\`:
 
-  How exact duplicate coordinates are handled: '"collapse"' keeps one
+  How exact duplicate coordinates are handled: '"remove"' keeps one
   observation per location before the neighbor search, while '"keep"'
-  processes every row. Default is '"collapse"'.
+  processes every row. Default is \`"keep"\` to maintain behavior with
+  previous versions.
 
 **Grid-based thinning**
 

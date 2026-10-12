@@ -340,13 +340,13 @@ plot(dist_thin)
 
 #### Duplicate coordinates
 
-By default, exact duplicate coordinates are collapsed before the
-neighbor search (`duplicates = "collapse"`). This reduces computation
-and prevents repeated records at one location from influencing the
-thinning decisions. One observation per duplicated location is passed to
-the thinning algorithm, and the result is then mapped back to the
-original rows. Use `duplicates = "keep"` to process every duplicate row,
-as in previous versions (\<v2.2.0).
+Exact duplicate coordinates can be removed before the neighbor search
+(`duplicates = "remove"`). This reduces computation and prevents
+repeated records at one location from influencing the thinning
+decisions. One observation per duplicated location is passed to the
+thinning algorithm, and the result is then mapped back to the original
+rows. Use `duplicates = "keep"` to process every duplicate row (default
+to match the behaviour of previous versions).
 
 ``` r
 
@@ -360,7 +360,7 @@ duplicate_data <- data.frame(
 duplicates_collapsed <- thin_points(
   duplicate_data, method = "distance", thin_dist = 10,
   search_type = "brute", trials = 1,
-  duplicates = "collapse", seed = 123
+  duplicates = "remove", seed = 123
 )
 largest(duplicates_collapsed)
 #>   lon lat record
@@ -526,7 +526,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.019   0.001   0.018
+#>   0.012   0.000   0.010
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -549,7 +549,7 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.005   0.000   0.004
+#>   0.003   0.000   0.003
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
@@ -579,7 +579,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.004   0.001   0.003
+#>   0.003   0.000   0.003
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -648,11 +648,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-09-15 11:46:03 
+#> Starting spatial thinning at 2026-10-12 07:07:09 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 4.22 seconds
+#> Total execution time: 3.19 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -798,10 +798,10 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.3    sf_1.1-3         terra_1.9-50     GeoThinneR_2.1.2
+#> [1] ggplot2_4.0.3    sf_1.1-3         terra_1.9-50     GeoThinneR_2.1.3
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] s2_1.1.12           sass_0.4.10         class_7.3-23       
+#>  [1] s2_1.1.13           sass_0.4.10         class_7.3-23       
 #>  [4] KernSmooth_2.23-26  digest_0.6.39       evaluate_1.0.5     
 #>  [7] grid_4.6.1          RColorBrewer_1.1-3  iterators_1.0.14   
 #> [10] fastmap_1.2.0       maps_3.4.3          foreach_1.5.2      
@@ -816,7 +816,7 @@ sessionInfo()
 #> [37] fs_2.1.0            ragg_1.5.2          desc_1.4.3         
 #> [40] pkgdown_2.2.1       bslib_0.12.0        gtable_0.3.6       
 #> [43] glue_1.8.1          data.table_1.18.6.1 Rcpp_1.1.2         
-#> [46] fields_17.3         systemfonts_1.3.2   xfun_0.60          
+#> [46] fields_17.3         systemfonts_1.3.2   xfun_0.61          
 #> [49] knitr_1.52          farver_2.1.2        htmltools_0.5.9    
 #> [52] rmarkdown_2.32      labeling_0.4.3      dotCall64_1.2      
 #> [55] wk_0.9.5            compiler_4.6.1      S7_0.2.2
