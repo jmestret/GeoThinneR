@@ -64,7 +64,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Getting started with GeoThinneR</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/v2.1.3/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/jmestret/GeoThinneR/blob/main/vignettes/GeoThinneR.Rmd" class="external-link"><code>vignettes/GeoThinneR.Rmd</code></a></small>
       <div class="d-none name"><code>GeoThinneR.Rmd</code></div>
     </div>
 
@@ -547,7 +547,7 @@ reference system (CRS) of your grid (<code>crs</code>).</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.018   0.000   0.015</span></span>
+<span><span class="co">#&gt;   0.020   0.000   0.016</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
 <p>Alternatively, you can pass a <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> object,
@@ -565,7 +565,7 @@ and that grid will be used for the thinning process.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.006   0.000   0.004</span></span>
+<span><span class="co">#&gt;   0.007   0.000   0.004</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">grid_raster_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 200</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="700"></p>
@@ -592,7 +592,7 @@ which the coordinates should be rounded.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;   0.004   0.000   0.003</span></span>
+<span><span class="co">#&gt;   0.003   0.000   0.003</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">precision_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 230</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="700"></p>
@@ -657,11 +657,11 @@ very large datasets.</p>
 <span>  seed <span class="op">=</span> <span class="fl">123</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Starting spatial thinning at 2026-10-29 09:31:07 </span></span>
+<span><span class="co">#&gt; Starting spatial thinning at 2026-10-29 10:09:28 </span></span>
 <span><span class="co">#&gt; Thinning using method: distance</span></span>
 <span><span class="co">#&gt; For specific target points, brute force method is used.</span></span>
 <span><span class="co">#&gt; Thinning process completed.</span></span>
-<span><span class="co">#&gt; Total execution time: 6.35 seconds</span></span>
+<span><span class="co">#&gt; Total execution time: 6.51 seconds</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="../reference/GeoThinned.html">largest</a></span><span class="op">(</span><span class="va">targeted_thin</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 150</span></span></code></pre></div>
 <p><img src="GeoThinneR_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="700"></p>
