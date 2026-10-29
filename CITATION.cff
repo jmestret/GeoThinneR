@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use GeoThinneR, please cite it as below."
+authors:
+  - family-names: "Mestre-Tomás"
+    given-names: "Jorge"
+    orcid: "https://orcid.org/0000-0002-8983-3417"
+title: "GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data"
+repository-code: "https://github.com/jmestret/GeoThinneR"
+url: "https://jmestret.github.io/GeoThinneR/"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Mestre-Tomás"
+      given-names: "Jorge"
+      orcid: "https://orcid.org/0000-0002-8983-3417"
+  title: "GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data"
+  journal: "The R Journal"
+  year: 2026
+  volume: 18
+  issue: 1
+  start: 299
+  end: 314
+  doi: "10.32614/RJ-2026-006"
