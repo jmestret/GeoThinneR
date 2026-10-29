@@ -4,6 +4,8 @@
 
 ## GeoThinneR 2.1.3 - 12/10/2026
 
+CRAN release: 2026-10-12
+
 ### Added
 
 - Added a `duplicates` argument to distance thinning, allowing exact

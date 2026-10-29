@@ -526,7 +526,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.012   0.000   0.010
+#>   0.018   0.000   0.015
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -549,7 +549,7 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.003   0.000   0.003
+#>   0.006   0.000   0.004
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
@@ -579,7 +579,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.003   0.000   0.003
+#>   0.004   0.000   0.003
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -648,11 +648,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-10-12 07:07:09 
+#> Starting spatial thinning at 2026-10-29 09:31:07 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 3.19 seconds
+#> Total execution time: 6.35 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -779,11 +779,11 @@ tools that may be suitable for your work:
 sessionInfo()
 #> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.5 LTS
+#> Running under: Ubuntu 26.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -804,20 +804,21 @@ sessionInfo()
 #>  [1] s2_1.1.13           sass_0.4.10         class_7.3-23       
 #>  [4] KernSmooth_2.23-26  digest_0.6.39       evaluate_1.0.5     
 #>  [7] grid_4.6.1          RColorBrewer_1.1-3  iterators_1.0.14   
-#> [10] fastmap_1.2.0       maps_3.4.3          foreach_1.5.2      
+#> [10] fastmap_1.2.0       maps_3.4.4          foreach_1.5.2      
 #> [13] jsonlite_2.0.0      e1071_1.7-17        DBI_1.3.0          
 #> [16] spam_2.11-4         viridisLite_0.4.3   scales_1.4.0       
 #> [19] codetools_0.2-20    textshaping_1.0.5   jquerylib_0.1.4    
 #> [22] cli_3.6.6           rlang_1.3.0         units_1.0-1        
-#> [25] withr_3.0.3         cachem_1.1.0        yaml_2.3.12        
-#> [28] otel_0.2.0          tools_4.6.1         vctrs_0.7.3        
-#> [31] R6_2.6.1            matrixStats_1.5.0   proxy_0.4-29       
-#> [34] lifecycle_1.0.5     classInt_0.4-11     nabor_0.5.0        
-#> [37] fs_2.1.0            ragg_1.5.2          desc_1.4.3         
-#> [40] pkgdown_2.2.1       bslib_0.12.0        gtable_0.3.6       
-#> [43] glue_1.8.1          data.table_1.18.6.1 Rcpp_1.1.2         
-#> [46] fields_17.3         systemfonts_1.3.2   xfun_0.61          
-#> [49] knitr_1.52          farver_2.1.2        htmltools_0.5.9    
-#> [52] rmarkdown_2.32      labeling_0.4.3      dotCall64_1.2      
-#> [55] wk_0.9.5            compiler_4.6.1      S7_0.2.2
+#> [25] splines_4.6.1       withr_3.0.3         cachem_1.1.0       
+#> [28] yaml_2.3.12         otel_0.2.0          tools_4.6.1        
+#> [31] vctrs_0.7.3         R6_2.6.1            matrixStats_1.5.0  
+#> [34] proxy_0.4-29        lifecycle_1.0.5     classInt_0.4-11    
+#> [37] nabor_0.5.0         fs_2.1.0            ragg_1.5.2         
+#> [40] desc_1.4.3          pkgdown_2.2.1       bslib_0.12.0       
+#> [43] gtable_0.3.6        glue_1.8.1          data.table_1.18.6.1
+#> [46] Rcpp_1.1.2          fields_18.0         systemfonts_1.3.2  
+#> [49] xfun_0.62           knitr_1.52          farver_2.1.2       
+#> [52] htmltools_0.5.9     rmarkdown_2.32      labeling_0.4.3     
+#> [55] dotCall64_1.2       wk_0.9.5            compiler_4.6.1     
+#> [58] S7_0.2.2
 ```
