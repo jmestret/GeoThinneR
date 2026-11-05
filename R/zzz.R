@@ -2,7 +2,7 @@
 .onAttach <- function(libname, pkgname) {
   if (interactive()) {
     packageStartupMessage(
-      "Type 'citation(\"GeoThinneR\")' to cite the associated R Journal article."
+      "Type 'citation(\"GeoThinneR\")' to see which references to cite when using GeoThinneR."
     )
   }
 }

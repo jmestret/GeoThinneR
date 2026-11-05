@@ -1,16 +1,22 @@
 Type: Package
 Package: GeoThinneR
 Title: Efficient Spatial Thinning of Species Occurrences
-Version: 2.1.3
-Authors@R: 
+Version: 2.1.3.9000
+Authors@R: c(
     person("Jorge", "Mestre-Tomás", , "jorge.mestre.tomas@csic.es", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-8983-3417"))
+           comment = c(ORCID = "0000-0002-8983-3417")),
+    person("Héctor", "Ibáñez", role = "ctb",
+           comment = c(ORCID = "0009-0007-9123-6076"))
+  )
 Description: Provides efficient geospatial thinning algorithms to reduce
     the density of coordinate data while maintaining spatial
     relationships. Implements K-D Tree and brute-force distance-based
     thinning, as well as grid-based and precision-based thinning methods.
-    For more information on the methods, see Elseberg et al. (2012)
-    <https://hdl.handle.net/10446/86202>.
+    Also estimates thinning parameters from environmental stability.
+    For more information on the methods, see Mestre-Tomás (2026) 
+    <https://doi.org/10.32614/RJ-2026-006>, Elseberg et al. (2012) 
+    <https://hdl.handle.net/10446/86202> and Ibáñez et al. (2026)
+    <https://doi.org/10.64898/2026.10.23.759308>.
 License: MIT + file LICENSE
 URL: https://github.com/jmestret/GeoThinneR,
     https://jmestret.github.io/GeoThinneR/
@@ -30,6 +36,7 @@ Imports:
     stats,
     terra
 Suggests:
+    e1071,
     ggplot2,
     knitr,
     rmarkdown,

@@ -1,0 +1,168 @@
+---
+title: "Choosing a thinning resolution"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Choosing a thinning resolution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>",
+  fig.width = 7, fig.height = 4.5, fig.align = "center"
+)
+library(GeoThinneR)
+```
+
+Which thinning distance should we use: 0.05°, 1°, or something else? There is no single answer for every dataset. `estimate_thinning_parameter()` helps choose a grid resolution by checking how the moving median of an environmental variable stabilizes (or not) as records are progressively sampled (Ibáñez et al., 2026).
+
+There are two methods. **LS-TP** selects the largest tested resolution at which the environmental median reaches stability. **BD-TP** uses the relationship between stability and geographic range size to predict a resolution for each species. Both methods currently work with grid-based thinning, with resolutions expressed in degrees.
+
+## Finding a stable resolution
+
+The function needs longitude and latitude in WGS84, a numeric environmental variable, and optionally a column identifying species or other groups. We will simulate records for two species and an environmental variable. These values are only for illustration, they are not measured temperatures.
+
+```{r simulated data}
+set.seed(123)
+n <- 600
+occ <- data.frame(
+  lon = runif(n, -10, 10),
+  lat = runif(n, -5, 5),
+  species = sample(c("sp1", "sp2"), n, replace = TRUE)
+)
+occ$temp <- 23 - 0.5 * occ$lat + 0.1 * occ$lon + rnorm(n, sd = 0.5)
+```
+
+The points cover the same area, while temperature varies mainly with latitude.
+
+```{r simulated plots, fig.cap="Simulated occurrence records and environmental values.", echo = FALSE}
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+sp_col <- c("black", "grey65")[as.integer(factor(occ$species))]
+plot(occ$lon, occ$lat, pch = 16, cex = 0.6, col = sp_col, xlab = "Longitude", ylab = "Latitude", main = "Occurrences")
+legend("topright", legend = c("sp1", "sp2"), pch = 16, col = c("black", "grey65"), bty = "n", cex = 0.8)
+plot(occ$lat, occ$temp, pch = 16, cex = 0.6, col = "grey50", xlab = "Latitude", ylab = "Simulated temperature", main = "Environmental values")
+par(old_par)
+```
+
+For this example, we use six candidate grid resolutions. By default, GeoThinneR evaluates 11 resolutions ranging from 0.001º to 17.5º, but users can provide their own values. `group_col` tells the function to estimate a resolution for each species, and `env_col` identifies the variable used to assess stability. We use five sampling replicates to keep this example quick.
+
+```{r ls-tp}
+resolutions <- c(0.025, 0.05, 0.1, 0.2, 0.4, 0.8)
+
+ls_fit <- estimate_thinning_parameter(
+  occ,
+  group_col = "species",
+  env_col = "temp",
+  param_method = "ls-tp",
+  resolutions = resolutions,
+  replicates = 5,
+  seed = 123,
+  keep_curves = TRUE
+)
+
+ls_fit$estimated_parameters
+ls_fit$estimates[, c("group", "estimated_parameter", "selection_status")]
+```
+
+`estimated_parameters` is a named vector, with one resolution per species. The `selection_status` column tells us whether that resolution was found to be stable. If none of the tested resolutions reaches stability, LS-TP returns 0.001° as a fallback, **not** as a confirmed stable resolution.
+
+We can inspect the cumulative median at any tested resolution. The black line is the median across replicates, and the lighter lines show the individual sampling orders. A vertical line marks the start of a stable run when one is found.
+
+```{r ls-plot, fig.cap="Cumulative-median stability for sp1 at a 0.1° grid resolution."}
+plot(ls_fit, group = "sp1", resolution = 0.1)
+```
+
+For a summary of all tested resolutions, use `summary(ls_fit)` or `ls_fit$stability`. The latter also distinguishes resolutions that did not reach stability from those with too few observations to assess it.
+
+## Predicting resolutions from range size
+
+BD-TP fits a relationship between geographic range size and the tested thinning resolutions. To illustrate it, we simulate six species with different ranges.
+
+```{r bd-data}
+set.seed(42)
+species_names <- paste0("sp", 1:6)
+spreads <- c(0.30, 0.45, 0.65, 0.95, 1.35, 1.85)
+
+bd_occ <- do.call(rbind, lapply(seq_along(species_names), function(i) {
+  n <- 80
+  center_lon <- -140 + 35 * (i - 1)
+  center_lat <- -25 + 10 * (i - 1)
+  lon <- center_lon + runif(n, -spreads[i] / 2, spreads[i] / 2)
+  lat <- center_lat + runif(n, -spreads[i] / 2, spreads[i] / 2)
+
+  data.frame(
+    lon = lon, lat = lat, species = species_names[i],
+    temp = 16 + i + 0.8 * (lon - center_lon) / spreads[i] + rnorm(n, sd = 1.4)
+  )
+}))
+```
+
+The species differ in their occupied areas and environmental values.
+
+```{r bd-plots, fig.cap="Simulated species distributions and environmental values for BD-TP.", echo = FALSE}
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+sp_cols <- grDevices::gray.colors(6, start = 0.15, end = 0.75)
+plot(bd_occ$lon, bd_occ$lat, pch = 16, cex = 0.55, col = sp_cols[as.integer(factor(bd_occ$species))], xlab = "Longitude", ylab = "Latitude", main = "Species ranges")
+legend("topright", legend = species_names, pch = 16, col = sp_cols, bty = "n", cex = 0.7)
+boxplot(temp ~ species, data = bd_occ, col = "grey90", xlab = "Species", ylab = "Simulated temperature", main = "Environmental values")
+par(old_par)
+```
+
+```{r bd-tp}
+if (requireNamespace("e1071", quietly = TRUE)) {
+  bd_fit <- estimate_thinning_parameter(
+    bd_occ,
+    group_col = "species",
+    env_col = "temp",
+    param_method = "bd-tp",
+    resolutions = resolutions,
+    replicates = 5,
+    max_samples = 60,
+    seed = 123
+  )
+
+  bd_fit$estimated_parameters
+  summary(bd_fit)
+}
+```
+
+The BD-TP plot shows the combinations used to fit the model, its decision boundary, and the predicted resolutions. Filled points indicate demonstrated stability, open points indicate that stability was not demonstrated.
+
+```{r bd-plot, fig.cap="BD-TP decision boundary and predicted thinning resolutions."}
+if (requireNamespace("e1071", quietly = TRUE)) {
+  plot(bd_fit)
+}
+```
+
+These two plotting groups are kept simple, but the full diagnostics are still available in `bd_fit$stability`. In particular, combinations with at least three sampled observations enter BD-TP even when there are too few observations to assess a stable run. They remain labelled `"insufficient_observations"` in the diagnostic table. BD-TP predictions may fall between tested resolutions and should be interpreted as model predictions, not directly observed stability.
+
+## Thinning the records
+
+Estimating a resolution does not remove any records. Once we have checked the LS-TP results, we can pass a selected resolution to `thin_points()`.
+
+```{r apply, fig.cap="Original and retained records after applying an LS-TP resolution."}
+stable_species <- ls_fit$estimates$group[ls_fit$estimates$selection_status == "stable_parameter_selected"]
+
+if (length(stable_species) > 0) {
+  sp <- stable_species[[1]]
+  thinned <- thin_points(
+    subset(occ, species == sp),
+    method = "grid",
+    resolution = unname(ls_fit$estimated_parameters[[sp]]),
+    seed = 123
+  )
+  summary(thinned)
+  plot(thinned)
+}
+```
+
+These estimates can help choose a thinning resolution, but they do not by themselves demonstrate that sampling bias has been removed. For ecological analyses, use measured environmental variables and inspect the stability results before applying the selected resolution.
+
+## Reference
+
+Ibáñez, H., Bidegain, G., Sáez de Ocáriz, H., Mestre-Tomás, J., Verbruggen, H., Jueterbock, A. O., & Becerro, M. A. (2026). Stop guessing thinning distances: a data-driven framework for spatial thinning parametrization for ecological modelling. *bioRxiv*, 2026-10. https://doi.org/10.64898/2026.10.23.759308
+
+Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data. *The R Journal, 18*(1), 299-314. https://doi.org/10.32614/RJ-2026-006

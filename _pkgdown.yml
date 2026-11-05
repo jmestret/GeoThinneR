@@ -23,6 +23,10 @@ reference:
   - '`distance_thinning`'
   - '`grid_thinning`'
   - '`precision_thinning`'
+- title: Parameter estimation
+  contents:
+  - '`estimate_thinning_parameter`'
+  - '`GeoThinningParameter`'
 - title: Distance-based methods
   contents:
   - '`compute_neighbors_brute`'

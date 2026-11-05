@@ -61,11 +61,9 @@ as_sf(x, ...)
 
 \item{original_data}{The original unmodified data.}
 
-\item{x}{An object of class \code{GeoThinned}.}
+\item{x, object}{An object of class \code{GeoThinned}.}
 
 \item{...}{Additional arguments (ignored).}
-
-\item{object}{An object of class \code{GeoThinned}.}
 
 \item{trial}{Integer index of the thinning trial to extract (for \code{summary()}, \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.}
 

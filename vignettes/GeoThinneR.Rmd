@@ -379,6 +379,29 @@ ggplot() +
   theme_minimal()
 ```
 
+
+### Estimating a grid resolution
+
+Rather than choosing a grid resolution arbitrarily, `estimate_thinning_parameter()` can identify resolutions that preserve a stable environmental median. The **LS-TP** method selects the largest tested stable resolution for each species; **BD-TP** additionally relates resolutions to geographical range size. Both methods use one environmental variable per call and return resolutions in degrees.
+
+```{r estimate-grid-resolution}
+# Add an illustrative environmental variable to the simulated occurrences
+param_data <- transform(sim_data, temperature = 18 + 0.08 * lon - 0.12 * lat)
+
+ls_fit <- estimate_thinning_parameter(
+  param_data,
+  group_col = "sp",
+  env_col = "temperature",
+  resolutions = c(0.1, 0.5, 1),
+  replicates = 5,
+  max_samples = 100,
+  seed = 123
+)
+ls_fit$estimated_parameters
+```
+
+The temperature values above are simulated, not measured environmental data. You can learn more about this method in the [dedicated parameter estimation vignette](estimate_thinning_parameter.html) (`vignette("estimate_thinning_parameter", package = "GeoThinneR")`) and reading the original publication of  Ibáñez et al. (2026).
+
 ## Precision thinning
 
 In this approach, coordinates are rounded to a certain precision to remove points that fall too close together. After removing points based on coordinate precision, the coordinate values are restored to their original locations. This is the simplest method and is more of a filtering when working with data from different sources with varying coordinate precision. To use it, you need to define the `precision` parameter, indicating the number of decimals to which the coordinates should be rounded.
@@ -547,6 +570,8 @@ The **GeoThinneR** package was inspired by the work of many others who have deve
 - Elseberg, J., Magnenat, S., Siegwart, R., & Nüchter, A. (2012). *Comparison of nearest-neighbor-search strategies and implementations for efficient shape registration*. Journal of Software Engineering for Robotics, 3(1), 2-12. https://hdl.handle.net/10446/86202
 
 - Hijmans, R.J., Phillips, S., Leathwick, J., & Elith, J. (2023). *dismo: Species Distribution Modeling*. R Package Version 1.3-14. https://cran.r-project.org/package=dismo
+
+- Ibáñez, H., Bidegain, G., Sáez de Ocáriz, H., Mestre-Tomás, J., Verbruggen, H., Jueterbock, A. O., & Becerro, M. A. (2026). Stop guessing thinning distances: a data-driven framework for spatial thinning parametrization for ecological modelling. *bioRxiv*, 2026-10. https://doi.org/10.64898/2026.10.23.759308
 
 - Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data. *The R Journal, 18*(1), 299-314. https://doi.org/10.32614/RJ-2026-006
 

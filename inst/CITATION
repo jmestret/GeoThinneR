@@ -1,4 +1,4 @@
-citHeader("To cite GeoThinneR in publications, please use:")
+citHeader("To cite GeoThinneR, please use the first reference. If you use estimate_thinning_parameter(), please also cite the second reference.")
 
 # GeoThinneR publication
 bibentry(
@@ -11,4 +11,22 @@ bibentry(
   number   = "1",
   pages    = "299--314",
   doi      = "10.32614/RJ-2026-006"
+)
+
+# Estimate thinning parameter publication
+bibentry(
+  bibtype = "Article",
+  title = "Stop guessing thinning distances: a data-driven framework for spatial thinning parametrization for ecological modelling",
+  author = c(
+    person("Héctor", "Ibáñez"),
+    person("Gorka", "Bidegain"),
+    person("Haitz", "Sáez de Ocáriz Borde"),
+    person("Jorge", "Mestre-Tomás"),
+    person("Heroen", "Verbruggen"),
+    person(c("Alexander", "Oliver"), "Jueterbock"),
+    person(c("Mikel", "Aingeru"), "Becerro")
+  ),
+  journal  = "bioRxiv",
+  year = "2026",
+  doi = "10.64898/2026.10.23.759308"
 )

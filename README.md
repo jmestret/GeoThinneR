@@ -25,6 +25,14 @@ multiple species), retaining an exact number of points, and prioritizing
 records based on user-defined variables. These features make GeoThinneR
 a valuable tool for handling large-scale occurrence datasets.
 
+Not sure which thinning parameter to use? GeoThinneR also offers
+**data-driven thinning parameter estimation** based on Ibáñez et
+al. (2026). The `estimate_thinning_parameter()` function assesses the
+stability of cumulative environmental medians: LS-TP selects the largest
+tested stable resolution, while BD-TP predicts a resolution from
+geographical range size. Parameter estimation and thinning are separate
+steps, so the estimated resolution can be applied with `thin_points()`.
+
 <img src="man/figures/README-GeoThinneR_summary.png" width="90%" />
 
 GeoThinneR has been developed as an alternative tool for spatial
@@ -66,8 +74,10 @@ To install the **development version** from GitHub, use:
 devtools::install_github("jmestret/GeoThinneR")
 ```
 
-Using GeoThinneR is simple. The main function, `thin_points()`, applies
+Using GeoThinneR is simple. The main function, `thin_points()` applies
 spatial thinning using a user-specified method and thinning constraint.
+In the examples below, `data` represents an occurrence data frame with
+longitude and latitude columns.
 
 ``` r
 library(GeoThinneR)
@@ -80,6 +90,33 @@ thin_points(data, method = "grid", resolution = 0.1)
 
 # Precision-based thinning (rounding coordinates to 1 decimal place)
 thin_points(data, method = "precision", precision = 1)
+```
+
+Instead of selecting a grid resolution arbitrarily, you can estimate one
+using the stability of an environmental variable. For example, with
+occurrence data containing `lon`, `lat`, `species`, and `temperature`
+columns:
+
+``` r
+ls_fit <- estimate_thinning_parameter(
+  data,
+  group_col = "species",
+  env_col = "temperature",
+  param_method = "ls-tp",
+  seed = 123
+)
+
+ls_fit$estimated_parameters
+
+# Check whether a stable resolution was identified
+ls_fit$estimates[, c("group", "estimated_parameter", "selection_status")]
+
+# Apply the estimate for one species with thin_points()
+thinned <- thin_points(
+  subset(data, species == "sp1"),
+  method = "grid",
+  resolution = unname(ls_fit$estimated_parameters[["sp1"]])
+)
 ```
 
 ## Documentation
@@ -101,3 +138,12 @@ If you use GeoThinneR in your work, please cite the published article:
 > Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient
 > Spatial Thinning of Species Occurrences and Point Data. *The R
 > Journal, 18*(1), 299-314. <https://doi.org/10.32614/RJ-2026-006>
+
+If you use `estimate_thinning_parameter()`, please also cite the
+manuscript describing the thinning-parameter estimation framework:
+
+> Ibáñez, H., Bidegain, G., Sáez de Ocáriz, H., Mestre-Tomás, J.,
+> Verbruggen, H., Jueterbock, A. O., & Becerro, M. A. (2026). Stop
+> guessing thinning distances: a data-driven framework for spatial
+> thinning parametrization for ecological modelling. *bioRxiv*, 2026-10.
+> <https://doi.org/10.64898/2026.10.23.759308>

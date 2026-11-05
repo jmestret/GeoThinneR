@@ -36,8 +36,16 @@ test_that("plot.GeoThinned runs without error", {
   retained <- list(rep(TRUE, 10))
   obj <- as_GeoThinned(retained, method = "distance", params = list(lon_col = "lon", lat_col = "lat"), original_data = data)
 
+  plot_file <- tempfile(fileext = ".pdf")
+  grDevices::pdf(plot_file)
+  on.exit({
+    if (grDevices::dev.cur() > 1) grDevices::dev.off()
+    unlink(plot_file)
+  }, add = TRUE)
   expect_silent(plot(obj))
   expect_silent(plot(obj, show_original = FALSE))
+  grDevices::dev.off()
+  unlink(plot_file)
 })
 
 test_that("get_trial and largest work", {

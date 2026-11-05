@@ -6,8 +6,7 @@
 #' @param method The thinning method used (e.g., "distance", "grid", "precision").
 #' @param params A list of parameters used in thinning.
 #' @param original_data The original unmodified data.
-#' @param x An object of class \code{GeoThinned}.
-#' @param object An object of class \code{GeoThinned}.
+#' @param x,object An object of class \code{GeoThinned}.
 #' @param trial Integer index of the thinning trial to extract (for \code{summary()}, \code{get_trial()}, \code{plot()}, \code{as_sf()}). Default `NULL`, which will return the largest dataset.
 #' @param crs Coordinate reference system to assign to the resulting \code{sf} object (optional).
 #' @param show_original Logical, whether to show original points.

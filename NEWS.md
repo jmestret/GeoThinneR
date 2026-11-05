@@ -2,6 +2,12 @@ All notable changes to this project will be documented in this file.
 
 # GeoThinneR (development version)
 
+## Added
+
+* Added `estimate_thinning_parameter()` to estimate spatial thinning resolutions using the Last Stable Thinning Parameterization (LS-TP) and Biogeographic-size Dependent Thinning Parameterization (BD-TP) methods (Ibáñez et al., 2026). (#5)
+* Added stability diagnostics, summaries, and plots.
+* Added a short vignette showing how to estimate and apply thinning resolutions.
+
 # GeoThinneR 2.1.3 - 12/10/2026
 
 ## Added
