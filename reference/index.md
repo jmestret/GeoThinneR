@@ -14,6 +14,17 @@
 - [`precision_thinning()`](https://jmestret.github.io/GeoThinneR/reference/precision_thinning.md)
   : Precision Thinning of Spatial Points
 
+## Parameter estimation
+
+- [`estimate_thinning_parameter()`](https://jmestret.github.io/GeoThinneR/reference/estimate_thinning_parameter.md)
+  : Estimate Spatial Thinning Parameters
+- [`print(`*`<GeoThinningParameter>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinningParameter.md)
+  [`summary(`*`<GeoThinningParameter>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinningParameter.md)
+  [`print(`*`<summary.GeoThinningParameter>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinningParameter.md)
+  [`as.data.frame(`*`<GeoThinningParameter>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinningParameter.md)
+  [`plot(`*`<GeoThinningParameter>`*`)`](https://jmestret.github.io/GeoThinneR/reference/GeoThinningParameter.md)
+  : Methods for GeoThinningParameter Objects
+
 ## Distance-based methods
 
 - [`compute_neighbors_brute()`](https://jmestret.github.io/GeoThinneR/reference/compute_neighbors_brute.md)

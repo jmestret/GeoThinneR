@@ -526,7 +526,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.020   0.000   0.016
+#>   0.020   0.000   0.017
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -549,12 +549,48 @@ grid_raster_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.007   0.000   0.004
+#>   0.006   0.000   0.004
 nrow(largest(grid_raster_thin))
 #> [1] 200
 ```
 
 ![](GeoThinneR_files/figure-html/unnamed-chunk-20-1.png)
+
+#### Estimating a grid resolution
+
+Rather than choosing a grid resolution arbitrarily,
+[`estimate_thinning_parameter()`](https://jmestret.github.io/GeoThinneR/reference/estimate_thinning_parameter.md)
+can identify resolutions that preserve a stable environmental median.
+The **LS-TP** method selects the largest tested stable resolution for
+each species; **BD-TP** additionally relates resolutions to geographical
+range size. Both methods use one environmental variable per call and
+return resolutions in degrees.
+
+``` r
+
+# Add an illustrative environmental variable to the simulated occurrences
+param_data <- transform(sim_data, temperature = 18 + 0.08 * lon - 0.12 * lat)
+
+ls_fit <- estimate_thinning_parameter(
+  param_data,
+  group_col = "sp",
+  env_col = "temperature",
+  resolutions = c(0.1, 0.5, 1),
+  replicates = 5,
+  max_samples = 100,
+  seed = 123
+)
+ls_fit$estimated_parameters
+#> sp2 sp1 
+#>   1   1
+```
+
+The temperature values above are simulated, not measured environmental
+data. You can learn more about this method in the [dedicated parameter
+estimation
+vignette](https://jmestret.github.io/GeoThinneR/articles/estimate_thinning_parameter.md)
+([`vignette("estimate_thinning_parameter", package = "GeoThinneR")`](https://jmestret.github.io/GeoThinneR/articles/estimate_thinning_parameter.md))
+and reading the original publication of Ibáñez et al. (2026).
 
 ### Precision thinning
 
@@ -579,7 +615,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.003   0.000   0.003
+#>   0.005   0.000   0.003
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -648,11 +684,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-10-29 10:09:28 
+#> Starting spatial thinning at 2026-11-05 16:17:15 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 6.51 seconds
+#> Total execution time: 6.52 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
@@ -762,6 +798,12 @@ tools that may be suitable for your work:
   *dismo: Species Distribution Modeling*. R Package Version 1.3-14.
   <https://cran.r-project.org/package=dismo>
 
+- Ibáñez, H., Bidegain, G., Sáez de Ocáriz, H., Mestre-Tomás, J.,
+  Verbruggen, H., Jueterbock, A. O., & Becerro, M. A. (2026). Stop
+  guessing thinning distances: a data-driven framework for spatial
+  thinning parametrization for ecological modelling. *bioRxiv*, 2026-10.
+  <https://doi.org/10.64898/2026.10.23.759308>
+
 - Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient
   Spatial Thinning of Species Occurrences and Point Data. *The R
   Journal, 18*(1), 299-314. <https://doi.org/10.32614/RJ-2026-006>
@@ -777,7 +819,7 @@ tools that may be suitable for your work:
 ``` r
 
 sessionInfo()
-#> R version 4.6.1 (2026-06-24)
+#> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 26.04.1 LTS
 #> 
@@ -798,19 +840,20 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_4.0.3    sf_1.1-3         terra_1.9-50     GeoThinneR_2.1.3
+#> [1] ggplot2_4.0.3         sf_1.1-3              terra_1.9-50         
+#> [4] GeoThinneR_2.1.3.9000
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] s2_1.1.13           sass_0.4.10         class_7.3-23       
-#>  [4] KernSmooth_2.23-26  digest_0.6.39       evaluate_1.0.5     
-#>  [7] grid_4.6.1          RColorBrewer_1.1-3  iterators_1.0.14   
+#>  [1] s2_1.1.13           sass_0.4.10         class_7.3-24       
+#>  [4] KernSmooth_2.23-27  digest_0.6.39       evaluate_1.0.5     
+#>  [7] grid_4.6.2          RColorBrewer_1.1-3  iterators_1.0.14   
 #> [10] fastmap_1.2.0       maps_3.4.4          foreach_1.5.2      
 #> [13] jsonlite_2.0.0      e1071_1.7-17        DBI_1.3.0          
 #> [16] spam_2.11-4         viridisLite_0.4.3   scales_1.4.0       
 #> [19] codetools_0.2-20    textshaping_1.0.5   jquerylib_0.1.4    
 #> [22] cli_3.6.6           rlang_1.3.0         units_1.0-1        
-#> [25] splines_4.6.1       withr_3.0.3         cachem_1.1.0       
-#> [28] yaml_2.3.12         otel_0.2.0          tools_4.6.1        
+#> [25] splines_4.6.2       withr_3.0.3         cachem_1.1.0       
+#> [28] yaml_2.3.12         otel_0.2.0          tools_4.6.2        
 #> [31] vctrs_0.7.3         R6_2.6.1            matrixStats_1.5.0  
 #> [34] proxy_0.4-29        lifecycle_1.0.5     classInt_0.4-11    
 #> [37] nabor_0.5.0         fs_2.1.0            ragg_1.5.2         
@@ -819,6 +862,6 @@ sessionInfo()
 #> [46] Rcpp_1.1.2          fields_18.0         systemfonts_1.3.2  
 #> [49] xfun_0.62           knitr_1.52          farver_2.1.2       
 #> [52] htmltools_0.5.9     rmarkdown_2.32      labeling_0.4.3     
-#> [55] dotCall64_1.2       wk_0.9.5            compiler_4.6.1     
+#> [55] dotCall64_1.2       wk_0.9.5            compiler_4.6.2     
 #> [58] S7_0.2.2
 ```

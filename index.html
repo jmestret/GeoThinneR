@@ -15,8 +15,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Efficient Spatial Thinning of Species Occurrences">
-<meta name="description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
-<meta property="og:description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. For more information on the methods, see Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt;.">
+<meta name="description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. Also estimates thinning parameters from environmental stability. For more information on the methods, see Mestre-Tomás (2026) &lt;https://doi.org/10.32614/RJ-2026-006&gt;, Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt; and Ibáñez et al. (2026) &lt;https://doi.org/10.64898/2026.10.23.759308&gt;.">
+<meta property="og:description" content="Provides efficient geospatial thinning algorithms to reduce the density of coordinate data while maintaining spatial relationships. Implements K-D Tree and brute-force distance-based thinning, as well as grid-based and precision-based thinning methods. Also estimates thinning parameters from environmental stability. For more information on the methods, see Mestre-Tomás (2026) &lt;https://doi.org/10.32614/RJ-2026-006&gt;, Elseberg et al. (2012) &lt;https://hdl.handle.net/10446/86202&gt; and Ibáñez et al. (2026) &lt;https://doi.org/10.64898/2026.10.23.759308&gt;.">
 <meta property="og:image" content="https://jmestret.github.io/GeoThinneR/logo.png">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-N3F029FJEK"></script><script>
   window.dataLayer = window.dataLayer || [];
@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="index.html">GeoThinneR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.3.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,12 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/GeoThinneR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/estimate_thinning_parameter.html">Choosing a thinning resolution</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -71,6 +77,7 @@
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
 <p><strong>GeoThinneR</strong> is an R package designed for efficient spatial thinning of species occurrence records and other geospatial point data. It integrates three primary thinning methods (<strong>distance-based, grid-based, and precision-based thinning</strong>) into a single package, eliminating the need to switch between multiple tools. GeoThinneR implements algorithms based on kd-tree structures for nearest-neighbor searches, significantly improving performance and <strong>scalability for large datasets</strong>. Additionally, the package provides custom <strong>functionalities</strong> useful for species distribution modeling (SDM), such as thinning by group (e.g., multiple species), retaining an exact number of points, and prioritizing records based on user-defined variables. These features make GeoThinneR a valuable tool for handling large-scale occurrence datasets.</p>
+<p>Not sure which thinning parameter to use? GeoThinneR also offers <strong>data-driven thinning parameter estimation</strong> based on Ibáñez et al. (2026). The <code><a href="reference/estimate_thinning_parameter.html">estimate_thinning_parameter()</a></code> function assesses the stability of cumulative environmental medians: LS-TP selects the largest tested stable resolution, while BD-TP predicts a resolution from geographical range size. Parameter estimation and thinning are separate steps, so the estimated resolution can be applied with <code><a href="reference/thin_points.html">thin_points()</a></code>.</p>
 <p><img src="reference/figures/README-GeoThinneR_summary.png" width="90%"></p>
 <p>GeoThinneR has been developed as an alternative tool for spatial thinning to mitigate the effects of sampling bias in SDM. Various approaches exist to address sampling bias, each suited to different scenarios. Below are some references discussing methods for bias correction and spatial thinning:</p>
 <ul>
@@ -92,7 +99,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmestret/GeoThinneR"</span><span class="op">)</span></span></code></pre></div>
-<p>Using GeoThinneR is simple. The main function, <code><a href="reference/thin_points.html">thin_points()</a></code>, applies spatial thinning using a user-specified method and thinning constraint.</p>
+<p>Using GeoThinneR is simple. The main function, <code><a href="reference/thin_points.html">thin_points()</a></code> applies spatial thinning using a user-specified method and thinning constraint. In the examples below, <code>data</code> represents an occurrence data frame with longitude and latitude columns.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jmestret/GeoThinneR" class="external-link">GeoThinneR</a></span><span class="op">)</span></span>
 <span></span>
@@ -104,6 +111,27 @@
 <span></span>
 <span><span class="co"># Precision-based thinning (rounding coordinates to 1 decimal place)</span></span>
 <span><span class="fu"><a href="reference/thin_points.html">thin_points</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"precision"</span>, precision <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p>Instead of selecting a grid resolution arbitrarily, you can estimate one using the stability of an environmental variable. For example, with occurrence data containing <code>lon</code>, <code>lat</code>, <code>species</code>, and <code>temperature</code> columns:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ls_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/estimate_thinning_parameter.html">estimate_thinning_parameter</a></span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  group_col <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>  env_col <span class="op">=</span> <span class="st">"temperature"</span>,</span>
+<span>  param_method <span class="op">=</span> <span class="st">"ls-tp"</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ls_fit</span><span class="op">$</span><span class="va">estimated_parameters</span></span>
+<span></span>
+<span><span class="co"># Check whether a stable resolution was identified</span></span>
+<span><span class="va">ls_fit</span><span class="op">$</span><span class="va">estimates</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>, <span class="st">"estimated_parameter"</span>, <span class="st">"selection_status"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Apply the estimate for one species with thin_points()</span></span>
+<span><span class="va">thinned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/thin_points.html">thin_points</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">species</span> <span class="op">==</span> <span class="st">"sp1"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"grid"</span>,</span>
+<span>  resolution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">ls_fit</span><span class="op">$</span><span class="va">estimated_parameters</span><span class="op">[[</span><span class="st">"sp1"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
@@ -121,6 +149,10 @@
 <p>If you use GeoThinneR in your work, please cite the published article:</p>
 <blockquote>
 <p>Mestre-Tomás, J. (2026). GeoThinneR: An R Package for Efficient Spatial Thinning of Species Occurrences and Point Data. <em>The R Journal, 18</em>(1), 299-314. <a href="https://doi.org/10.32614/RJ-2026-006" class="external-link uri">https://doi.org/10.32614/RJ-2026-006</a></p>
+</blockquote>
+<p>If you use <code><a href="reference/estimate_thinning_parameter.html">estimate_thinning_parameter()</a></code>, please also cite the manuscript describing the thinning-parameter estimation framework:</p>
+<blockquote>
+<p>Ibáñez, H., Bidegain, G., Sáez de Ocáriz, H., Mestre-Tomás, J., Verbruggen, H., Jueterbock, A. O., &amp; Becerro, M. A. (2026). Stop guessing thinning distances: a data-driven framework for spatial thinning parametrization for ecological modelling. <em>bioRxiv</em>, 2026-10. <a href="https://doi.org/10.64898/2026.10.23.759308" class="external-link uri">https://doi.org/10.64898/2026.10.23.759308</a></p>
 </blockquote>
 </div>
 </div>
@@ -153,6 +185,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Jorge Mestre-Tomás <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8983-3417" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 

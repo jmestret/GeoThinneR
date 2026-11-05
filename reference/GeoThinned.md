@@ -69,17 +69,13 @@ as_sf(x, trial = NULL, crs = 4326, ...)
 
   The original unmodified data.
 
-- x:
+- x, object:
 
   An object of class `GeoThinned`.
 
 - ...:
 
   Additional arguments (ignored).
-
-- object:
-
-  An object of class `GeoThinned`.
 
 - trial:
 

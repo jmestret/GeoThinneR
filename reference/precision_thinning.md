@@ -89,6 +89,6 @@ print(result)
 result_single <- precision_thinning(coords, precision = 2, trials = 1, all_trials = FALSE)
 print(result_single)
 #> [[1]]
-#> [1] FALSE  TRUE  TRUE
+#> [1]  TRUE  TRUE FALSE
 #> 
 ```

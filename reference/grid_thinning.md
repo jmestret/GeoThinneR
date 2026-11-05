@@ -100,7 +100,7 @@ print(result)
 #> [1] FALSE  TRUE  TRUE
 #> 
 #> [[2]]
-#> [1] FALSE  TRUE  TRUE
+#> [1]  TRUE  TRUE FALSE
 #> 
 #> [[3]]
 #> [1]  TRUE  TRUE FALSE
@@ -126,6 +126,6 @@ rast_obj <- terra::rast(nrows = 100, ncols = 100, xmin = -123, xmax = -121, ymin
 result_raster <- grid_thinning(coords, raster_obj = rast_obj, trials = 5)
 print(result_raster)
 #> [[1]]
-#> [1] FALSE  TRUE FALSE
+#> [1] FALSE FALSE  TRUE
 #> 
 ```
