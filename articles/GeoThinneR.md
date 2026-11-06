@@ -526,7 +526,7 @@ grid_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.020   0.000   0.017
+#>   0.019   0.000   0.017
 nrow(largest(grid_thin))
 #> [1] 200
 ```
@@ -615,7 +615,7 @@ precision_thin <- thin_points(
   seed = 123
 ))
 #>    user  system elapsed 
-#>   0.005   0.000   0.003
+#>   0.004   0.001   0.004
 nrow(largest(precision_thin))
 #> [1] 230
 ```
@@ -684,11 +684,11 @@ targeted_thin <- thin_points(
   seed = 123,
   verbose = TRUE
 )
-#> Starting spatial thinning at 2026-11-05 16:17:15 
+#> Starting spatial thinning at 2026-11-06 13:22:02 
 #> Thinning using method: distance
 #> For specific target points, brute force method is used.
 #> Thinning process completed.
-#> Total execution time: 6.52 seconds
+#> Total execution time: 6.08 seconds
 nrow(largest(targeted_thin))
 #> [1] 150
 ```
